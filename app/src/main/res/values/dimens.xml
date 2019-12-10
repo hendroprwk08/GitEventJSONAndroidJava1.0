@@ -6,4 +6,6 @@
     <dimen name="layout_8">8dp</dimen>
     <dimen name="layout_10">10dp</dimen>
     <dimen name="layout_0">0dp</dimen>
+    <dimen name="layout_1">1dp</dimen>
+    <dimen name="layout_50">50dp</dimen>
 </resources>

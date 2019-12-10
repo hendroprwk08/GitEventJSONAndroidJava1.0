@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_participant"
+        android:icon="@drawable/ic_card_membership_white_24dp"
+        app:showAsAction="always"
+        android:title="@string/Add"/>
+
+    <item
+        android:id="@+id/menu_event"
+        android:icon="@drawable/ic_event_note_white_24dp"
+        app:showAsAction="always"
+        android:title="@string/Add"/>
+
+    <item
+        android:id="@+id/menu_user"
+        android:icon="@drawable/ic_people_white_24dp"
+        app:showAsAction="always"
+        android:title="@string/registration" />
+
+    <item
+        android:id="@+id/menu_registration"
+        android:icon="@drawable/ic_event_available_white_24dp"
+        app:showAsAction="always"
+        android:title="@string/registration" />
+</menu>

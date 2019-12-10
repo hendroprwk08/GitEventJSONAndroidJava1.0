@@ -24,4 +24,5 @@
     <string name="server_problem">Server problem</string>
     <string name="please_check_your_connection">Please check your connection</string>
     <string name="reading_data_failed">Reading data failed!</string>
+    <string name="no_participant">No Participant</string>
 </resources>

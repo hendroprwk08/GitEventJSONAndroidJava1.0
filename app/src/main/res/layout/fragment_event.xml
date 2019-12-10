@@ -14,6 +14,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="@dimen/layout_10"
             android:id="@+id/rv_events">
 
         </androidx.recyclerview.widget.RecyclerView>
