@@ -106,7 +106,7 @@ public class ParticipantFragment extends Fragment {
 
                 pb.setVisibility(ProgressBar.VISIBLE);
 
-                Log.d(Cons.TAG, "onItemSelected: " + idVal);
+                //Log.d(Cons.TAG, "onItemSelected: " + idVal);
 
                 EVENT_ID = Integer.parseInt(idVal);
 
@@ -119,7 +119,7 @@ public class ParticipantFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                Log.d(Cons.TAG, "onNothingSelected: "+ adapterView);
+                //Log.d(Cons.TAG, "onNothingSelected: "+ adapterView);
             }
         });
 
@@ -131,7 +131,7 @@ public class ParticipantFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getContext());
         String url = Cons.BASE_URL +"peserta.php?action=41&id="+ id;
 
-        Log.d(Cons.TAG, "load: " + url );
+        //Log.d(Cons.TAG, "load: " + url );
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest(
                 Request.Method.GET,
@@ -141,7 +141,7 @@ public class ParticipantFragment extends Fragment {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("Members: ", response.toString());
+                        //Log.d("Members: ", response.toString());
                         String id, nama, kampus, whatsapp, phone, email, active, input;
 
                         participants = new ArrayList<>();
@@ -219,7 +219,7 @@ public class ParticipantFragment extends Fragment {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("Event: ", response.toString());
+                        //Log.d("Event: ", response.toString());
                         String id = "0", event;
 
                         try {

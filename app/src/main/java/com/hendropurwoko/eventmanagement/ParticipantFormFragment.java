@@ -104,6 +104,7 @@ public class ParticipantFormFragment extends Fragment {
             }
         });
 
+
         final Button btUpdate = (Button) view.findViewById(R.id.bt_form_user_update);
         btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,13 +119,14 @@ public class ParticipantFormFragment extends Fragment {
             }
         });
 
+        /* === No deletion process
         final Button btDelete = (Button) view.findViewById(R.id.bt_form_user_delete);
         btDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 delete(ID, etName.getText().toString().trim());
             }
-        });
+        }); */
 
         pb = (ProgressBar) view.findViewById(R.id.pb);
 
@@ -207,6 +209,8 @@ public class ParticipantFormFragment extends Fragment {
 
             Log.d(Cons.TAG, "save: " + url);
 
+            pb.setVisibility(ProgressBar.VISIBLE);
+
             RequestQueue queue = Volley.newRequestQueue(getContext());
             JsonObjectRequest jsObjRequest = new JsonObjectRequest(
                     Request.Method.GET,
@@ -221,6 +225,8 @@ public class ParticipantFormFragment extends Fragment {
                             Toast.makeText(getContext(),
                                     nm + " updated",
                                     Toast.LENGTH_SHORT).show();
+
+                            pb.setVisibility(ProgressBar.GONE);
                         }
                     }, new Response.ErrorListener() {
 
@@ -228,6 +234,8 @@ public class ParticipantFormFragment extends Fragment {
                 public void onErrorResponse(VolleyError error) {
                     // TODO Auto-generated method stub
                     Log.d("Events: ", error.toString());
+
+                    pb.setVisibility(ProgressBar.GONE);
 
                     Toast.makeText(getContext(),
                             error.toString(),
@@ -244,6 +252,8 @@ public class ParticipantFormFragment extends Fragment {
             Toast.makeText(getContext(),
                     stackTrace,
                     Toast.LENGTH_SHORT).show();
+
+            pb.setVisibility(ProgressBar.GONE);
         }
 
     }
@@ -261,6 +271,8 @@ public class ParticipantFormFragment extends Fragment {
 
                     Log.d(Cons.TAG, "save: " + url);
 
+                    pb.setVisibility(ProgressBar.VISIBLE);
+
                     RequestQueue queue = Volley.newRequestQueue(getContext());
                     JsonObjectRequest jsObjRequest = new JsonObjectRequest(
                             Request.Method.GET,
@@ -275,6 +287,7 @@ public class ParticipantFormFragment extends Fragment {
                                             nm + " deleted",
                                             Toast.LENGTH_SHORT).show();
 
+                                    pb.setVisibility(ProgressBar.GONE);
                                 }
                             }, new Response.ErrorListener() {
 

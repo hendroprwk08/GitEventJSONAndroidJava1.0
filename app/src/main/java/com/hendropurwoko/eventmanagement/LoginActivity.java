@@ -26,7 +26,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(LoginActivity.this, MainAppActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY); //close login activity
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                finish();
+
                 getApplicationContext().startActivity(i);
             }
         });

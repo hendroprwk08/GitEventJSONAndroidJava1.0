@@ -158,11 +158,12 @@
                     android:text="@string/update"
                     android:id="@+id/bt_form_event_update"
                     android:textColor="@color/colorPrimary"
-                    android:background="@drawable/orangercorner"
+                    android:background="@drawable/bluercorner"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:layout_weight="1"/>
 
-                <Button
+                <!-- No Deletion -->
+                <!-- <Button
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/layout_40"
                     android:text="@string/hide"
@@ -170,7 +171,7 @@
                     android:textColor="@color/grey"
                     android:background="@color/transparent"
                     android:foreground="?android:attr/selectableItemBackground"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"/> -->
             </LinearLayout>
 
             <ProgressBar

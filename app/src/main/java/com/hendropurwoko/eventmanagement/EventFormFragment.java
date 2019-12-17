@@ -162,13 +162,14 @@ public class EventFormFragment extends Fragment {
             }
         });
 
+        /* --- No deletion
         final Button btDelete = (Button) view.findViewById(R.id.bt_form_event_delete);
         btDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 delete(ID, etName.getText().toString());
             }
-        });
+        }); */
 
         final Button btUpdate = (Button) view.findViewById(R.id.bt_form_event_update);
         btUpdate.setOnClickListener(new View.OnClickListener() {

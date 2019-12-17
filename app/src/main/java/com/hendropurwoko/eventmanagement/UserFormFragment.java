@@ -120,13 +120,14 @@ public class UserFormFragment extends Fragment {
             }
         });
 
+        /* -- No deletion
         final Button btDelete = (Button) view.findViewById(R.id.bt_form_user_delete);
         btDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 delete(etUsername.getText().toString().trim());
             }
-        });
+        });*/
 
         return view;
     }
@@ -206,6 +207,8 @@ public class UserFormFragment extends Fragment {
                     "&active=" + URLEncoder.encode(ac, "utf-8") +
                     "&type=" + URLEncoder.encode(ty, "utf-8");
 
+            pb.setVisibility(ProgressBar.VISIBLE);
+
             RequestQueue queue = Volley.newRequestQueue(getContext());
             JsonObjectRequest jsObjRequest = new JsonObjectRequest(
                     Request.Method.GET,
@@ -220,6 +223,9 @@ public class UserFormFragment extends Fragment {
                             Toast.makeText(getContext(),
                                     us + " updated",
                                     Toast.LENGTH_SHORT).show();
+
+                            pb.setVisibility(ProgressBar.GONE);
+
                         }
                     }, new Response.ErrorListener() {
 
@@ -231,6 +237,8 @@ public class UserFormFragment extends Fragment {
                     Toast.makeText(getContext(),
                             error.toString(),
                             Toast.LENGTH_SHORT).show();
+
+                    pb.setVisibility(ProgressBar.GONE);
                 }
             });
 
@@ -243,6 +251,9 @@ public class UserFormFragment extends Fragment {
             Toast.makeText(getContext(),
                     stackTrace,
                     Toast.LENGTH_SHORT).show();
+
+            pb.setVisibility(ProgressBar.GONE);
+
         }
 
     }
@@ -259,6 +270,8 @@ public class UserFormFragment extends Fragment {
                     try {
                         String url = Cons.BASE_URL +"pengguna.php?action=3&username=" + URLEncoder.encode(us, "utf-8");
 
+                        pb.setVisibility(ProgressBar.VISIBLE);
+
                         RequestQueue queue = Volley.newRequestQueue(getContext());
                         JsonObjectRequest jsObjRequest = new JsonObjectRequest(
                                 Request.Method.GET,
@@ -272,6 +285,8 @@ public class UserFormFragment extends Fragment {
                                         Toast.makeText(getContext(),
                                                 us + " deleted",
                                                 Toast.LENGTH_SHORT).show();
+
+                                        pb.setVisibility(ProgressBar.GONE);
 
                                     }
                                 }, new Response.ErrorListener() {
@@ -299,6 +314,8 @@ public class UserFormFragment extends Fragment {
                         queue.add(jsObjRequest);
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
+
+                        pb.setVisibility(ProgressBar.GONE);
                     }
 
                     dialog.dismiss();
@@ -313,7 +330,7 @@ public class UserFormFragment extends Fragment {
 
                     dialog.dismiss();
 
-                    //showDetailDialog(view);
+                    pb.setVisibility(ProgressBar.GONE);
                 }
             })
             .show();

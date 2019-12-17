@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,8 +60,11 @@ class UserAdapter extends RecyclerView.Adapter<UserAdapter.CardViewHolder> {
         cardViewHolder.tv_username.setText(username);
         cardViewHolder.tv_email.setText(email);
         cardViewHolder.tv_phone.setText(phone);
-        cardViewHolder.tv_active.setText(active);
         cardViewHolder.tv_type.setText(type);
+
+        if (active.equals("No")){
+            cardViewHolder.ll.setBackgroundResource(R.drawable.redpastelrcorner);
+        }
 
         cardViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
 
@@ -88,15 +92,16 @@ class UserAdapter extends RecyclerView.Adapter<UserAdapter.CardViewHolder> {
     }
 
     public class CardViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_username, tv_email, tv_phone, tv_active, tv_type;
+        TextView tv_username, tv_email, tv_phone, tv_type;
+        LinearLayout ll;
 
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_username = (TextView) itemView.findViewById(R.id.tv_rv_username);
             tv_email = (TextView) itemView.findViewById(R.id.tv_rv_email);
             tv_phone = (TextView) itemView.findViewById(R.id.tv_rv_phone);
-            tv_active = (TextView) itemView.findViewById(R.id.tv_rv_active);
             tv_type = (TextView) itemView.findViewById(R.id.tv_rv_type);
+            ll = (LinearLayout) itemView.findViewById(R.id.wrap);
         }
     }
 }
