@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -43,7 +44,7 @@ public class UserFragment extends Fragment {
     View fragment_view;
     private SwipeRefreshLayout swipeContainer;
     public List<User> users;
-    ProgressDialog pDialog;
+    ProgressBar pb;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,10 +54,8 @@ public class UserFragment extends Fragment {
 
         fragment_view = view;
 
-        pDialog = new ProgressDialog(getContext());
-        pDialog.setTitle("Loading...");
-        pDialog.setMessage("Getting user list");
-        pDialog.show();
+        pb = (ProgressBar) view.findViewById(R.id.pb);
+
         load();
 
         // Lookup the swipe container view
@@ -91,6 +90,8 @@ public class UserFragment extends Fragment {
     }
 
     void load() {
+        pb.setVisibility(ProgressBar.VISIBLE);
+
         RequestQueue queue = Volley.newRequestQueue(getContext());
         String url = Cons.BASE_URL +"pengguna.php?action=4";
 
@@ -128,20 +129,18 @@ public class UserFragment extends Fragment {
                                 recyclerView.setAdapter(mAdapter);
                                 recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-                                if (pDialog.isShowing()) pDialog.dismiss();
-
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }finally {
-                            if (pDialog.isShowing()) pDialog.dismiss();
+                            pb.setVisibility(ProgressBar.GONE);
                         }
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (pDialog.isShowing()) pDialog.dismiss();
+                pb.setVisibility(ProgressBar.GONE);
 
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) { //time out or there is no connection
                     Toast.makeText(getContext(), R.string.time_out_try_again, Toast.LENGTH_SHORT).show();
@@ -153,6 +152,8 @@ public class UserFragment extends Fragment {
                     Toast.makeText(getContext(), R.string.please_check_your_connection, Toast.LENGTH_SHORT).show();
                 } else if (error instanceof ParseError) {//the server response could not be parsed
                     Toast.makeText(getContext(), R.string.reading_data_failed, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), R.string.server_problem, Toast.LENGTH_SHORT).show();
                 }
             }
         });

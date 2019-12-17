@@ -5,7 +5,10 @@
     android:orientation="vertical"
     android:background="@drawable/greyrcorner"
     android:padding="@dimen/layout_10"
+    android:id="@+id/wrap"
+    android:foreground="?attr/selectableItemBackground"
     android:layout_marginBottom="@dimen/layout_5">
+    <!-- riple effect gridview dengan menambhakan foregorund -->
 
     <TextView
         android:layout_width="match_parent"

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="@dimen/layout_30"
+    android:padding="@dimen/layout_20"
     android:background="@color/colorPrimary"
     tools:context=".LoginActivity">
 
@@ -15,7 +15,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/layout_30"
         android:orientation="vertical"
         android:background="@color/colorPrimary">
 
@@ -40,6 +39,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/layout_15"
+                android:background="@drawable/greyedittextrcorner"
+                android:layout_marginTop="@dimen/layout_5"
                 android:hint="@string/email" />
 
             <EditText
@@ -47,6 +48,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/layout_15"
+                android:background="@drawable/greyedittextrcorner"
+                android:layout_marginTop="@dimen/layout_5"
                 android:hint="@string/password"
                 android:inputType="textPassword" />
 
@@ -57,20 +60,22 @@
 
                 <Button
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/layout_40"
                     android:text="@string/login"
                     android:id="@+id/login_bt_login"
                     android:textColor="@color/colorPrimary"
                     android:background="@drawable/orangercorner"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:layout_weight="1"/>
 
                 <Button
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/layout_40"
                     android:text="@string/sign_up"
                     android:id="@+id/login_bt_sign_up"
                     android:textColor="@color/grey"
                     android:background="@color/transparent"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:layout_weight="1"/>
 
             </LinearLayout>

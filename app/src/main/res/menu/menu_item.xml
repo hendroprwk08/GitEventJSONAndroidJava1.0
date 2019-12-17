@@ -17,12 +17,12 @@
     <item
         android:id="@+id/menu_user"
         android:icon="@drawable/ic_people_white_24dp"
-        app:showAsAction="always"
-        android:title="@string/registration" />
+        app:showAsAction="ifRoom"
+        android:title="@string/user" />
 
     <item
         android:id="@+id/menu_registration"
         android:icon="@drawable/ic_event_available_white_24dp"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:title="@string/registration" />
 </menu>

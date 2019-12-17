@@ -13,12 +13,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".WebRegistrationActivity"></activity>
+        <activity android:name=".WebRegistrationActivity"
+            android:screenOrientation="portrait"/>
+
         <activity android:name=".MainAppActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme"/>
+
         <activity
             android:name=".RegistrationActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".LoginActivity"

@@ -3,8 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:foreground="?attr/selectableItemBackground"
     android:background="@drawable/greyrcorner"
     android:padding="@dimen/layout_10"
+    android:id="@+id/wrap"
     android:layout_marginBottom="@dimen/layout_5">
 
     <TextView

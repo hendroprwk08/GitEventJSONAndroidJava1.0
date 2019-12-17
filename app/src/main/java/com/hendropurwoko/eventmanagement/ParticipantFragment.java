@@ -1,8 +1,5 @@
 package com.hendropurwoko.eventmanagement;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,7 +49,7 @@ public class ParticipantFragment extends Fragment {
     ArrayList<String> arr;
     HashMap<String, String> mapData;
 
-    ProgressDialog pDialog;
+    ProgressBar pb;
     Spinner sp;
     TextView tvJumlah;
     int EVENT_ID;
@@ -63,7 +61,10 @@ public class ParticipantFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_participant, container, false);
 
         fragment_view = view;
-        pDialog = new ProgressDialog(getContext());
+
+        pb = (ProgressBar) view.findViewById(R.id.pb);
+
+        pb.setVisibility(ProgressBar.VISIBLE);
 
         loadEvent();
 
@@ -77,6 +78,7 @@ public class ParticipantFragment extends Fragment {
                 // Your code to refresh the list here.
                 // Make sure you call swipeContainer.setRefreshing(false)
                 // once the network request has completed successfully.
+                pb.setVisibility(ProgressBar.VISIBLE);
                 load(EVENT_ID);
 
                 new Handler().postDelayed(new Runnable() {
@@ -102,9 +104,15 @@ public class ParticipantFragment extends Fragment {
                 String eventVal = adapterView.getItemAtPosition(i).toString();
                 String idVal =  mapData.get(eventVal);
 
+                pb.setVisibility(ProgressBar.VISIBLE);
+
                 Log.d(Cons.TAG, "onItemSelected: " + idVal);
 
                 EVENT_ID = Integer.parseInt(idVal);
+
+                Cons.SELECTED_EVENT_INDEX = i; //ambil index sp-nya
+                Cons.SELECTED_EVENT_ID = EVENT_ID; //tampung id event
+                Cons.SELECTED_EVENT_INDEX_STATUS = true; //kasih status
 
                 load(EVENT_ID);
             }
@@ -120,12 +128,10 @@ public class ParticipantFragment extends Fragment {
     }
 
     void load(int id) {
-        pDialog.setTitle("Loading...");
-        pDialog.setMessage("Getting participant data");
-        pDialog.show();
-
         RequestQueue queue = Volley.newRequestQueue(getContext());
         String url = Cons.BASE_URL +"peserta.php?action=41&id="+ id;
+
+        Log.d(Cons.TAG, "load: " + url );
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest(
                 Request.Method.GET,
@@ -136,7 +142,7 @@ public class ParticipantFragment extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("Members: ", response.toString());
-                        String id, nama, kampus, whatsapp, phone, email, input;
+                        String id, nama, kampus, whatsapp, phone, email, active, input;
 
                         participants = new ArrayList<>();
 
@@ -153,9 +159,10 @@ public class ParticipantFragment extends Fragment {
                                     whatsapp = data.getString("whatsapp").toString().trim();
                                     phone = data.getString("phone").toString().trim();
                                     email = data.getString("email").toString().trim();
+                                    active = data.getString("active").toString().trim();
                                     input = data.getString("input").toString().trim();
 
-                                    participants.add(new Participant(id, nama, kampus, whatsapp, phone, email, input));
+                                    participants.add(new Participant(id, nama, kampus, whatsapp, phone, email, active, input));
                                 }
                                 tvJumlah.setText(participants.size() + " Participants");
                             }else{
@@ -171,14 +178,14 @@ public class ParticipantFragment extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }finally {
-                            if (pDialog.isShowing()) pDialog.dismiss();
+                            pb.setVisibility(ProgressBar.GONE);
                         }
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (pDialog.isShowing()) pDialog.dismiss();
+                pb.setVisibility(ProgressBar.GONE);
 
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) { //time out or there is no connection
                     Toast.makeText(getContext(), R.string.time_out_try_again, Toast.LENGTH_SHORT).show();
@@ -190,6 +197,8 @@ public class ParticipantFragment extends Fragment {
                     Toast.makeText(getContext(), R.string.please_check_your_connection, Toast.LENGTH_SHORT).show();
                 } else if (error instanceof ParseError) {//the server response could not be parsed
                     Toast.makeText(getContext(), R.string.reading_data_failed, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), R.string.server_problem, Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -199,12 +208,8 @@ public class ParticipantFragment extends Fragment {
     }
 
     void loadEvent() {
-        pDialog.setTitle("Loading...");
-        pDialog.setMessage("Getting event data");
-        pDialog.show();
-
         RequestQueue queue = Volley.newRequestQueue(getContext());
-        String url = "https://event-lcc-me.000webhostapp.com/load_event.php";
+        String url = Cons.BASE_URL +"load_event.php";
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest(
                 Request.Method.GET,
@@ -215,7 +220,7 @@ public class ParticipantFragment extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("Event: ", response.toString());
-                        String id, event;
+                        String id = "0", event;
 
                         try {
                             JSONArray jsonArray = response.getJSONArray("result");
@@ -227,6 +232,10 @@ public class ParticipantFragment extends Fragment {
                             if (jsonArray.length() != 0) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject data = jsonArray.getJSONObject(i);
+
+                                    if (i == 0){
+                                        Cons.SELECTED_EVENT_ID = Integer.parseInt(data.getString("id"));
+                                    }
 
                                     id = data.getString("id").toString().trim();
                                     event = data.getString("event").toString().trim();
@@ -244,24 +253,42 @@ public class ParticipantFragment extends Fragment {
 
                                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                 sp.setAdapter(arrayAdapter);
+
+                                //do not load if event index status = true
+                                if(Cons.SELECTED_EVENT_INDEX_STATUS == true) {
+                                    sp.setSelection(Cons.SELECTED_EVENT_INDEX, false);
+                                    load(Cons.SELECTED_EVENT_ID);
+                                    Cons.SELECTED_EVENT_INDEX_STATUS = false;
+                                }else{
+                                    load(Cons.SELECTED_EVENT_ID);
+                                }
                             }
 
-                            if (pDialog.isShowing()) pDialog.dismiss();
+                            pb.setVisibility(ProgressBar.GONE);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                        }finally {
+                            pb.setVisibility(ProgressBar.GONE);
                         }
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                // TODO Auto-generated method stub
-                Log.d("Members ", error.toString());
+                pb.setVisibility(ProgressBar.GONE);
 
-                Toast.makeText(getContext(),
-                        error.toString(),
-                        Toast.LENGTH_SHORT).show();
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) { //time out or there is no connection
+                    Toast.makeText(getContext(), R.string.time_out_try_again, Toast.LENGTH_SHORT).show();
+                } else if (error instanceof AuthFailureError) { //there was an Authentication Failure
+                    Toast.makeText(getContext(), R.string.auth_failed, Toast.LENGTH_SHORT).show();
+                } else if (error instanceof ServerError) { //server responded with a error response
+                    Toast.makeText(getContext(), R.string.server_problem, Toast.LENGTH_SHORT).show();
+                } else if (error instanceof NetworkError) {//network error while performing the request
+                    Toast.makeText(getContext(), R.string.please_check_your_connection, Toast.LENGTH_SHORT).show();
+                } else if (error instanceof ParseError) {//the server response could not be parsed
+                    Toast.makeText(getContext(), R.string.reading_data_failed, Toast.LENGTH_SHORT).show();
+                }
 
             }
         });

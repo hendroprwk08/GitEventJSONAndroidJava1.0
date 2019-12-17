@@ -1,6 +1,7 @@
 package com.hendropurwoko.eventmanagement;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
@@ -61,12 +63,21 @@ class UserAdapter extends RecyclerView.Adapter<UserAdapter.CardViewHolder> {
         cardViewHolder.tv_type.setText(type);
 
         cardViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            EditText et_username, et_email, et_phone, et_password;
-            Spinner sp_active, sp_type;
 
             @Override
             public void onClick(View view) {
+                Bundle b = new Bundle();
+                b.putString("busername", username);
+                b.putString("bemail", email);
+                b.putString("bphone", phone);
+                b.putString("bactive", active);
+                b.putString("btype", type);
 
+                UserFormFragment fragment = new UserFormFragment("edit");
+                fragment.setArguments(b);
+                ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.fl_container, fragment).commit();
+
+                MainAppActivity.hideBar();
             }
         });
     }

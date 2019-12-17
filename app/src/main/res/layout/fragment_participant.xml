@@ -11,20 +11,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/sp_participant"
-        android:layout_marginTop="@dimen/layout_8"/>
+        android:layout_marginTop="@dimen/layout_8"
+        android:layout_marginLeft="@dimen/layout_10"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_jumlah"
         android:layout_marginLeft="@dimen/layout_10"
-        android:layout_marginBottom="@dimen/layout_10"
         android:textAlignment="textEnd"
         android:layout_gravity="end"
         android:layout_marginRight="@dimen/layout_10"
+        android:layout_marginBottom="10dp"
         android:text="@string/no_participant"
         android:textColor="@color/white"
+        android:textSize="@dimen/layout_10"
         android:background="@drawable/textviewbluercorner"/>
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_5"
+        android:id="@+id/pb"
+        android:indeterminate="true"
+        android:visibility="gone"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -35,7 +45,9 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/layout_10"
+            android:paddingBottom="@dimen/layout_15"
+            android:paddingLeft="@dimen/layout_15"
+            android:paddingRight="@dimen/layout_15"
             android:id="@+id/rv_participants">
 
         </androidx.recyclerview.widget.RecyclerView>

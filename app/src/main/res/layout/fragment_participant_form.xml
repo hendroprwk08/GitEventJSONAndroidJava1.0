@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ParticipantFormFragment"
+    android:padding="@dimen/layout_15"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_participans"
+                android:textAllCaps="true"
+                android:textColor="@color/grey"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/layout_20"
+                android:layout_marginBottom="@dimen/layout_20"
+                android:textSize="@dimen/layout_30"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/greyedittextrcorner"
+                android:layout_marginBottom="@dimen/layout_5"
+                android:layout_marginTop="@dimen/layout_5"
+                android:id="@+id/et_form_member_name"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Institution"/>
+
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:background="@drawable/greyedittextrcorner"
+                android:layout_marginBottom="@dimen/layout_5"
+                android:layout_marginTop="@dimen/layout_5"
+
+                android:id="@+id/et_form_member_institution"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Whatsapp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Phone"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/et_form_member_whatsapp"
+                    android:inputType="phone"
+                    android:background="@drawable/greyedittextrcorner"
+                    android:layout_marginBottom="@dimen/layout_5"
+                    android:layout_marginTop="@dimen/layout_5"
+                    android:layout_marginRight="@dimen/layout_5"
+                    android:layout_weight="1"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/et_form_member_phone"
+                    android:inputType="phone"
+                    android:background="@drawable/greyedittextrcorner"
+                    android:layout_marginBottom="@dimen/layout_5"
+                    android:layout_marginTop="@dimen/layout_5"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Email"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="Active"/>
+
+            </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_form_member_email"
+                android:background="@drawable/greyedittextrcorner"
+                android:layout_marginBottom="@dimen/layout_5"
+                android:layout_marginTop="@dimen/layout_5"
+                android:layout_marginRight="@dimen/layout_5"
+                android:layout_weight="1"
+                android:inputType="textEmailAddress"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sp_form_member_active"
+                android:entries="@array/yes_no"
+                android:layout_weight="3"
+                android:background="@drawable/greyedittextrcorner"
+                android:layout_marginBottom="@dimen/layout_5"
+                android:layout_marginTop="@dimen/layout_5"
+                android:layout_marginRight="@dimen/layout_5"/>
+
+        </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/layout_20"
+                android:layout_marginBottom="@dimen/layout_20"
+                android:id="@+id/ll_new">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layout_40"
+                    android:text="@string/save"
+                    android:id="@+id/bt_form_user_save"
+                    android:textColor="@color/colorPrimary"
+                    android:background="@drawable/orangercorner"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/layout_20"
+                android:layout_marginBottom="@dimen/layout_20"
+                android:id="@+id/ll_edit">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layout_40"
+                    android:text="@string/update"
+                    android:id="@+id/bt_form_user_update"
+                    android:textColor="@color/colorPrimary"
+                    android:background="@drawable/orangercorner"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layout_40"
+                    android:text="@string/hide"
+                    android:id="@+id/bt_form_user_delete"
+                    android:textColor="@color/grey"
+                    android:background="@color/transparent"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_5"
+                android:id="@+id/pb"
+                android:indeterminate="true"
+                android:visibility="gone"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

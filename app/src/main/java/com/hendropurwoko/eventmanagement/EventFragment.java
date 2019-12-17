@@ -43,7 +43,7 @@ public class EventFragment extends Fragment {
     View fragment_view;
     private SwipeRefreshLayout swipeContainer;
     public List<Event> events;
-    ProgressDialog pDialog;
+    ProgressBar pb;
 
     public EventFragment() { }
 
@@ -52,9 +52,9 @@ public class EventFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_event, container, false);
-
         fragment_view = view;
 
+        pb = (ProgressBar) view.findViewById(R.id.pb);
 
         // Lookup the swipe container view
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.eventSwipeRefreshLayout);
@@ -83,13 +83,13 @@ public class EventFragment extends Fragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
+        load();
+
         return view;
     }
 
     void load() {
-        pDialog.setTitle("Loading...");
-        pDialog.setMessage("Getting events data");
-        pDialog.show();
+        pb.setVisibility(ProgressBar.VISIBLE);
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
         String url = Cons.BASE_URL +"event.php?action=4";
@@ -103,7 +103,7 @@ public class EventFragment extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         //Log.d("Events: ", response.toString());
-                        String id, event, description, date, time;
+                        String id, event, description, date, time, visible;
                         events = new ArrayList<>();
 
                         try {
@@ -118,9 +118,10 @@ public class EventFragment extends Fragment {
                                     event = data.getString("event").toString().trim();
                                     description = data.getString("description").toString().trim();
                                     date = data.getString("date").toString().trim();
-                                    time = data.getString("time").toString().trim();
+                                    time = data.getString("time").toString().trim().substring(0, 5);
+                                    visible = data.getString("visible").toString().trim();
 
-                                    events.add(new Event(id, event, description, date, time));
+                                    events.add(new Event(id, event, description, date, time, visible));
                                 }
 
                                 RecyclerView recyclerView = (RecyclerView) fragment_view.findViewById(R.id.rv_events);
@@ -130,19 +131,19 @@ public class EventFragment extends Fragment {
                                 recyclerView.setAdapter(mAdapter);
                                 recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-                                if (pDialog.isShowing()) pDialog.dismiss();
+                                pb.setVisibility(ProgressBar.GONE);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }finally {
-                            if (pDialog.isShowing()) pDialog.dismiss();
+                            pb.setVisibility(ProgressBar.GONE);
                         }
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (pDialog.isShowing()) pDialog.dismiss();
+                pb.setVisibility(ProgressBar.GONE);
 
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) { //time out or there is no connection
                     Toast.makeText(getContext(), R.string.time_out_try_again, Toast.LENGTH_SHORT).show();
@@ -154,17 +155,12 @@ public class EventFragment extends Fragment {
                     Toast.makeText(getContext(), R.string.please_check_your_connection, Toast.LENGTH_SHORT).show();
                 } else if (error instanceof ParseError) {//the server response could not be parsed
                     Toast.makeText(getContext(), R.string.reading_data_failed, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), R.string.server_problem, Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
         queue.add(jsObjRequest);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        pDialog = new ProgressDialog(getContext());
-        load();
     }
 }

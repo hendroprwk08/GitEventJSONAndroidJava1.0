@@ -1,21 +1,23 @@
 package com.hendropurwoko.eventmanagement;
 
 public class Event {
-    String id, event, description, date, time;
+    String id, event, description, date, time, visible;
 
-    Event(String id, String event, String description, String date, String time) {
+    public Event(String id, String event, String description, String date, String time, String visible) {
         this.id = id;
         this.event = event;
         this.description = description;
         this.date = date;
         this.time = time;
+        this.visible = visible;
     }
 
-    Event(String event, String description, String date, String time) {
+    public Event(String event, String description, String date, String time, String visible) {
         this.event = event;
         this.description = description;
         this.date = date;
         this.time = time;
+        this.visible = visible;
     }
 
     public String getId() {
@@ -56,5 +58,13 @@ public class Event {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getVisible() {
+        return visible;
+    }
+
+    public void setVisible(String visible) {
+        this.visible = visible;
     }
 }

@@ -1,24 +1,26 @@
 package com.hendropurwoko.eventmanagement;
 
 public class Participant {
-    String id, name, institution, whatsapp, phone, email, input;
+    String id, name, institution, whatsapp, phone, email, active, input;
 
-    Participant(String id, String name, String institution, String whatsapp, String phone, String email, String input) {
+    public Participant(String id, String name, String institution, String whatsapp, String phone, String email, String active, String input) {
         this.id = id;
         this.name = name;
         this.institution = institution;
         this.whatsapp = whatsapp;
         this.phone = phone;
         this.email = email;
+        this.active = active;
         this.input = input;
     }
 
-    Participant(String name, String institution, String whatsapp, String phone, String email, String input) {
+    public Participant(String name, String institution, String whatsapp, String phone, String email, String active, String input) {
         this.name = name;
         this.institution = institution;
         this.whatsapp = whatsapp;
         this.phone = phone;
         this.email = email;
+        this.active = active;
         this.input = input;
     }
 
@@ -68,6 +70,14 @@ public class Participant {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(String active) {
+        this.active = active;
     }
 
     public String getInput() {

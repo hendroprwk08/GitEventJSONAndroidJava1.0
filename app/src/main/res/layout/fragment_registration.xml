@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EventFragment"
+    tools:context=".RegistrationFragment"
     android:orientation="vertical">
 
     <ProgressBar
@@ -14,19 +14,9 @@
         android:visibility="gone"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
 
-    <!-- TODO: Update blank fragment layout -->
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <WebView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/eventSwipeRefreshLayout">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/layout_15"
-            android:id="@+id/rv_events">
-
-        </androidx.recyclerview.widget.RecyclerView>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        android:id="@+id/web_view"/>
 
 </LinearLayout>

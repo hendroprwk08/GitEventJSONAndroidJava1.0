@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:background="@drawable/greyrcorner"
     android:padding="@dimen/layout_10"
+    android:foreground="?attr/selectableItemBackground"
     android:layout_marginBottom="@dimen/layout_5">
 
     <TextView

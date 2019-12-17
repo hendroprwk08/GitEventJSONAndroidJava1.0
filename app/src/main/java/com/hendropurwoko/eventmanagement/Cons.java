@@ -3,4 +3,8 @@ package com.hendropurwoko.eventmanagement;
 public class Cons {
     public static String BASE_URL = "http://event-lcc-me.000webhostapp.com/";
     public static String TAG = R.string.app_name +"_DEBUG";
+    public static int SELECTED_EVENT_ID;
+    public static int SELECTED_EVENT_INDEX ;
+    public static boolean SELECTED_EVENT_INDEX_STATUS = false;
+    public static String LAST_FRAGMENT;
 }

@@ -1,14 +1,17 @@
 package com.hendropurwoko.eventmanagement;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
@@ -45,7 +48,7 @@ class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.CardVie
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CardViewHolder cardViewHolder, int i) {
+    public void onBindViewHolder(@NonNull CardViewHolder holder, int i) {
         pos = i;
 
         final String id = list.get(i).getId();
@@ -54,19 +57,37 @@ class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.CardVie
         final String whatsapp = list.get(i).getWhatsapp();
         final String phone = list.get(i).getPhone();
         final String email = list.get(i).getEmail();
+        final String active = list.get(i).getActive();
         final String input = list.get(i).getInput();
 
-        cardViewHolder.tv_name.setText(name);
-        cardViewHolder.tv_institution.setText(institution);
-        cardViewHolder.tv_phone.setText(phone);
-        cardViewHolder.tv_input.setText(input);
+        holder.tv_name.setText(name);
+        holder.tv_institution.setText(institution);
+        holder.tv_phone.setText(phone);
+        holder.tv_input.setText(input);
 
-        cardViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+        if (active.equals("No")){
+            holder.ll.setBackgroundResource(R.drawable.redpastelrcorner);
+        }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             TextView d_tv_name, d_tv_institution, d_tv_phone, d_tv_whatsapp, d_tv_email;
 
             @Override
             public void onClick(View view) {
+                Bundle b = new Bundle();
+                b.putString("bid", id);
+                b.putString("bname", name);
+                b.putString("binstitution", institution);
+                b.putString("bemail", email);
+                b.putString("bphone", phone);
+                b.putString("bwhatsapp", whatsapp);
+                b.putString("bactive", active);
 
+                ParticipantFormFragment fragment = new ParticipantFormFragment("edit");
+                fragment.setArguments(b);
+                ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.fl_container, fragment).commit();
+
+                MainAppActivity.hideBar();
             }
         });
     }
@@ -78,6 +99,7 @@ class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.CardVie
 
     public class CardViewHolder extends RecyclerView.ViewHolder {
         TextView tv_name, tv_institution, tv_phone, tv_input;
+        LinearLayout ll;
 
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -85,6 +107,7 @@ class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.CardVie
             tv_institution = (TextView) itemView.findViewById(R.id.tv_rv_campus);
             tv_phone = (TextView) itemView.findViewById(R.id.tv_rv_phone);
             tv_input = (TextView) itemView.findViewById(R.id.tv_rv_input);
+            ll = (LinearLayout) itemView.findViewById(R.id.wrap);
         }
     }
 
