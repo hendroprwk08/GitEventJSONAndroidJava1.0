@@ -136,7 +136,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/pb_login"
-            android:visibility="gone"
+            android:layout_marginTop="@dimen/layout_10"
             android:indeterminate="true"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
 
