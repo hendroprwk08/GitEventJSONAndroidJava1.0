@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -40,7 +41,8 @@ import java.net.URLEncoder;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    EditText etUsername, etPassword;
+    LinearLayout llLogin, llRegistration;
+    EditText etUsername, etPassword, etEmail, etRegisEmail, etRegisPassword, etRegisUsername;
     ProgressBar pb;
 
     @Override
@@ -50,21 +52,28 @@ public class LoginActivity extends AppCompatActivity {
 
         hide();
 
-        pb = (ProgressBar) findViewById(R.id.pb_login);
+        pb = (ProgressBar) findViewById(R.id.pb);
 
-        etUsername = (EditText) findViewById(R.id.login_et_email);
+        etUsername = (EditText) findViewById(R.id.login_et_username);
         etPassword = (EditText) findViewById(R.id.login_et_password);
+        etEmail = (EditText) findViewById(R.id.regis_et_email);
+        etRegisPassword = (EditText) findViewById(R.id.regis_et_password);
+
+        llLogin = (LinearLayout) findViewById(R.id.ll_login);
+        llRegistration = (LinearLayout) findViewById(R.id.ll_registration);
 
         final Button btLogin = (Button) findViewById(R.id.login_bt_login);
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(LoginActivity.this, MainAppActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY); //close login activity
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                finish();
 
-                getApplicationContext().startActivity(i);
+                if (etUsername.getText().length() == 0 || etUsername.getText().length() == 0){
+                    Toast.makeText(getBaseContext(), "Lengkapi data", Toast.LENGTH_SHORT).show();
+                } else
+                {
+                    login(etUsername.getText().toString().trim(),
+                            etPassword.getText().toString().trim());
+                }
             }
         });
 
@@ -72,13 +81,20 @@ public class LoginActivity extends AppCompatActivity {
         btSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login(etUsername.getText().toString().trim(),
-                        etPassword.getText().toString().trim());
-
-
+                Toast.makeText(getBaseContext(), "Fitur ini sedang dikerjakan", Toast.LENGTH_SHORT).show();
+                llRegistration.setVisibility(LinearLayout.VISIBLE);
+                llLogin.setVisibility(LinearLayout.GONE);
             }
         });
 
+        final Button btBack = (Button) findViewById(R.id.regis_bt_back);
+        btBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                llLogin.setVisibility(LinearLayout.VISIBLE);
+                llRegistration.setVisibility(LinearLayout.GONE);
+            }
+        });
     }
 
     private void hide() {
@@ -110,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             String email = null, type = null, username = null, status = response.optString("status").trim();
 
+                            if(response.optString("status") == "1") {
                                 JSONArray jsonArray = null;
                                 try {
                                     jsonArray = response.getJSONArray("result");
@@ -120,21 +137,25 @@ public class LoginActivity extends AppCompatActivity {
                                         username = response.optString("status").trim();
                                     }
 
-                                    if (status.equals("0")){
+                                    if (status.equals("0")) {
                                         Toast.makeText(getBaseContext(), "Login failed!", Toast.LENGTH_SHORT).show();
-                                    }else if (status.equals("1")){
+                                    } else if (status.equals("1")) {
                                         saveSharedPreferences(email, type, username);
 
-                                        //buka main
-                                        Intent i = new Intent(LoginActivity.this, RegistrationActivity.class);
+                                        //buka main app
+                                        Intent i = new Intent(LoginActivity.this, MainAppActivity.class);
+                                        i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY); //close login activity
                                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                         getApplicationContext().startActivity(i);
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
+                            }else{
+                                Toast.makeText(getBaseContext(), "Login gagal!\nData tak ditemukan", Toast.LENGTH_SHORT).show();
+                            }
 
-                                pb.setVisibility(ProgressBar.GONE);
+                            pb.setVisibility(ProgressBar.GONE);
                         }
                     }, new Response.ErrorListener() {
 

@@ -9,9 +9,6 @@
     android:background="@color/colorPrimary"
     tools:context=".LoginActivity">
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,13 +32,13 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
             <EditText
-                android:id="@+id/login_et_email"
+                android:id="@+id/login_et_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/layout_15"
                 android:background="@drawable/greyedittextrcorner"
                 android:layout_marginTop="@dimen/layout_5"
-                android:hint="@string/email" />
+                android:hint="@string/username" />
 
             <EditText
                 android:id="@+id/login_et_password"
@@ -85,25 +82,45 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/ll_veri"
+            android:id="@+id/ll_registration"
             android:visibility="gone"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/verification"
+                android:text="@string/registration"
+                android:textAllCaps="true"
                 android:textColor="@color/grey"
                 android:textStyle="bold"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="@dimen/layout_30"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
             <EditText
-                android:id="@+id/login_et_code"
                 android:layout_width="match_parent"
+                android:hint="@string/username"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/layout_15"
-                android:hint="@string/your_code" />
+                android:background="@drawable/greyedittextrcorner"
+                android:id="@+id/regis_et_username"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:inputType="textEmailAddress"
+                android:hint="@string/email"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/layout_15"
+                android:background="@drawable/greyedittextrcorner"
+                android:id="@+id/regis_et_email"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="@string/password"
+                android:layout_marginBottom="@dimen/layout_15"
+                android:background="@drawable/greyedittextrcorner"
+                android:id="@+id/regis_et_password"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -114,19 +131,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/back"
-                    android:id="@+id/login_bt_back"
-                    android:textColor="@color/blue"
+                    android:layout_weight="1"
+                    android:textColor="@color/grey"
                     android:background="@color/transparent"
-                    android:layout_weight="1"/>
+                    android:id="@+id/regis_bt_back"/>
 
                 <Button
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/confirm"
-                    android:textColor="@color/colorAccent"
-                    android:background="@color/transparent"
-                    android:id="@+id/login_bt_confirm"
-                    android:layout_weight="1"/>
+                    android:layout_height="@dimen/layout_40"
+                    android:text="@string/sign_up"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:background="@drawable/orangercorner"
+                    android:id="@+id/regis_bt_sign_up"/>
 
             </LinearLayout>
 
@@ -135,8 +152,9 @@
         <ProgressBar
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/pb_login"
+            android:id="@+id/pb"
             android:layout_marginTop="@dimen/layout_10"
+            android:visibility="gone"
             android:indeterminate="true"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
 

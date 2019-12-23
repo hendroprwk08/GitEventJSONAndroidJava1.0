@@ -31,6 +31,7 @@
     <string name="user">User</string>
     <string name="server_problem">Server problem</string>
     <string name="hide">Hide</string>
+    <string name="username">Username</string>
 
     <string-array name="yes_no">
         <item>No</item>
