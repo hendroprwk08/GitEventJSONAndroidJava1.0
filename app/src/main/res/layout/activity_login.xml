@@ -32,13 +32,13 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
             <EditText
-                android:id="@+id/login_et_username"
+                android:id="@+id/login_et_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/layout_15"
                 android:background="@drawable/greyedittextrcorner"
                 android:layout_marginTop="@dimen/layout_5"
-                android:hint="@string/username" />
+                android:hint="@string/email" />
 
             <EditText
                 android:id="@+id/login_et_password"
@@ -74,6 +74,59 @@
                     android:background="@color/transparent"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:layout_weight="1"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ll_verification"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/verification"
+                android:textAllCaps="true"
+                android:textColor="@color/grey"
+                android:textStyle="bold"
+                android:layout_marginBottom="30dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+            <EditText
+                android:id="@+id/veri_et_vericode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/layout_15"
+                android:background="@drawable/greyedittextrcorner"
+                android:layout_marginTop="@dimen/layout_5"
+                android:hint="@string/type_your_code" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/back"
+                    android:layout_weight="2"
+                    android:textColor="@color/grey"
+                    android:background="@color/transparent"
+                    android:id="@+id/veri_bt_back"/>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layout_40"
+                    android:text="@string/confirm_this_code"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:background="@drawable/orangercorner"
+                    android:id="@+id/veri_bt_confirm"/>
 
             </LinearLayout>
 

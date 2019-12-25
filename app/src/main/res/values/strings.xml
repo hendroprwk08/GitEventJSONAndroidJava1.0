@@ -7,7 +7,6 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="sign_up">Sign Up</string>
-    <string name="verification">Verification</string>
     <string name="your_code">Your Code</string>
     <string name="back">Back</string>
     <string name="confirm">Cofirm</string>
@@ -32,6 +31,9 @@
     <string name="server_problem">Server problem</string>
     <string name="hide">Hide</string>
     <string name="username">Username</string>
+    <string name="verification">Verification</string>
+    <string name="type_your_code">Type your code</string>
+    <string name="confirm_this_code">Confirm this code</string>
 
     <string-array name="yes_no">
         <item>No</item>
