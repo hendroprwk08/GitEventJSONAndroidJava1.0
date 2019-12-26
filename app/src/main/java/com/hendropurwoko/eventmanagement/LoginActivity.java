@@ -115,6 +115,15 @@ public class LoginActivity extends AppCompatActivity {
                         etLoginEmail.getText().toString().trim());
             }
         });
+
+        //cek shared preferences
+        if(cekSharedPreferences()){
+            //buka main app
+            Intent i = new Intent(LoginActivity.this, MainAppActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY); //close login activity
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getApplicationContext().startActivity(i);
+        }
     }
 
     private void hide() {
@@ -306,6 +315,14 @@ public class LoginActivity extends AppCompatActivity {
 
             pb.setVisibility(ProgressBar.GONE);
         }
+    }
+
+    private boolean cekSharedPreferences() {
+        SharedPreferences mPrefs = getSharedPreferences("em",0);
+        String str = mPrefs.getString("sp_email", "");
+
+        if (str.length() != 0) return true;
+        return false;
     }
 
     private void saveSharedPreferences(String email, String type, String username) {

@@ -98,6 +98,12 @@ public class MainAppActivity extends AppCompatActivity {
                         loadFragment(fragment);
                         ACTIVE_FRAGMENT = "participant";
                         return true;
+                    case R.id.menu_profile:
+                        LAST_FRAGMENT = fragment;
+                        fragment = new ProfileFragment();
+                        loadFragment(fragment);
+                        ACTIVE_FRAGMENT = "profile";
+                        return true;
                 }
 
                 return false;

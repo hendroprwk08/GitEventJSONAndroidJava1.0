@@ -12,4 +12,5 @@
     <dimen name="layout_50">50dp</dimen>
     <dimen name="layout_30">30dp</dimen>
     <dimen name="layout_40">40dp</dimen>
+    <dimen name="layout_150">150dp</dimen>
 </resources>
