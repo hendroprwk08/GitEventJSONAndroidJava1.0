@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     LinearLayout llLogin, llRegistration, llVerification;
     EditText etPassword, etLoginEmail, etRegisEmail, etRegisPassword, etRegisUsername, etVerification;
     ProgressBar pb;
+    SharedPref sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,9 +117,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+         sp = new SharedPref(getBaseContext());
+
         //cek shared preferences
-        if(cekSharedPreferences()){
+        if(sp.cekSharedPreferences()){
             //buka main app
+            Toast.makeText(getBaseContext(), "Login info registered", Toast.LENGTH_SHORT).show();
+
             Intent i = new Intent(LoginActivity.this, MainAppActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY); //close login activity
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -158,32 +163,6 @@ public class LoginActivity extends AppCompatActivity {
 
                                 llLogin.setVisibility(LinearLayout.GONE);
                                 llVerification.setVisibility(LinearLayout.VISIBLE);
-
-                                /*JSONArray jsonArray = null;
-                                try {
-                                    jsonArray = response.getJSONArray("result");
-
-                                    if (jsonArray.length() != 0) {
-                                        email = response.optString("status").trim();
-                                        type = response.optString("status").trim();
-                                        username = response.optString("status").trim();
-                                    }
-
-                                    if (status.equals("0")) {
-                                        Toast.makeText(getBaseContext(), "Login failed!", Toast.LENGTH_SHORT).show();
-                                    } else if (status.equals("1")) {
-                                        saveSharedPreferences(email, type, username);
-
-
-                                        /*buka main app
-                                        Intent i = new Intent(LoginActivity.this, MainAppActivity.class);
-                                        i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY); //close login activity
-                                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        getApplicationContext().startActivity(i);
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }*/
                             }else{
                                 Toast.makeText(getBaseContext(), "Login gagal!\nData tak ditemukan", Toast.LENGTH_SHORT).show();
                             }
@@ -248,7 +227,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
                             Log.d("Save: ", response.toString());
-                            String email = null, type = null, username = null, status = response.optString("status").trim();
+                            String email = null, type = null, username = null, foto = null, status = response.optString("status").trim();
 
                             if(status.equals("1")) {
                                 JSONArray jsonArray = null;
@@ -259,8 +238,9 @@ public class LoginActivity extends AppCompatActivity {
                                     email = data.getString("email").toString().trim();
                                     type = data.getString("type").toString().trim();
                                     username = data.getString("username").trim();
+                                    foto = data.getString("foto").trim();
 
-                                    saveSharedPreferences(email, type, username);
+                                    sp.saveSharedPreferences(email, type, username, foto);
 
                                     //buka main app
                                     Intent i = new Intent(LoginActivity.this, MainAppActivity.class);
@@ -317,21 +297,5 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private boolean cekSharedPreferences() {
-        SharedPreferences mPrefs = getSharedPreferences("em",0);
-        String str = mPrefs.getString("sp_email", "");
 
-        if (str.length() != 0) return true;
-        return false;
-    }
-
-    private void saveSharedPreferences(String email, String type, String username) {
-        SharedPreferences mSharedPreferences = getSharedPreferences("em", Context.MODE_PRIVATE);
-        SharedPreferences.Editor mEditor = mSharedPreferences.edit();
-        mEditor.putString("sp_email", email);
-        mEditor.putString("sp_type", type);
-        mEditor.putString("sp_username", username);
-        mEditor.commit();
-        mEditor.apply();
-    }
 }

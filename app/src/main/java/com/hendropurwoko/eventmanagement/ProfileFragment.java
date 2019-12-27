@@ -20,6 +20,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,8 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.BitSet;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static android.app.Activity.RESULT_OK;
 
 
@@ -64,10 +67,12 @@ public class ProfileFragment extends Fragment {
     final static int IMAGE_PICK_CODE = 1000;
     final static int PERMISSION_CODE = 1001;
 
-    ImageView iv;
+    CircleImageView iv;
     Button btUpload;
-    String email;
+    String email, foto;
     ProgressDialog progressDialog;
+
+    SharedPref sp;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,75 +85,58 @@ public class ProfileFragment extends Fragment {
         progressDialog.setMax(100);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 
-        iv = (ImageView) view.findViewById(R.id.iv_profile);
+        iv = (CircleImageView) view.findViewById(R.id.iv_profile);
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //check runtime permission
                 //use DEXTER
                 Dexter.withActivity(getActivity())
-                        .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                        .withListener(new PermissionListener() {
-                            @Override
-                            public void onPermissionGranted(PermissionGrantedResponse response) {
-                                // start picker to get image for cropping and then use the image in cropping activity
-                                CropImage.activity()
-                                        .setGuidelines(CropImageView.Guidelines.ON)
-                                        .start(getContext(), ProfileFragment.this); //<----- untuk fragment
-                                        //.start(getActivity()); <-- untuk activity
-                            }
+                    .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    .withListener(new PermissionListener() {
+                        @Override
+                        public void onPermissionGranted(PermissionGrantedResponse response) {
+                            // start picker to get image for cropping and then use the image in cropping activity
+                            CropImage.activity()
+                                .setGuidelines(CropImageView.Guidelines.ON)
+                                .start(getContext(), ProfileFragment.this); //<----- untuk fragment
+                                //.start(getActivity()); <-- untuk activity
+                        }
 
-                            @Override
-                            public void onPermissionDenied(PermissionDeniedResponse response) {
-                                if (response.isPermanentlyDenied()){
-                                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-                                    alertDialogBuilder.setMessage("Permission is required to access your images");
-                                    alertDialogBuilder.setPositiveButton("Yes, sure",
-                                            new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface arg0, int arg1) {
-                                                    //tidak diijinkan, minta ijin
-                                                    String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                        @Override
+                        public void onPermissionDenied(PermissionDeniedResponse response) {
+                            if (response.isPermanentlyDenied()){
+                                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                                alertDialogBuilder.setMessage("Permission is required to access your images");
+                                alertDialogBuilder.setPositiveButton("Yes, sure",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface arg0, int arg1) {
+                                            //tidak diijinkan, minta ijin
+                                            String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
 
-                                                    //show popup permission
-                                                    requestPermissions(permission, PERMISSION_CODE);
-                                                }
-                                            });
-
-                                    alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
+                                            //show popup permission
+                                            requestPermissions(permission, PERMISSION_CODE);
                                         }
                                     });
 
-                                    AlertDialog alertDialog = alertDialogBuilder.create();
-                                    alertDialog.show();
-                                }
+                                alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+
+                                AlertDialog alertDialog = alertDialogBuilder.create();
+                                alertDialog.show();
                             }
+                        }
 
-                            @Override
-                            public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-                                token.continuePermissionRequest();
-                            }
-                        })
-                        .check();
-
-                /* OLD WAYS
-                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE ) ==
-                            PackageManager.PERMISSION_DENIED){
-                        //tidak diijinkan, minta ijin
-                        String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
-
-                        //show popup permission
-                        requestPermissions(permission, PERMISSION_CODE);
-                    }else{
-                       //sudah granted
-                        pickImageFromGallery();
-                    }
-                }else{
-                    //os < Marshmallow
-                }*/
+                        @Override
+                        public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                            token.continuePermissionRequest();
+                        }
+                    })
+                    .check();
             }
         });
 
@@ -159,21 +147,21 @@ public class ProfileFragment extends Fragment {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                 alertDialogBuilder.setMessage("Are you sure want to logout");
                 alertDialogBuilder.setPositiveButton("Yes, sure",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                //remove share preferences
-                                clearPreferences();
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            //remove share preferences
+                            sp.clearPreferences();
 
-                                if (!cekSharedPreferences()) {
-                                    Intent i = new Intent(getActivity(), LoginActivity.class);
-                                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    getActivity().startActivity(i);
-                                }else{
-                                    Toast.makeText(getActivity(), "Gagal", Toast.LENGTH_SHORT).show();
-                                }
+                            if (!sp.cekSharedPreferences()) {
+                                Intent i = new Intent(getActivity(), LoginActivity.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                getActivity().startActivity(i);
+                            }else{
+                                Toast.makeText(getActivity(), "Gagal", Toast.LENGTH_SHORT).show();
                             }
-                        });
+                        }
+                    });
 
                 alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -189,11 +177,24 @@ public class ProfileFragment extends Fragment {
         final EditText etUsername = (EditText) view.findViewById(R.id.et_profile_username);
         final EditText etEmail = (EditText) view.findViewById(R.id.et_profile_email);
 
+        sp = new SharedPref(getContext());
+
         //ambil SP
-        if (cekSharedPreferences()) {
+        if (sp.cekSharedPreferences()) {
             SharedPreferences mSharedPreferences = getActivity().getSharedPreferences("em", Context.MODE_PRIVATE);
 
-            email = mSharedPreferences.getString("sp_email", "0");
+            email = mSharedPreferences.getString("sp_email", null);
+            foto = mSharedPreferences.getString("sp_foto", null);
+
+            if (foto != null) { //kalo ada gambar
+                String location = Cons.PHOTO_BASE_URL + foto;
+                Glide.with(getContext())
+                    .load(location)
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_person_grey_24dp)
+                    .into(iv);
+            }
+
             etUsername.setText(mSharedPreferences.getString("sp_username", ""));
             etEmail.setText(email);
         }
@@ -206,43 +207,20 @@ public class ProfileFragment extends Fragment {
         return  view;
     }
 
-    /*private void pickImageFromGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent, IMAGE_PICK_CODE);
-    }*/
-
-    //runtime permission
-    /*@Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
-            case PERMISSION_CODE : {
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    pickImageFromGallery();
-                }else{
-                    Toast.makeText(getContext(), "Permission denied", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }*/
-
     //catch result
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //super.onActivityResult(requestCode, resultCode, data);
-
-        /*if(resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE) {
-            Uri uri = data.getData();
-            iv.setImageURI(uri);
-        }*/
-
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 final Uri resultUri = result.getUri();
-                iv.setImageURI(resultUri); //view in image view
+
+                Glide.with(getContext())
+                    .load(resultUri.getPath())
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_person_grey_24dp)
+                    .into(iv);
+
                 btUpload.setVisibility(Button.VISIBLE);
                 btUpload.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -250,65 +228,58 @@ public class ProfileFragment extends Fragment {
                         File imageFile = new File(resultUri.getPath());
 
                         AndroidNetworking.upload(Cons.BASE_URL +"upload_file.php")
-                                .addMultipartFile("image",imageFile)
-                                .addMultipartParameter("em", email)
-                                .setTag("uploadTest")
-                                .setPriority(Priority.HIGH)
-                                .build()
-                                .setUploadProgressListener(new UploadProgressListener() {
-                                    @Override
-                                    public void onProgress(long bytesUploaded, long totalBytes) {
-                                        // show progress dialog
-                                        float progress = bytesUploaded / totalBytes * 100;
-                                        progressDialog.setProgress((int) progress);
-                                    }
-                                })
-                                .getAsString(new StringRequestListener() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        try {
-                                            progressDialog.dismiss();
-                                            JSONObject jsonObject = new JSONObject(response);
-                                            int status = jsonObject.getInt("status");
-                                            String message = jsonObject.getString("message");
+                            .addMultipartFile("image", imageFile)
+                            .addMultipartParameter("em", email)
+                            .addMultipartParameter("old", foto)
+                            .setTag("uploadTest")
+                            .setPriority(Priority.HIGH)
+                            .build()
+                            .setUploadProgressListener(new UploadProgressListener() {
+                                @Override
+                                public void onProgress(long bytesUploaded, long totalBytes) {
+                                    // show progress dialog
+                                    float progress = bytesUploaded / totalBytes * 100;
+                                    progressDialog.setProgress((int) progress);
+                                }
+                            })
+                            .getAsString(new StringRequestListener() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.d(Cons.TAG, "onResponse: "+ response);
+                                    try {
+                                        progressDialog.dismiss();
 
-                                            if(status == 0){
-                                                Toast.makeText(getContext(), "Unabled to upload image: " + message, Toast.LENGTH_SHORT).show();
-                                            }else{
-                                                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-                                            }
-                                        } catch (JSONException e) {
-                                            progressDialog.dismiss();
-                                            e.printStackTrace();
-                                            Toast.makeText(getContext(), "Parsing error", Toast.LENGTH_SHORT).show();
+                                        JSONObject jsonObject = new JSONObject(response);
+                                        int status = jsonObject.getInt("status");
+                                        String result = jsonObject.getString("result");
+
+                                        if(status == 0){
+                                            Toast.makeText(getContext(), "Unabled to upload image: " + result, Toast.LENGTH_SHORT).show();
+                                        }else{
+                                            Toast.makeText(getContext(), result +" uploaded", Toast.LENGTH_SHORT).show();
+
+                                            sp.updateSharedPreferences("sp_foto", result);
                                         }
-                                    }
 
-                                    @Override
-                                    public void onError(ANError anError) {
-                                        anError.printStackTrace();
-                                        Toast.makeText(getContext(), "Error uploading image", Toast.LENGTH_SHORT).show();
+                                        btUpload.setVisibility(Button.GONE);
+                                    } catch (JSONException e) {
+                                        progressDialog.dismiss();
+                                        e.printStackTrace();
+                                        Toast.makeText(getContext(), "Parsing error", Toast.LENGTH_SHORT).show();
                                     }
-                                });
+                                }
+
+                                @Override
+                                public void onError(ANError anError) {
+                                    anError.printStackTrace();
+                                    Toast.makeText(getContext(), "Error uploading image", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                     }
                 });
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
             }
         }
-    }
-
-    void clearPreferences(){
-        SharedPreferences mSharedPreferences = getActivity().getSharedPreferences("em", Context.MODE_PRIVATE);
-        SharedPreferences.Editor mEditor = mSharedPreferences.edit();
-        mEditor.clear().commit();
-    }
-
-    private boolean cekSharedPreferences() {
-        SharedPreferences mPrefs = getActivity().getSharedPreferences("em",0);
-        String str = mPrefs.getString("sp_email", "");
-
-        if (str.length() != 0) return true;
-        return false;
     }
 }
