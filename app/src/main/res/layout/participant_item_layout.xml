@@ -15,7 +15,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/tv_rv_name"
         android:text="NAME"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+        android:textSize="@dimen/text_16"
+        android:textStyle="bold"
+        android:textAllCaps="true"/>
+        <!-- android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>-->
 
     <LinearLayout
         android:layout_width="match_parent"

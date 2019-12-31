@@ -99,10 +99,12 @@ public class MainAppActivity extends AppCompatActivity {
                         ACTIVE_FRAGMENT = "participant";
                         return true;
                     case R.id.menu_profile:
+                        Cons.LAST_FRAGMENT = ACTIVE_FRAGMENT;
                         LAST_FRAGMENT = fragment;
                         fragment = new ProfileFragment();
                         loadFragment(fragment);
                         ACTIVE_FRAGMENT = "profile";
+                        hideBar();
                         return true;
                 }
 
@@ -139,7 +141,7 @@ public class MainAppActivity extends AppCompatActivity {
                         fragment = new UserFragment();
                     }else if (ACTIVE_FRAGMENT.equals("participant")) {
                         fragment = new ParticipantFragment();
-                    }else if (ACTIVE_FRAGMENT.equals("registration")) {
+                    }else if (ACTIVE_FRAGMENT.equals("registration") || ACTIVE_FRAGMENT.equals("profile")) {
                         if (Cons.LAST_FRAGMENT == "user") {
                             fragment = new UserFragment();
                         }else if (Cons.LAST_FRAGMENT ==  "participant") {

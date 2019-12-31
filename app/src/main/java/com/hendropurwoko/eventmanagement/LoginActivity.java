@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        final Button btSignUp = (Button) findViewById(R.id.login_bt_sign_up);
+        /*final Button btSignUp = (Button) findViewById(R.id.login_bt_sign_up);
         btSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                 llRegistration.setVisibility(LinearLayout.VISIBLE);
                 llLogin.setVisibility(LinearLayout.GONE);
             }
-        });
+        });*/
 
         final Button btBack = (Button) findViewById(R.id.regis_bt_back);
         btBack.setOnClickListener(new View.OnClickListener() {

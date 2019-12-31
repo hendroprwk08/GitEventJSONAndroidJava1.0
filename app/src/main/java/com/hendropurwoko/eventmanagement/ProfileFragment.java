@@ -27,6 +27,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -68,9 +70,10 @@ public class ProfileFragment extends Fragment {
     final static int PERMISSION_CODE = 1001;
 
     CircleImageView iv;
+    TextView tvProgress;
     Button btUpload;
     String email, foto;
-    ProgressDialog progressDialog;
+    ProgressBar pb;
 
     SharedPref sp;
 
@@ -79,11 +82,8 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
 
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Please wait");
-        progressDialog.setCancelable(false);
-        progressDialog.setMax(100);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        pb = (ProgressBar) view.findViewById(R.id.pb);
+        tvProgress = (TextView) view.findViewById(R.id.tv_progress);
 
         iv = (CircleImageView) view.findViewById(R.id.iv_profile);
         iv.setOnClickListener(new View.OnClickListener() {
@@ -227,6 +227,9 @@ public class ProfileFragment extends Fragment {
                     public void onClick(View v) {
                         File imageFile = new File(resultUri.getPath());
 
+                        pb.setVisibility(ProgressBar.VISIBLE);
+                        tvProgress.setVisibility(TextView.VISIBLE);
+
                         AndroidNetworking.upload(Cons.BASE_URL +"upload_file.php")
                             .addMultipartFile("image", imageFile)
                             .addMultipartParameter("em", email)
@@ -239,7 +242,8 @@ public class ProfileFragment extends Fragment {
                                 public void onProgress(long bytesUploaded, long totalBytes) {
                                     // show progress dialog
                                     float progress = bytesUploaded / totalBytes * 100;
-                                    progressDialog.setProgress((int) progress);
+                                    pb.setProgress((int) progress);
+                                    tvProgress.setText(progress+"/"+pb.getMax());
                                 }
                             })
                             .getAsString(new StringRequestListener() {
@@ -247,7 +251,8 @@ public class ProfileFragment extends Fragment {
                                 public void onResponse(String response) {
                                     Log.d(Cons.TAG, "onResponse: "+ response);
                                     try {
-                                        progressDialog.dismiss();
+                                        pb.setVisibility(ProgressBar.GONE);
+                                        tvProgress.setVisibility(TextView.GONE);
 
                                         JSONObject jsonObject = new JSONObject(response);
                                         int status = jsonObject.getInt("status");
@@ -263,7 +268,9 @@ public class ProfileFragment extends Fragment {
 
                                         btUpload.setVisibility(Button.GONE);
                                     } catch (JSONException e) {
-                                        progressDialog.dismiss();
+                                        pb.setVisibility(ProgressBar.GONE);
+                                        tvProgress.setVisibility(TextView.GONE);
+
                                         e.printStackTrace();
                                         Toast.makeText(getContext(), "Parsing error", Toast.LENGTH_SHORT).show();
                                     }

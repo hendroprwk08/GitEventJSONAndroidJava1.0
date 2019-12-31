@@ -42,4 +42,11 @@ class SharedPref {
         SharedPreferences.Editor mEditor = mSharedPreferences.edit();
         mEditor.clear().commit();
     }
+
+    public String getType(){
+        SharedPreferences mSharedPreferences = c.getSharedPreferences("em", Context.MODE_PRIVATE);
+        String type = mSharedPreferences.getString("sp_type", "");
+
+        return type;
+    }
 }

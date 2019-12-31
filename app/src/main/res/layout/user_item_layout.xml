@@ -20,7 +20,10 @@
             android:id="@+id/tv_rv_username"
             android:text="USERNAME"
             android:layout_weight="1"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+            android:textSize="@dimen/text_16"
+            android:textStyle="bold"
+            android:textAllCaps="true"/>
+            <!-- android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/> -->
 
         <TextView
             android:layout_width="match_parent"

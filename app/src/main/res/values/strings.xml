@@ -14,6 +14,7 @@
     <string name="title_events">Event</string>
     <string name="title_users">User</string>
     <string name="title_participans">Participant</string>
+    <string name="title_participant">Participant</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

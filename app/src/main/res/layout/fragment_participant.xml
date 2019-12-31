@@ -4,15 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ParticipantFragment"
+    android:padding="@dimen/layout_15"
     android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@color/grey"
+        android:text="@string/title_participant"/>
 
     <!-- TODO: Update blank fragment layout -->
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/sp_participant"
-        android:layout_marginTop="@dimen/layout_8"
-        android:layout_marginLeft="@dimen/layout_10"/>
+        android:layout_marginLeft="-10dp"
+        android:layout_marginRight="-10dp"
+        android:layout_marginTop="@dimen/layout_8"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -21,7 +31,6 @@
         android:layout_marginLeft="@dimen/layout_10"
         android:textAlignment="textEnd"
         android:layout_gravity="end"
-        android:layout_marginRight="@dimen/layout_10"
         android:layout_marginBottom="10dp"
         android:text="@string/no_participant"
         android:textColor="@color/white"
@@ -45,9 +54,6 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="@dimen/layout_15"
-            android:paddingLeft="@dimen/layout_15"
-            android:paddingRight="@dimen/layout_15"
             android:id="@+id/rv_participants">
 
         </androidx.recyclerview.widget.RecyclerView>

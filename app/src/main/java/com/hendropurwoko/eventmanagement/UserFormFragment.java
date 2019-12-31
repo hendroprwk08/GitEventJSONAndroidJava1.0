@@ -43,6 +43,8 @@ public class UserFormFragment extends Fragment {
     String ACTION;
     LinearLayout llAdd, llEdit;
     ProgressBar pb;
+    SharedPref sp;
+
 
     public UserFormFragment(String action) {
         this.ACTION = action;
@@ -97,6 +99,11 @@ public class UserFormFragment extends Fragment {
             @Override
             public void onClick(View v) {
             //kalo mau dapetin indexnya ---> String.valueOf(spActive.getSelectedItemPosition())
+            String t = sp.getType();
+            if (!t.equals("Admin")){
+                Toast.makeText(getContext(), "Maaf Anda tak berhak mengubah data", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             save(etUsername.getText().toString().trim(),
                 etPassword.getText().toString().trim(),
@@ -111,6 +118,12 @@ public class UserFormFragment extends Fragment {
         btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String t = sp.getType();
+                if (!t.equals("Admin")){
+                    Toast.makeText(getContext(), "Maaf Anda tak berhak mengubah data", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 update(etUsername.getText().toString().trim(),
                         etPassword.getText().toString().trim(),
                         etEmail.getText().toString().trim(),
@@ -120,14 +133,7 @@ public class UserFormFragment extends Fragment {
             }
         });
 
-        /* -- No deletion
-        final Button btDelete = (Button) view.findViewById(R.id.bt_form_user_delete);
-        btDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                delete(etUsername.getText().toString().trim());
-            }
-        });*/
+        sp = new SharedPref(getContext());
 
         return view;
     }
@@ -198,6 +204,12 @@ public class UserFormFragment extends Fragment {
     }
 
     void update(final String us, String pw,String em, String ph, String ac, String ty ){
+        //kalo mau dapetin indexnya ---> String.valueOf(spActive.getSelectedItemPosition())
+        if (!sp.getType().equals("Admin")){
+            Toast.makeText(getContext(), "Maaf Anda tak berhak mengubah data", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         try {
             String url = "http://event-lcc-me.000webhostapp.com/pengguna.php?action=2" +
                     "&username=" + URLEncoder.encode(us, "utf-8") +

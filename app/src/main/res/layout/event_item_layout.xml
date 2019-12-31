@@ -12,9 +12,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="EVENT"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:text="@string/title_events"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:textSize="@dimen/text_16"
         android:id="@+id/tv_event_event"/>
+        <!-- android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"-->
 
     <LinearLayout
         android:layout_width="match_parent"
