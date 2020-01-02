@@ -36,6 +36,7 @@
     <string name="type_your_code">Type your code</string>
     <string name="confirm_this_code">Confirm this code</string>
     <string name="profile">Profile</string>
+    <string name="new_password">New Password</string>
 
     <string-array name="yes_no">
         <item>No</item>

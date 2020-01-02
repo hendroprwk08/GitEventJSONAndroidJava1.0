@@ -75,6 +75,9 @@ public class ProfileFragment extends Fragment {
     String email, foto;
     ProgressBar pb;
 
+
+    AlertDialog.Builder dialog;
+
     SharedPref sp;
 
     @Override
@@ -204,6 +207,52 @@ public class ProfileFragment extends Fragment {
         //fast android networking
         AndroidNetworking.initialize(getContext());
 
+
+        final Button btChangePassword = (Button) view.findViewById(R.id.bt_profile_cpassword);
+        btChangePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog = new AlertDialog.Builder(getContext());
+                LayoutInflater = getLayoutInflater();
+                dialogView = inflater.inflate(R.layout.form_data, null);
+                dialog.setView(dialogView);
+                dialog.setCancelable(true);
+                dialog.setIcon(R.mipmap.ic_launcher);
+                dialog.setTitle("Form Biodata");
+
+                txt_nama    = (EditText) dialogView.findViewById(R.id.txt_nama);
+                txt_usia    = (EditText) dialogView.findViewById(R.id.txt_usia);
+                txt_alamat  = (EditText) dialogView.findViewById(R.id.txt_alamat);
+                txt_status = (EditText) dialogView.findViewById(R.id.txt_status);
+
+                kosong();
+
+                dialog.setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        nama    = txt_nama.getText().toString();
+                        usia    = txt_usia.getText().toString();
+                        alamat  = txt_alamat.getText().toString();
+                        status = txt_status.getText().toString();
+
+                        txt_hasil.setText("Nama : " + nama + "\n" + "Usia : " + usia + "\n" + "Alamat : " + alamat + "\n" + "Status : " + status);
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
+            }
+        });
+
         return  view;
     }
 
@@ -241,9 +290,9 @@ public class ProfileFragment extends Fragment {
                                 @Override
                                 public void onProgress(long bytesUploaded, long totalBytes) {
                                     // show progress dialog
-                                    float progress = bytesUploaded / totalBytes * 100;
-                                    pb.setProgress((int) progress);
-                                    tvProgress.setText(progress+"/"+pb.getMax());
+                                    pb.setMax((int) totalBytes);
+                                    pb.setProgress((int) bytesUploaded);
+                                    tvProgress.setText((int) bytesUploaded +"/"+ pb.getMax());
                                 }
                             })
                             .getAsString(new StringRequestListener() {
@@ -264,6 +313,7 @@ public class ProfileFragment extends Fragment {
                                             Toast.makeText(getContext(), result +" uploaded", Toast.LENGTH_SHORT).show();
 
                                             sp.updateSharedPreferences("sp_foto", result);
+                                            foto = result;
                                         }
 
                                         btUpload.setVisibility(Button.GONE);
