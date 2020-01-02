@@ -72,11 +72,13 @@ public class ProfileFragment extends Fragment {
     CircleImageView iv;
     TextView tvProgress;
     Button btUpload;
+    EditText etPassword;
+
     String email, foto;
     ProgressBar pb;
 
-
-    AlertDialog.Builder dialog;
+    AlertDialog.Builder alertDialog;
+    LayoutInflater inf;
 
     SharedPref sp;
 
@@ -211,45 +213,34 @@ public class ProfileFragment extends Fragment {
         final Button btChangePassword = (Button) view.findViewById(R.id.bt_profile_cpassword);
         btChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                dialog = new AlertDialog.Builder(getContext());
-                LayoutInflater = getLayoutInflater();
-                dialogView = inflater.inflate(R.layout.form_data, null);
-                dialog.setView(dialogView);
-                dialog.setCancelable(true);
-                dialog.setIcon(R.mipmap.ic_launcher);
-                dialog.setTitle("Form Biodata");
+            public void onClick(View view) {
+                alertDialog = new AlertDialog.Builder(getContext());
 
-                txt_nama    = (EditText) dialogView.findViewById(R.id.txt_nama);
-                txt_usia    = (EditText) dialogView.findViewById(R.id.txt_usia);
-                txt_alamat  = (EditText) dialogView.findViewById(R.id.txt_alamat);
-                txt_status = (EditText) dialogView.findViewById(R.id.txt_status);
+                inf = getActivity().getLayoutInflater();
+                view = inf.inflate(R.layout.alertdialog_change_password_form, null);
 
-                kosong();
+                final View diagView = view;
 
-                dialog.setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
+                alertDialog.setView(diagView);
+                alertDialog.setCancelable(true);
+                alertDialog.setTitle("Type Your New Password");
 
+                //definisi objek
+                etPassword = (EditText) view.findViewById(R.id.et_ad_pw);
+                alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        nama    = txt_nama.getText().toString();
-                        usia    = txt_usia.getText().toString();
-                        alamat  = txt_alamat.getText().toString();
-                        status = txt_status.getText().toString();
-
-                        txt_hasil.setText("Nama : " + nama + "\n" + "Usia : " + usia + "\n" + "Alamat : " + alamat + "\n" + "Status : " + status);
-                        dialog.dismiss();
                     }
                 });
 
-                dialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-
+                alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
                 });
 
-                dialog.show();
+                alertDialog.show();
             }
         });
 
