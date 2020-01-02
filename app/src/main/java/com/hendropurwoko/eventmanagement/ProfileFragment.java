@@ -230,6 +230,38 @@ public class ProfileFragment extends Fragment {
                 alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        AndroidNetworking.get(Cons.BASE_URL +"cpassword.php")
+                            .addQueryParameter("action", "1")
+                            .addQueryParameter("em", email)
+                            .addQueryParameter("pw", etPassword.getText().toString().trim())
+                            .setTag(Cons.TAG)
+                            .setPriority(Priority.MEDIUM)
+                            .build()
+                            .getAsJSONObject(new JSONObjectRequestListener() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    Log.d("Save: ", response.toString());
+
+                                    String status = response.optString("status").toString().trim();
+
+                                    if (status.equals("1")){
+                                        Toast.makeText(getContext(),
+                                                "Password successfully changed",
+                                                Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        Toast.makeText(getContext(),
+                                                "Unsuccessfull",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                @Override
+                                public void onError(ANError error) {
+                                    Toast.makeText(getContext(),
+                                            "Error: " + error,
+                                            Toast.LENGTH_SHORT).show();
+
+                                }
+                            });
                     }
                 });
 

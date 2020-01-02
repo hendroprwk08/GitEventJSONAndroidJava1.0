@@ -210,7 +210,7 @@
 
         <ProgressBar
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/layout_5"
             android:id="@+id/pb"
             android:layout_marginTop="@dimen/layout_10"
             android:visibility="gone"
@@ -218,6 +218,5 @@
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
 
     </LinearLayout>
-
 
 </LinearLayout>
