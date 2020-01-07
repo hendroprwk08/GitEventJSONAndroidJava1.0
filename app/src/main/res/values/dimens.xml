@@ -19,4 +19,5 @@
     <dimen name="layout_95">95dp</dimen>
     <dimen name="text_8">8sp</dimen>
     <dimen name="text_20">20sp</dimen>
+    <dimen name="text_18">18sp</dimen>
 </resources>

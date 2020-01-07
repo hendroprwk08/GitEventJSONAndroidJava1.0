@@ -165,22 +165,6 @@
                     android:foreground="?android:attr/selectableItemBackground"
                     android:layout_weight="1"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title_events"
-                    android:textAllCaps="true"
-                    android:textColor="@color/grey"
-                    android:textStyle="bold"
-                    android:layout_marginTop="@dimen/layout_20"
-                    android:layout_marginBottom="@dimen/layout_20"
-                    android:textSize="@dimen/text_16"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_Events"
-                    android:text="@string/title_events"/>
                 <!-- No Deletion -->
                 <!-- <Button
                     android:layout_width="match_parent"
@@ -191,6 +175,7 @@
                     android:background="@color/transparent"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:layout_weight="1"/> -->
+
             </LinearLayout>
 
             <ProgressBar

@@ -54,8 +54,11 @@
         android:layout_gravity="bottom"
         app:backgroundTint="@color/blue"
         app:hideOnScroll="true"
-        app:layout_scrollFlags="scroll|enterAlways"/>
-    <!-- app:navigationIcon="@drawable/ic_card_membership_black_24dp" -->
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:navigationIcon="@drawable/ic_menu_white_24dp"
+        style="@style/Widget.MaterialComponents.BottomAppBar"/>
+    <!-- biar center iconnya dikasih ini: style="@style/Widget.MaterialComponents.BottomAppBar" -->
+    <!-- icon app:navigationIcon="@drawable/ic_card_membership_black_24dp" -->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

@@ -127,6 +127,9 @@ public class LoginActivity extends AppCompatActivity {
             Intent i = new Intent(LoginActivity.this, MainAppActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY); //close login activity
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            finish(); //close current activity
+
             getApplicationContext().startActivity(i);
         }
     }

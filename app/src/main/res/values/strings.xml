@@ -39,6 +39,7 @@
     <string name="new_password">New Password</string>
     <string name="latest_events">Latest events</string>
     <string name="latest_activity">Latest Activity</string>
+    <string name="activity">Activity</string>
 
     <string-array name="yes_no">
         <item>No</item>

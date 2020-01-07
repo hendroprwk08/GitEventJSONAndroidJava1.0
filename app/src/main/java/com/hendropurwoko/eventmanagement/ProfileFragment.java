@@ -161,6 +161,8 @@ public class ProfileFragment extends Fragment {
                             if (!sp.cekSharedPreferences()) {
                                 Intent i = new Intent(getActivity(), LoginActivity.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                                getActivity().finish(); //close current activity
                                 getActivity().startActivity(i);
                             }else{
                                 Toast.makeText(getActivity(), "Gagal", Toast.LENGTH_SHORT).show();

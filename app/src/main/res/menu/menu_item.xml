@@ -13,21 +13,4 @@
         android:icon="@drawable/ic_event_note_white_24dp"
         app:showAsAction="always"
         android:title="@string/Add"/>
-
-    <item
-        android:id="@+id/menu_user"
-        android:icon="@drawable/ic_people_white_24dp"
-        app:showAsAction="never"
-        android:title="@string/user" />
-
-    <!-- <item
-        android:id="@+id/menu_registration"
-        android:icon="@drawable/ic_event_available_white_24dp"
-        app:showAsAction="never"
-        android:title="@string/registration" /> -->
-
-    <item
-        android:id="@+id/menu_profile"
-        app:showAsAction="never"
-        android:title="@string/profile" />
 </menu>

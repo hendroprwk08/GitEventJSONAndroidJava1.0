@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_view_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- navigation header layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/drawer_profile_image"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:src="@drawable/ic_person_grey_24dp"/>
+
+        <TextView
+            android:id="@+id/drawer_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/layout_10"
+            android:layout_marginTop="@dimen/layout_15"
+            android:layout_toLeftOf="@+id/close_image_view"
+            android:layout_toRightOf="@+id/drawer_profile_image"
+            android:text="@string/username"
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_18"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/drawer_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/drawer_username"
+            android:layout_marginLeft="@dimen/layout_10"
+            android:layout_marginTop="@dimen/layout_2"
+            android:layout_toLeftOf="@+id/close_image_view"
+            android:layout_toRightOf="@+id/drawer_profile_image"
+            android:text="@string/email"
+            android:textColor="@android:color/black" />
+
+        <ImageView
+            android:id="@+id/close_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/layout_15"
+            android:visibility="gone"
+            android:src="@drawable/ic_close_black_24dp" />
+
+        <View
+            android:id="@+id/divider_one"
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_below="@+id/drawer_email"
+            android:layout_marginTop="@dimen/layout_15"
+            android:background="#447e7e7e" />
+    </RelativeLayout>
+
+    <!-- navigation view -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="4dp"
+        app:menu="@menu/bottom_navigation_menu" />
+
+</LinearLayout>

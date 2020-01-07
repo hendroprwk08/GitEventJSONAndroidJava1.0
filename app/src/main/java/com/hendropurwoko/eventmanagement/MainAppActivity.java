@@ -32,6 +32,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.behavior.HideBottomViewOnScrollBehavior;
 import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONObject;
@@ -43,7 +44,7 @@ import java.net.URLEncoder;
 public class MainAppActivity extends AppCompatActivity {
 
     public static Context MAIN_CONTEXT;
-    public static String ACTIVE_FRAGMENT, ACTION;
+    public static String ACTION;
     public static Fragment LAST_FRAGMENT;
     public static View MAIN_VIEW;
 
@@ -51,7 +52,7 @@ public class MainAppActivity extends AppCompatActivity {
     public static FloatingActionButton fab;
     TextView tvTitle;
 
-    Fragment fragment = null;
+    public static Fragment fragment = null;
 
     public MainAppActivity() {
     }
@@ -78,31 +79,26 @@ public class MainAppActivity extends AppCompatActivity {
                     case R.id.menu_event:
                         fragment = new EventFragment();
                         loadFragment(fragment);
-                        ACTIVE_FRAGMENT = "event";
-                        return true;
-                    case R.id.menu_user:
-                        fragment = new UserFragment();
-                        loadFragment(fragment);
-                        ACTIVE_FRAGMENT = "user";
+                        Cons.ACTIVE_FRAGMENT = "event";
                         return true;
                     case R.id.menu_participant:
-                        Cons.LAST_FRAGMENT = ACTIVE_FRAGMENT;
+                        Cons.LAST_FRAGMENT = Cons.ACTIVE_FRAGMENT;
                         LAST_FRAGMENT = fragment;
                         fragment = new ParticipantFragment();
                         loadFragment(fragment);
-                        ACTIVE_FRAGMENT = "participant";
-                        return true;
-                    case R.id.menu_profile:
-                        Cons.LAST_FRAGMENT = ACTIVE_FRAGMENT;
-                        LAST_FRAGMENT = fragment;
-                        fragment = new ProfileFragment();
-                        loadFragment(fragment);
-                        ACTIVE_FRAGMENT = "profile";
-                        hideBar();
+                        Cons.ACTIVE_FRAGMENT = "participant";
                         return true;
                 }
 
                 return false;
+            }
+        });
+        bottomAppBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //show BottomSheetDialogFragment
+                BottomSheetDialogFragment bottomSheetDialogFragment = BottomSheetNavigationFragment.newInstance();
+                bottomSheetDialogFragment.show(getSupportFragmentManager(), "Bottom Sheet Dialog Fragment");
             }
         });
 
@@ -111,18 +107,18 @@ public class MainAppActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(Cons.TAG, "onClick: " + ACTIVE_FRAGMENT);
+                Log.d(Cons.TAG, "onClick: " + Cons.ACTIVE_FRAGMENT);
 
                 if (bottomAppBar.getFabAlignmentMode() == BottomAppBar.FAB_ALIGNMENT_MODE_CENTER){
-                    if (ACTIVE_FRAGMENT.equals("event")) {
+                    if (Cons.ACTIVE_FRAGMENT.equals("event")) {
                         fragment = new EventFormFragment("add");
-                    }else if (ACTIVE_FRAGMENT.equals("user")) {
+                    }else if (Cons.ACTIVE_FRAGMENT.equals("user")) {
                         fragment = new UserFormFragment("add");
 //                    }else if (ACTIVE_FRAGMENT.equals("participant")) {
 //                        fragment = new ParticipantFormFragment("add");
 //                        fragment = new ParticipantFormFragment("add");
-                    }else if (ACTIVE_FRAGMENT.equals("registration") || ACTIVE_FRAGMENT.equals("participant")) {
-                        Cons.LAST_FRAGMENT = ACTIVE_FRAGMENT;
+                    }else if (Cons.ACTIVE_FRAGMENT.equals("registration") || Cons.ACTIVE_FRAGMENT.equals("participant")) {
+                        Cons.LAST_FRAGMENT = Cons.ACTIVE_FRAGMENT;
                         Toast.makeText(getBaseContext(), R.string.opening_web_page, Toast.LENGTH_SHORT).show();
                         fragment = new RegistrationFragment();
                     }
@@ -131,13 +127,13 @@ public class MainAppActivity extends AppCompatActivity {
 
                     loadFragment(fragment);
                 }else{
-                    if (ACTIVE_FRAGMENT.equals("event")) {
+                    if (Cons.ACTIVE_FRAGMENT.equals("event")) {
                         fragment = new EventFragment();
-                    }else if (ACTIVE_FRAGMENT.equals("user")) {
+                    }else if (Cons.ACTIVE_FRAGMENT.equals("user")) {
                         fragment = new UserFragment();
 //                    }else if (ACTIVE_FRAGMENT.equals("participant")) {
 //                        fragment = new ParticipantFragment();
-                    }else if (ACTIVE_FRAGMENT.equals("registration") || ACTIVE_FRAGMENT.equals("profile") || ACTIVE_FRAGMENT.equals("participant")){
+                    }else if (Cons.ACTIVE_FRAGMENT.equals("registration") || Cons.ACTIVE_FRAGMENT.equals("profile") || Cons.ACTIVE_FRAGMENT.equals("participant")){
                         if (Cons.LAST_FRAGMENT == "user") {
                             fragment = new UserFragment();
                         }else if (Cons.LAST_FRAGMENT ==  "participant") {
@@ -160,19 +156,16 @@ public class MainAppActivity extends AppCompatActivity {
 
         // kita set default nya Home Fragment
         loadFragment(new ParticipantFragment());
-        ACTIVE_FRAGMENT = "participant";
+        Cons.ACTIVE_FRAGMENT = "participant";
     }
 
     // method untuk load fragment yang sesuai
-    public boolean loadFragment(Fragment fragment) {
+    public void loadFragment(Fragment fragment) {
         if (fragment != null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fl_container, fragment)
                     .commit();
-
-            return true;
-        }
-        return false;
+        };
     }
 
     private void hide() {
