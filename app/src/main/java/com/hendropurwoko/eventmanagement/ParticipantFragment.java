@@ -111,10 +111,10 @@ public class ParticipantFragment extends Fragment {
                 EVENT_ID = Integer.parseInt(idVal);
 
                 Cons.SELECTED_EVENT_INDEX = i; //ambil index sp-nya
-                Cons.SELECTED_EVENT_ID = EVENT_ID; //tampung id event
+                Cons.SELECTED_EVENT_ID = Integer.parseInt(idVal); //tampung id event
                 Cons.SELECTED_EVENT_INDEX_STATUS = true; //kasih status
 
-                load(EVENT_ID);
+                load(Cons.SELECTED_EVENT_ID );
             }
 
             @Override
@@ -257,7 +257,7 @@ public class ParticipantFragment extends Fragment {
                                 //do not load if event index status = true
                                 if(Cons.SELECTED_EVENT_INDEX_STATUS == true) {
                                     sp.setSelection(Cons.SELECTED_EVENT_INDEX, false);
-                                    load(Cons.SELECTED_EVENT_ID);
+                                    // baru ----- load(Cons.SELECTED_EVENT_ID);
                                     Cons.SELECTED_EVENT_INDEX_STATUS = false;
                                 }else{
                                     load(Cons.SELECTED_EVENT_ID);

@@ -2,11 +2,16 @@ package com.hendropurwoko.eventmanagement;
 
 
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +21,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -31,6 +37,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
@@ -46,6 +54,8 @@ public class ParticipantFormFragment extends Fragment {
     String ACTION, ID;
     LinearLayout llAdd, llEdit;
     ProgressBar pb;
+
+    TextView tvEvents;
 
     public ParticipantFormFragment(String action) {
         this.ACTION = action;
@@ -84,6 +94,9 @@ public class ParticipantFormFragment extends Fragment {
                 String[] arrActive = getResources().getStringArray(R.array.yes_no);
                 int idxActive = Arrays.asList(arrActive).indexOf(bundle.getString("bactive").trim());//find the index
                 spActive.setSelection(idxActive);
+
+
+                loadEventPeserta(Integer.parseInt(ID));
             }
 
             llAdd.setVisibility(View.GONE);
@@ -130,7 +143,88 @@ public class ParticipantFormFragment extends Fragment {
 
         pb = (ProgressBar) view.findViewById(R.id.pb);
 
+        tvEvents = (TextView) view.findViewById(R.id.tv_form_member_events);
         return view;
+    }
+
+    private void loadEventPeserta(int id) {
+        try {
+            String url = Cons.BASE_URL + "peserta.php?action=7" +
+                    "&id=" + URLEncoder.encode(String.valueOf(id), "utf-8");
+
+            Log.d(Cons.TAG, "save: " + url);
+
+            RequestQueue queue = Volley.newRequestQueue(getContext());
+            JsonObjectRequest jsObjRequest = new JsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    null,
+                    new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d("Save: ", response.toString());
+
+                            JSONArray jsonArray = null;
+                            String myText = "";
+
+                            try {
+                                jsonArray = response.getJSONArray("result");
+
+                                if (jsonArray.length() != 0) {
+
+                                    myText = jsonArray.length() + " data found<br/>";
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject data = jsonArray.getJSONObject(i);
+
+                                        myText = myText + "<br/>" + (i + 1) + ". <b>" + data.getString("event").toString().trim() +
+                                                "</b> <small>" + data.getString("date").toString().trim() +
+                                                " " + data.getString("time").toString().trim().substring(0, 5) + "</small><br/>";
+                                    }
+
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                        tvEvents.setText(Html.fromHtml(myText, Html.FROM_HTML_MODE_COMPACT));
+                                    } else {
+                                        tvEvents.setText(Html.fromHtml(myText));
+                                    }
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+
+                        }
+                    }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    // TODO Auto-generated method stub
+                    pb.setVisibility(ProgressBar.GONE);
+
+                    if (error instanceof TimeoutError || error instanceof NoConnectionError) { //time out or there is no connection
+                        Toast.makeText(getContext(), R.string.time_out_try_again, Toast.LENGTH_SHORT).show();
+                    } else if (error instanceof AuthFailureError) { //there was an Authentication Failure
+                        Toast.makeText(getContext(), R.string.auth_failed, Toast.LENGTH_SHORT).show();
+                    } else if (error instanceof ServerError) { //server responded with a error response
+                        Toast.makeText(getContext(), R.string.server_problem, Toast.LENGTH_SHORT).show();
+                    } else if (error instanceof NetworkError) {//network error while performing the request
+                        Toast.makeText(getContext(), R.string.please_check_your_connection, Toast.LENGTH_SHORT).show();
+                    } else if (error instanceof ParseError) {//the server response could not be parsed
+                        Toast.makeText(getContext(), R.string.reading_data_failed, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            queue.add(jsObjRequest);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+
+            String stackTrace = Log.getStackTraceString(e);
+
+            Toast.makeText(getContext(),
+                    stackTrace,
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     void save( final String nm, String in, String wa, String ph, String em, String ac ){

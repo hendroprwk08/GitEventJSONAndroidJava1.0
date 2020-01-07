@@ -13,7 +13,6 @@
     <string name="registration">Registration</string>
     <string name="title_events">Event</string>
     <string name="title_users">User</string>
-    <string name="title_participans">Participant</string>
     <string name="title_participant">Participant</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -22,6 +21,7 @@
     <string name="time_out_try_again">Time out. try again</string>
     <string name="auth_failed">Auth failed</string>
     <string name="please_check_your_connection">Please check your connection</string>
+    <string name="opening_web_page">Opening web page</string>
     <string name="reading_data_failed">Reading data failed!</string>
     <string name="no_participant">No Participant</string>
     <string name="save">Save</string>
@@ -37,6 +37,8 @@
     <string name="confirm_this_code">Confirm this code</string>
     <string name="profile">Profile</string>
     <string name="new_password">New Password</string>
+    <string name="latest_events">Latest events</string>
+    <string name="latest_activity">Latest Activity</string>
 
     <string-array name="yes_no">
         <item>No</item>

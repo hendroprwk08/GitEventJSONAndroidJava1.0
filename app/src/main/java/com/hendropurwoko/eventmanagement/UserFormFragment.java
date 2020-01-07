@@ -88,7 +88,6 @@ public class UserFormFragment extends Fragment {
                 String[] arrType = getResources().getStringArray(R.array.admin_user);
                 int idxType = Arrays.asList(arrType).indexOf(bundle.getString("btype").trim());//find the index
                 spType.setSelection(idxType);
-
             }
 
             llAdd.setVisibility(View.GONE);

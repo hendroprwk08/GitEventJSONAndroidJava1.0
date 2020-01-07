@@ -20,11 +20,11 @@
         app:showAsAction="never"
         android:title="@string/user" />
 
-    <item
+    <!-- <item
         android:id="@+id/menu_registration"
         android:icon="@drawable/ic_event_available_white_24dp"
         app:showAsAction="never"
-        android:title="@string/registration" />
+        android:title="@string/registration" /> -->
 
     <item
         android:id="@+id/menu_profile"

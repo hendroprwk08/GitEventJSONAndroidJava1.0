@@ -75,13 +75,6 @@ public class MainAppActivity extends AppCompatActivity {
 
                 // Handle presses on the action bar items
                 switch (item.getItemId()) {
-                    case R.id.menu_registration:
-                        Cons.LAST_FRAGMENT = ACTIVE_FRAGMENT;
-                        fragment = new RegistrationFragment();
-                        loadFragment(fragment);
-                        ACTIVE_FRAGMENT = "registration";
-                        hideBar();
-                        return true;
                     case R.id.menu_event:
                         fragment = new EventFragment();
                         loadFragment(fragment);
@@ -93,6 +86,7 @@ public class MainAppActivity extends AppCompatActivity {
                         ACTIVE_FRAGMENT = "user";
                         return true;
                     case R.id.menu_participant:
+                        Cons.LAST_FRAGMENT = ACTIVE_FRAGMENT;
                         LAST_FRAGMENT = fragment;
                         fragment = new ParticipantFragment();
                         loadFragment(fragment);
@@ -124,24 +118,26 @@ public class MainAppActivity extends AppCompatActivity {
                         fragment = new EventFormFragment("add");
                     }else if (ACTIVE_FRAGMENT.equals("user")) {
                         fragment = new UserFormFragment("add");
-                    }else if (ACTIVE_FRAGMENT.equals("participant")) {
-                        fragment = new ParticipantFormFragment("add");
-                    }else if (ACTIVE_FRAGMENT.equals("registration")) {
+//                    }else if (ACTIVE_FRAGMENT.equals("participant")) {
+//                        fragment = new ParticipantFormFragment("add");
+//                        fragment = new ParticipantFormFragment("add");
+                    }else if (ACTIVE_FRAGMENT.equals("registration") || ACTIVE_FRAGMENT.equals("participant")) {
+                        Cons.LAST_FRAGMENT = ACTIVE_FRAGMENT;
+                        Toast.makeText(getBaseContext(), R.string.opening_web_page, Toast.LENGTH_SHORT).show();
                         fragment = new RegistrationFragment();
                     }
 
-                    loadFragment(fragment);
-
                     hideBar();
 
+                    loadFragment(fragment);
                 }else{
                     if (ACTIVE_FRAGMENT.equals("event")) {
                         fragment = new EventFragment();
                     }else if (ACTIVE_FRAGMENT.equals("user")) {
                         fragment = new UserFragment();
-                    }else if (ACTIVE_FRAGMENT.equals("participant")) {
-                        fragment = new ParticipantFragment();
-                    }else if (ACTIVE_FRAGMENT.equals("registration") || ACTIVE_FRAGMENT.equals("profile")) {
+//                    }else if (ACTIVE_FRAGMENT.equals("participant")) {
+//                        fragment = new ParticipantFragment();
+                    }else if (ACTIVE_FRAGMENT.equals("registration") || ACTIVE_FRAGMENT.equals("profile") || ACTIVE_FRAGMENT.equals("participant")){
                         if (Cons.LAST_FRAGMENT == "user") {
                             fragment = new UserFragment();
                         }else if (Cons.LAST_FRAGMENT ==  "participant") {
@@ -151,9 +147,9 @@ public class MainAppActivity extends AppCompatActivity {
                         }
                     }
 
-                    loadFragment(fragment);
-
                     showBar();
+
+                    loadFragment(fragment);
                }
 
                 ACTION = null;

@@ -19,7 +19,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/title_participans"
+                android:text="@string/title_participant"
                 android:textAllCaps="true"
                 android:textColor="@color/grey"
                 android:textStyle="bold"
@@ -173,7 +173,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_marginTop="@dimen/layout_20"
                 android:layout_marginBottom="@dimen/layout_20"
                 android:id="@+id/ll_edit">
@@ -188,6 +188,18 @@
                     android:foreground="?android:attr/selectableItemBackground"
                     android:layout_weight="1"/>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/latest_activity"
+                    android:textSize="@dimen/text_20"
+                    android:layout_marginTop="@dimen/layout_15"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_form_member_events"/>
                 <!-- No deletion feature -->
                 <!--<Button
                     android:layout_width="match_parent"
