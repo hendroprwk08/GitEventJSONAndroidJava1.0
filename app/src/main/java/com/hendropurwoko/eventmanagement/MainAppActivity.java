@@ -3,9 +3,12 @@ package com.hendropurwoko.eventmanagement;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +16,7 @@ import android.os.Bundle;
 import android.os.Debug;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -76,17 +80,11 @@ public class MainAppActivity extends AppCompatActivity {
 
                 // Handle presses on the action bar items
                 switch (item.getItemId()) {
-                    case R.id.menu_event:
-                        fragment = new EventFragment();
-                        loadFragment(fragment);
-                        Cons.ACTIVE_FRAGMENT = "event";
-                        return true;
-                    case R.id.menu_participant:
+                    case R.id.menu_home:
                         Cons.LAST_FRAGMENT = Cons.ACTIVE_FRAGMENT;
-                        LAST_FRAGMENT = fragment;
-                        fragment = new ParticipantFragment();
+                        fragment = new HomeFragment();
                         loadFragment(fragment);
-                        Cons.ACTIVE_FRAGMENT = "participant";
+                        Cons.ACTIVE_FRAGMENT = "home";
                         return true;
                 }
 
@@ -114,10 +112,7 @@ public class MainAppActivity extends AppCompatActivity {
                         fragment = new EventFormFragment("add");
                     }else if (Cons.ACTIVE_FRAGMENT.equals("user")) {
                         fragment = new UserFormFragment("add");
-//                    }else if (ACTIVE_FRAGMENT.equals("participant")) {
-//                        fragment = new ParticipantFormFragment("add");
-//                        fragment = new ParticipantFormFragment("add");
-                    }else if (Cons.ACTIVE_FRAGMENT.equals("registration") || Cons.ACTIVE_FRAGMENT.equals("participant")) {
+                    }else if (Cons.ACTIVE_FRAGMENT.equals("home") || Cons.ACTIVE_FRAGMENT.equals("participant")) {
                         Cons.LAST_FRAGMENT = Cons.ACTIVE_FRAGMENT;
                         Toast.makeText(getBaseContext(), R.string.opening_web_page, Toast.LENGTH_SHORT).show();
                         fragment = new RegistrationFragment();
@@ -131,15 +126,19 @@ public class MainAppActivity extends AppCompatActivity {
                         fragment = new EventFragment();
                     }else if (Cons.ACTIVE_FRAGMENT.equals("user")) {
                         fragment = new UserFragment();
-//                    }else if (ACTIVE_FRAGMENT.equals("participant")) {
-//                        fragment = new ParticipantFragment();
-                    }else if (Cons.ACTIVE_FRAGMENT.equals("registration") || Cons.ACTIVE_FRAGMENT.equals("profile") || Cons.ACTIVE_FRAGMENT.equals("participant")){
+                    }else if (Cons.ACTIVE_FRAGMENT.equals("registration") ||
+                            Cons.ACTIVE_FRAGMENT.equals("profile") ||
+                            Cons.ACTIVE_FRAGMENT.equals("member") ||
+                            Cons.ACTIVE_FRAGMENT.equals("participant") ||
+                            Cons.ACTIVE_FRAGMENT.equals("home")){
                         if (Cons.LAST_FRAGMENT == "user") {
                             fragment = new UserFragment();
                         }else if (Cons.LAST_FRAGMENT ==  "participant") {
                             fragment = new ParticipantFragment();
-                        }else {
+                        }else if (Cons.LAST_FRAGMENT ==  "event") {
                             fragment = new EventFragment();
+                        }else {
+                            fragment = new HomeFragment();
                         }
                     }
 
@@ -155,8 +154,8 @@ public class MainAppActivity extends AppCompatActivity {
         hide();
 
         // kita set default nya Home Fragment
-        loadFragment(new ParticipantFragment());
-        Cons.ACTIVE_FRAGMENT = "participant";
+        loadFragment(new HomeFragment());
+        Cons.ACTIVE_FRAGMENT = "home";
     }
 
     // method untuk load fragment yang sesuai

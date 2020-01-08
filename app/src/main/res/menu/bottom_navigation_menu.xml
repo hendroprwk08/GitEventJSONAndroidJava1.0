@@ -2,9 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/menu_activity"
+        android:icon="@drawable/ic_card_membership_black_24dp"
+        android:title="@string/activity"/>
+
+    <item
+        android:id="@+id/menu_event"
+        android:icon="@drawable/ic_event_note_black_24dp"
+        android:title="@string/title_events"/>
+
+    <item
         android:id="@+id/menu_member"
         android:icon="@drawable/ic_people_black_24dp"
-        android:title="@string/title_participant" />
+        android:title="@string/member" />
 
     <item
         android:id="@+id/menu_user"

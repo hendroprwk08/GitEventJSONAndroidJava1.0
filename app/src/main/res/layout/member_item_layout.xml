@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/greyrcorner"
+    android:padding="@dimen/layout_10"
+    android:id="@+id/wrap"
+    android:foreground="?attr/selectableItemBackground"
+    android:layout_marginBottom="@dimen/layout_5">
+    <!-- riple effect gridview dengan menambhakparticipant_item_layout.xmlan foregorund -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_rv_name"
+            android:text="NAME"
+            android:textSize="@dimen/text_16"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_rv_times"
+            android:layout_marginLeft="@dimen/layout_10"
+            android:layout_marginBottom="@dimen/layout_5"
+            android:textAlignment="textEnd"
+            android:layout_gravity="end"
+            android:text="@string/no_data"
+            android:textColor="@color/white"
+            android:textSize="@dimen/layout_10"
+            android:background="@drawable/textviewbluercorner"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv"
+            android:layout_width="@dimen/layout_20"
+            android:layout_height="@dimen/layout_20"
+            android:layout_marginLeft="@dimen/layout_5"
+            android:src="@drawable/ic_keyboard_arrow_down_black_24dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/layout_5"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_rv_institution"
+            android:text="@string/institution"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_rv_phone"
+            android:text="@string/phone"
+            android:gravity="right"
+            android:layout_weight="2"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_rv_email"
+            android:text="@string/email"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_rv_whatsapp"
+            android:text="@string/whatsapp"
+            android:gravity="right"
+            android:layout_weight="2"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_rv_activity"
+        android:padding="@dimen/layout_15"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/layout_10"
+        android:background="@drawable/greyrcorner">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_rv_activity"
+            android:text="@string/please_wait"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+
+    </LinearLayout>
+</LinearLayout>

@@ -103,6 +103,27 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
 
                 switch (item.getItemId()) {
                     case R.id.menu_member:
+                        Cons.LAST_FRAGMENT = Cons.ACTIVE_FRAGMENT;
+                        Cons.ACTIVE_FRAGMENT = "member";
+
+                        //panggil method yang ada di activity lain
+                        ((MainAppActivity)getActivity()).loadFragment(new MemberFragment());
+                        ((MainAppActivity)getActivity()).hideBar();
+
+                        break;
+                    case R.id.menu_activity:
+                        Cons.ACTIVE_FRAGMENT = "participant";
+
+                        //panggil method yang ada di activity lain
+                        ((MainAppActivity)getActivity()).loadFragment(new ParticipantFragment());
+
+                        break;
+                    case R.id.menu_event:
+                        Cons.ACTIVE_FRAGMENT = "event";
+
+                        //panggil method yang ada di activity lain
+                        ((MainAppActivity)getActivity()).loadFragment(new EventFragment());
+
                         break;
                     case R.id.menu_user:
                         Cons.ACTIVE_FRAGMENT = "user";

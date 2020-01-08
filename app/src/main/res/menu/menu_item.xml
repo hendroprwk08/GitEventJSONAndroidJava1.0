@@ -3,14 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_participant"
-        android:icon="@drawable/ic_card_membership_white_24dp"
+        android:id="@+id/menu_home"
+        android:icon="@drawable/ic_home_white_24dp"
         app:showAsAction="always"
-        android:title="@string/Add"/>
-
-    <item
-        android:id="@+id/menu_event"
-        android:icon="@drawable/ic_event_note_white_24dp"
-        app:showAsAction="always"
-        android:title="@string/Add"/>
+        android:title="@string/dashboard"/>
 </menu>

@@ -40,6 +40,14 @@
     <string name="latest_events">Latest events</string>
     <string name="latest_activity">Latest Activity</string>
     <string name="activity">Activity</string>
+    <string name="member">Member</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="home">Home</string>
+    <string name="whatsapp">Whatsapp</string>
+    <string name="institution">Institution</string>
+    <string name="phone">Phone</string>
+    <string name="no_data">No Data</string>
+    <string name="please_wait">Please wait</string>
 
     <string-array name="yes_no">
         <item>No</item>

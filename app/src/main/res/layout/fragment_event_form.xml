@@ -73,13 +73,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Time"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1.3"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Active"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1.4"/>
 
             </LinearLayout>
 
@@ -110,7 +110,7 @@
                     android:layout_marginTop="@dimen/layout_5"
                     android:layout_marginRight="@dimen/layout_5"
                     android:focusable="false"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1.3"/>
 
                 <Spinner
                     android:layout_width="match_parent"
@@ -121,7 +121,7 @@
                     android:layout_marginBottom="@dimen/layout_5"
                     android:layout_marginTop="@dimen/layout_5"
                     android:focusable="false"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1.4"/>
 
             </LinearLayout>
 

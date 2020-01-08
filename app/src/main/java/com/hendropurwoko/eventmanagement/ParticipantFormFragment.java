@@ -95,7 +95,6 @@ public class ParticipantFormFragment extends Fragment {
                 int idxActive = Arrays.asList(arrActive).indexOf(bundle.getString("bactive").trim());//find the index
                 spActive.setSelection(idxActive);
 
-
                 loadEventPeserta(Integer.parseInt(ID));
             }
 

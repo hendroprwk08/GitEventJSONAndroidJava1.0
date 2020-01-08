@@ -7,7 +7,5 @@ public class Cons {
     public static int SELECTED_EVENT_ID;
     public static int SELECTED_EVENT_INDEX ;
     public static boolean SELECTED_EVENT_INDEX_STATUS = false;
-    public static String LAST_FRAGMENT;
-    public static String ACTIVE_FRAGMENT;
-
+    public static String LAST_FRAGMENT, FAB_STATUS, ACTIVE_FRAGMENT;
 }
