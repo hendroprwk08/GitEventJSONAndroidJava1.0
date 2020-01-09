@@ -25,10 +25,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/login"
+                android:gravity="center"
                 android:textAllCaps="true"
                 android:textColor="@color/grey"
                 android:textStyle="bold"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="@dimen/layout_20"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
             <EditText
@@ -91,21 +92,27 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="@string/verification"
                 android:textAllCaps="true"
                 android:textColor="@color/grey"
                 android:textStyle="bold"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="@dimen/layout_20"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
             <EditText
                 android:id="@+id/veri_et_vericode"
-                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/layout_15"
+                android:textSize="40sp"
+                android:maxLines="1"
+                android:maxLength="6"
+                android:letterSpacing="0.5"
+                android:inputType="number"
                 android:background="@drawable/greyedittextrcorner"
-                android:layout_marginTop="@dimen/layout_5"
-                android:hint="@string/type_your_code" />
+                android:layout_marginTop="@dimen/layout_5" />
 
             <LinearLayout
                 android:layout_width="match_parent"
