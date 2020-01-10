@@ -49,6 +49,7 @@
     <string name="no_data">No Data</string>
     <string name="please_wait">Please wait</string>
     <string name="whatsapp_not_installed">Whatsapp app not installed in your phone</string>
+    <string name="press_back_exit">Press BACK again to exit</string>
 
     <string-array name="yes_no">
         <item>No</item>

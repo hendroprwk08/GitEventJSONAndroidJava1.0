@@ -197,11 +197,9 @@ class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.CardViewHolder> {
         holder.ivMsgPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                smsIntent.setType("vnd.android-dir/mms-sms");
-                smsIntent.putExtra("address", phone);
-                //smsIntent.putExtra("sms_body","Body of Message");
-                context.startActivity(smsIntent);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + phone));
+                intent.putExtra("sms_body", "");
+                context.startActivity(intent);
             }
         });
 

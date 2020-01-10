@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Debug;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Gravity;
@@ -54,7 +55,8 @@ public class MainAppActivity extends AppCompatActivity {
 
     public static BottomAppBar bottomAppBar;
     public static FloatingActionButton fab;
-    TextView tvTitle;
+
+    boolean doubleBackToExitPressedOnce = false;
 
     public static Fragment fragment = null;
 
@@ -193,5 +195,49 @@ public class MainAppActivity extends AppCompatActivity {
         //replace icon fab to arrow and center fab
         bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
         fab.setImageResource(R.drawable.ic_add_white_24dp);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+
+        if (Cons.ACTIVE_FRAGMENT.equals("event")) {
+            fragment = new EventFragment();
+        }else if (Cons.ACTIVE_FRAGMENT.equals("user")) {
+            fragment = new UserFragment();
+        }else if (Cons.ACTIVE_FRAGMENT.equals("registration") ||
+                Cons.ACTIVE_FRAGMENT.equals("profile") ||
+                Cons.ACTIVE_FRAGMENT.equals("member") ||
+                Cons.ACTIVE_FRAGMENT.equals("participant") ||
+                Cons.ACTIVE_FRAGMENT.equals("home")){
+            if (Cons.LAST_FRAGMENT == "user") {
+                fragment = new UserFragment();
+            }else if (Cons.LAST_FRAGMENT ==  "participant") {
+                fragment = new ParticipantFragment();
+            }else if (Cons.LAST_FRAGMENT ==  "event") {
+                fragment = new EventFragment();
+            }else {
+                fragment = new HomeFragment();
+            }
+        }
+
+        showBar();
+
+        loadFragment(fragment);
+
+        Toast.makeText(this, R.string.press_back_exit, Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 }
