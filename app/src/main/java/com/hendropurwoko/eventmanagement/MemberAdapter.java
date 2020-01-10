@@ -1,6 +1,13 @@
 package com.hendropurwoko.eventmanagement;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
@@ -14,7 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.PermissionChecker;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
@@ -29,6 +40,14 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,11 +59,16 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static androidx.core.app.ActivityCompat.requestPermissions;
+
 class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.CardViewHolder> {
     private List<Member> list;
     private Context context;
     private String url;
     private int pos;
+
+    int selectedPos = 0;
+    final static int PERMISSION_CODE = 1001;
 
     public MemberAdapter(Context context, List<Member> list) {
         this.context = context;
@@ -62,7 +86,6 @@ class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.CardViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final CardViewHolder holder, int i) {
-        final boolean[] showActivity = {false};
         pos = i;
 
         final String id = list.get(i).getId();
@@ -73,69 +96,168 @@ class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.CardViewHolder> {
         final String email = list.get(i).getEmail();
         final String active = list.get(i).getActive();
         final String times = list.get(i).getTimes();
+        final boolean exp = list.get(i).isExpanded();
 
         holder.tvName.setText(name);
         holder.tvInstitution.setText(institution);
         holder.tvWhatsapp.setText(whatsapp);
         holder.tvPhone.setText(phone);
-        holder.tvEmail.setText(email);
         holder.tvTimes.setText(times);
+        holder.tvEmail.setText(email.trim());
 
-        if (active.equals("No")){
-            holder.llWrap.setBackgroundResource(R.drawable.redpastelrcorner);
-        }
+        holder.tvInactive.setVisibility(active.equals("No") ? TextView.VISIBLE : TextView.GONE);
+        holder.llEmail.setVisibility(email.length() == 0 ? LinearLayout.GONE : LinearLayout.VISIBLE);
+        holder.llPhone.setVisibility(phone.length() == 0 ? LinearLayout.GONE : LinearLayout.VISIBLE);
+        holder.llWa.setVisibility(whatsapp.length() == 0 ? LinearLayout.GONE : LinearLayout.VISIBLE);
+        holder.llActivity.setVisibility(exp ? LinearLayout.VISIBLE : LinearLayout.GONE);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        //send mail
+        holder.ivSendMail.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                if (!showActivity[0]){
-                    showActivity[0] = true;
-                    holder.iv.setImageResource(R.drawable.ic_keyboard_arrow_up_black_24dp);
-                    holder.llActivity.setVisibility(LinearLayout.VISIBLE);
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("message/rfc822");
+                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{email});
+                //i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
+                //i.putExtra(Intent.EXTRA_TEXT   , "body of email");
+                try {
+                    context.startActivity(Intent.createChooser(i, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(context, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
+        //call wa number
+        holder.ivCallWa.setOnClickListener(new View.OnClickListener() {
+            private static final int REQUEST_PHONE_CALL = 1;
+
+            @Override
+            public void onClick(View v) {
+                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                callIntent.setData(Uri.parse("tel:" + whatsapp));
+
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions((MainAppActivity) context, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
+                }
+                else
+                {
+                    context.startActivity(callIntent);
+                }
+            }
+
+            private int checkSelfPermission(String callPhone) {
+                return 0;
+            }
+        });
+
+        //call phone number
+        holder.ivCallPhone.setOnClickListener(new View.OnClickListener() {
+            private static final int REQUEST_PHONE_CALL = 1;
+
+            @Override
+            public void onClick(View v) {
+                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                callIntent.setData(Uri.parse("tel:" + phone));
+
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions((MainAppActivity) context, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
+                }
+                else
+                {
+                    context.startActivity(callIntent);
+                }
+            }
+
+            private int checkSelfPermission(String callPhone) {
+                return 0;
+            }
+        });
+
+        //sms wa number
+        holder.ivMsgWa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String contact = "+62"+ whatsapp; // use country code with your phone number
+                String url = "https://api.whatsapp.com/send?phone=" + contact;
+                try {
+                    PackageManager pm = context.getPackageManager();
+                    pm.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES);
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    context.startActivity(i);
+                } catch (PackageManager.NameNotFoundException e) {
+                    Toast.makeText(context, R.string.whatsapp_not_installed, Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        //sms phone number
+        holder.ivMsgPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                smsIntent.setType("vnd.android-dir/mms-sms");
+                smsIntent.putExtra("address", phone);
+                //smsIntent.putExtra("sms_body","Body of Message");
+                context.startActivity(smsIntent);
+            }
+        });
+
+        //expandalbel recyclerbiew
+        final Member member = list.get(pos);
+
+        holder.iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(Cons.TAG, "onClick: " + pos);
+                boolean expanded = member.isExpanded();
+
+                if (!expanded){
                     try {
                         String url = Cons.BASE_URL + "peserta.php?action=7" +
                                 "&id=" + URLEncoder.encode(id, "utf-8");
 
                         RequestQueue queue = Volley.newRequestQueue(context);
                         JsonObjectRequest jsObjRequest = new JsonObjectRequest(
-                                Request.Method.GET,
-                                url,
-                                null,
-                                new Response.Listener<JSONObject>() {
+                            Request.Method.GET,
+                            url,
+                            null,
+                            new Response.Listener<JSONObject>() {
 
-                                    @Override
-                                    public void onResponse(JSONObject response) {
-                                        Log.d("Save: ", response.toString());
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    Log.d("Save: ", response.toString());
 
-                                        JSONArray jsonArray = null;
+                                    JSONArray jsonArray = null;
 
-                                        try {
-                                            jsonArray = response.getJSONArray("result");
+                                    try {
+                                        jsonArray = response.getJSONArray("result");
 
-                                            if (jsonArray.length() != 0) {
+                                        if (jsonArray.length() != 0) {
 
-                                                String myText = "";
-                                                for (int i = 0; i < jsonArray.length(); i++) {
-                                                    JSONObject data = jsonArray.getJSONObject(i);
+                                            String myText = "";
+                                            for (int i = 0; i < jsonArray.length(); i++) {
+                                                JSONObject data = jsonArray.getJSONObject(i);
 
-                                                    myText = myText + (i + 1) + ". <b>" + data.getString("event").toString().trim() +
-                                                            "</b> <small>" + data.getString("date").toString().trim() +
-                                                            " " + data.getString("time").toString().trim().substring(0, 5) + "</small><br/>";
-                                                }
-
-                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                                    holder.tvActivity.setText(Html.fromHtml(myText.substring(0, myText.length() - 5), Html.FROM_HTML_MODE_COMPACT));
-                                                } else {
-                                                    holder.tvActivity.setText(Html.fromHtml(myText.substring(0, myText.length() - 5)));
-                                                }
+                                                myText = myText + (i + 1) + ". <b>" + data.getString("event").toString().trim() +
+                                                        "</b> <small>" + data.getString("date").toString().trim() +
+                                                        " " + data.getString("time").toString().trim().substring(0, 5) + "</small><br/>";
                                             }
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
 
+                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                                holder.tvActivity.setText(Html.fromHtml(myText.substring(0, myText.length() - 5), Html.FROM_HTML_MODE_COMPACT));
+                                            } else {
+                                                holder.tvActivity.setText(Html.fromHtml(myText.substring(0, myText.length() - 5)));
+                                            }
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
                                     }
-                                }, new Response.ErrorListener() {
+
+                                }
+                            }, new Response.ErrorListener() {
 
                             @Override
                             public void onErrorResponse(VolleyError error) {
@@ -164,14 +286,53 @@ class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.CardViewHolder> {
                                 stackTrace,
                                 Toast.LENGTH_SHORT).show();
                     }
+
+                    holder.llActivity.setVisibility(LinearLayout.VISIBLE);
+                    holder.iv.setImageResource(R.drawable.ic_keyboard_arrow_up_black_24dp);
                 }else{
-                    showActivity[0] = false;
+                    holder.llActivity.setVisibility(LinearLayout.GONE);
+                    holder.iv.setImageResource(R.drawable.ic_keyboard_arrow_down_black_24dp);
+                }
+
+                member.setExpanded(!expanded);
+                notifyItemChanged(pos);
+
+            }
+        });
+
+    }
+
+    public boolean selfPermissionGranted(String permission) {
+        // For Android < Android M, self permissions are always granted.
+        boolean result = true;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            if (context.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.M) {
+                // targetSdkVersion >= Android M, we can
+                // use Context#checkSelfPermission
+                result = context.checkSelfPermission(permission)
+                        == PackageManager.PERMISSION_GRANTED;
+            } else {
+                // targetSdkVersion < Android M, we have to use PermissionChecker
+                result = PermissionChecker.checkSelfPermission(context, permission)
+                        == PermissionChecker.PERMISSION_GRANTED;
+            }
+        }
+
+        return result;
+    }
+
+                /*holder.iv.setImageResource(R.drawable.ic_keyboard_arrow_up_black_24dp);
+                holder.llActivity.setVisibility(LinearLayout.VISIBLE);
+
+                }else{
                     holder.iv.setImageResource(R.drawable.ic_keyboard_arrow_down_black_24dp);
                     holder.llActivity.setVisibility(LinearLayout.GONE);
                 }
             }
         });
-    }
+    }*/
 
     @Override
     public int getItemCount() {
@@ -179,9 +340,9 @@ class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.CardViewHolder> {
     }
 
     public class CardViewHolder extends RecyclerView.ViewHolder {
-        TextView tvName, tvInstitution, tvWhatsapp, tvPhone, tvEmail, tvTimes, tvActivity;
-        LinearLayout llWrap, llActivity;
-        CircleImageView iv;
+        TextView tvName, tvInstitution, tvWhatsapp, tvPhone, tvTimes, tvEmail, tvActivity, tvInactive;
+        LinearLayout llEmail, llActivity, llPhone, llWa;
+        CircleImageView iv, ivEmail, ivSendMail, ivCallWa, ivMsgWa, ivCallPhone, ivMsgPhone;
 
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -192,9 +353,18 @@ class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.CardViewHolder> {
             tvEmail = (TextView) itemView.findViewById(R.id.tv_rv_email);
             tvTimes = (TextView) itemView.findViewById(R.id.tv_rv_times);
             tvActivity = (TextView) itemView.findViewById(R.id.tv_rv_activity);
-            llWrap = (LinearLayout) itemView.findViewById(R.id.wrap);
-            llActivity = (LinearLayout) itemView.findViewById(R.id.ll_rv_activity);
+            tvInactive = (TextView) itemView.findViewById(R.id.tv_rv_inactive);
             iv = (CircleImageView) itemView.findViewById(R.id.iv);
+            ivSendMail = (CircleImageView) itemView.findViewById(R.id.iv_send_email);
+            ivCallPhone = (CircleImageView) itemView.findViewById(R.id.iv_call_phone);
+            ivCallWa = (CircleImageView) itemView.findViewById(R.id.iv_call_wa);
+            ivMsgPhone = (CircleImageView) itemView.findViewById(R.id.iv_msg_phone);
+            ivMsgWa = (CircleImageView) itemView.findViewById(R.id.iv_msg_wa);
+            ivEmail = (CircleImageView) itemView.findViewById(R.id.iv_send_email);
+            llPhone = (LinearLayout) itemView.findViewById(R.id.ll_phone);
+            llEmail = (LinearLayout) itemView.findViewById(R.id.ll_email);
+            llWa = (LinearLayout) itemView.findViewById(R.id.ll_wa);
+            llActivity = (LinearLayout) itemView.findViewById(R.id.ll_rv_activity);
         }
     }
 

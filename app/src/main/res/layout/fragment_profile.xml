@@ -21,7 +21,7 @@
             android:src="@drawable/ic_person_grey_24dp"
             android:layout_gravity="center"
             app:civ_border_width="2dp"
-            android:layout_marginBottom="@dimen/layout_10"
+            android:layout_marginBottom="@dimen/layout_15"
             app:civ_border_color="@color/lightGrey"/>
 
         <ProgressBar
@@ -53,7 +53,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/layout_20"
         android:textColor="@color/white"
-        android:background="@drawable/orangercorner"
+        android:background="@drawable/orange_round_corner"
         android:visibility="gone"
         android:id="@+id/bt_profile_upload"/>
 
@@ -80,10 +80,10 @@
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="@dimen/layout_40"
+            android:layout_height="wrap_content"
             android:text="Change Password"
             android:clickable="true"
-            android:background="@drawable/orangercorner"
+            android:background="@drawable/orange_round_corner"
             android:foreground="?android:attr/selectableItemBackground"
             android:textColor="@color/white"
             android:layout_marginRight="@dimen/layout_5"
@@ -93,11 +93,11 @@
         <Button
             android:id="@+id/bt_profile_logout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/layout_40"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
             android:textColor="@color/colorAccent"
             android:foreground="?android:attr/selectableItemBackground"
-            android:background="@drawable/orangercorneroutline"
+            android:background="@drawable/orange_round_corner_outline"
             android:clickable="true"
             android:text="Logout" />
     </LinearLayout>

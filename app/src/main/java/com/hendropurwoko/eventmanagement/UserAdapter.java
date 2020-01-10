@@ -50,23 +50,24 @@ class UserAdapter extends RecyclerView.Adapter<UserAdapter.CardViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CardViewHolder cardViewHolder, int i) {
+    public void onBindViewHolder(@NonNull CardViewHolder holder, int i) {
         final String username = users.get(i).getUSERNAME();
         final String email = users.get(i).getEMAIL();
         final String phone = users.get(i).getPHONE();
         final String active = users.get(i).getACTIVE();
         final String type = users.get(i).getTYPE();
 
-        cardViewHolder.tv_username.setText(username);
-        cardViewHolder.tv_email.setText(email);
-        cardViewHolder.tv_phone.setText(phone);
-        cardViewHolder.tv_type.setText(type);
+        holder.tv_username.setText(username);
+        holder.tv_email.setText(email);
+        holder.tv_phone.setText(phone);
+        holder.tv_type.setText(type);
 
         if (active.equals("No")){
-            cardViewHolder.ll.setBackgroundResource(R.drawable.redpastelrcorner);
+            holder.tv_inactive.setVisibility(TextView.VISIBLE);
+            //cardViewHolder.ll.setBackgroundResource(R.drawable.red_pastel_round_corner);
         }
 
-        cardViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -92,7 +93,7 @@ class UserAdapter extends RecyclerView.Adapter<UserAdapter.CardViewHolder> {
     }
 
     public class CardViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_username, tv_email, tv_phone, tv_type;
+        TextView tv_username, tv_email, tv_phone, tv_type, tv_inactive;
         LinearLayout ll;
 
         public CardViewHolder(@NonNull View itemView) {
@@ -101,6 +102,7 @@ class UserAdapter extends RecyclerView.Adapter<UserAdapter.CardViewHolder> {
             tv_email = (TextView) itemView.findViewById(R.id.tv_rv_email);
             tv_phone = (TextView) itemView.findViewById(R.id.tv_rv_phone);
             tv_type = (TextView) itemView.findViewById(R.id.tv_rv_type);
+            tv_inactive = (TextView) itemView.findViewById(R.id.tv_rv_inactive);
             ll = (LinearLayout) itemView.findViewById(R.id.wrap);
         }
     }

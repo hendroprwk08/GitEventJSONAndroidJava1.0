@@ -15,22 +15,18 @@
         android:orientation="vertical"
         android:background="@color/colorPrimary">
 
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/logo_lcc_header"
+            android:layout_gravity="center"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/ll_login"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/login"
-                android:gravity="center"
-                android:textAllCaps="true"
-                android:textColor="@color/grey"
-                android:textStyle="bold"
-                android:layout_marginBottom="@dimen/layout_20"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
             <EditText
                 android:id="@+id/login_et_email"
@@ -58,11 +54,11 @@
 
                 <Button
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/layout_40"
+                    android:layout_height="wrap_content"
                     android:text="@string/login"
                     android:id="@+id/login_bt_login"
-                    android:textColor="@color/colorPrimary"
-                    android:background="@drawable/orangercorner"
+                    android:textColor="@color/white"
+                    android:background="@drawable/orange_round_corner"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:layout_weight="1"/>
@@ -89,17 +85,6 @@
             android:visibility="gone"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/verification"
-                android:textAllCaps="true"
-                android:textColor="@color/grey"
-                android:textStyle="bold"
-                android:layout_marginBottom="@dimen/layout_20"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
-
             <EditText
                 android:id="@+id/veri_et_vericode"
                 android:layout_gravity="center"
@@ -107,6 +92,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/layout_15"
                 android:textSize="40sp"
+                android:textStyle="bold"
+                android:textColor="@color/grey"
                 android:maxLines="1"
                 android:maxLength="6"
                 android:letterSpacing="0.5"
@@ -131,12 +118,12 @@
 
                 <Button
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/layout_40"
+                    android:layout_height="wrap_content"
                     android:text="@string/confirm_this_code"
                     android:layout_weight="1"
                     android:clickable="true"
                     android:textColor="@color/white"
-                    android:background="@drawable/orangercorner"
+                    android:background="@drawable/orange_round_corner"
                     android:id="@+id/veri_bt_confirm"/>
 
             </LinearLayout>
@@ -208,7 +195,7 @@
                     android:layout_weight="1"
                     android:clickable="true"
                     android:textColor="@color/white"
-                    android:background="@drawable/orangercorner"
+                    android:background="@drawable/orange_round_corner"
                     android:id="@+id/regis_bt_sign_up"/>
 
             </LinearLayout>

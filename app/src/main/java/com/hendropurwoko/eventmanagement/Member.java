@@ -2,6 +2,7 @@ package com.hendropurwoko.eventmanagement;
 
 public class Member {
     String id, name, institution, whatsapp, phone, email, active, input, activity, times;
+    private boolean expanded;
 
     public Member(String id, String name, String institution, String whatsapp, String phone, String email, String active, String times) {
         this.id = id;
@@ -71,4 +72,12 @@ public class Member {
     }
 
     public String getTimes() { return times; }
+
+    public boolean isExpanded() {
+        return expanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
+    }
 }

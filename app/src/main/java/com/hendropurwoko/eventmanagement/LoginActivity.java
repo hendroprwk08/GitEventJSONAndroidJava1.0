@@ -122,14 +122,8 @@ public class LoginActivity extends AppCompatActivity {
         //cek shared preferences
         if(sp.cekSharedPreferences()){
             //buka main app
-            Toast.makeText(getBaseContext(), "Login info registered", Toast.LENGTH_SHORT).show();
-
-            Intent i = new Intent(LoginActivity.this, MainAppActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-            finish(); //close current activity
-
-            getApplicationContext().startActivity(i);
+            Toast.makeText(getBaseContext(), "Login information registered", Toast.LENGTH_SHORT).show();
+            openMainApp();
         }
     }
 
@@ -245,10 +239,7 @@ public class LoginActivity extends AppCompatActivity {
                                     sp.saveSharedPreferences(email, type, username, foto);
 
                                     //buka main app
-                                    Intent i = new Intent(LoginActivity.this, MainAppActivity.class);
-                                    i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY); //close login activity
-                                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    getApplicationContext().startActivity(i);
+                                    openMainApp();
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -299,5 +290,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
+    private void openMainApp() {
+        Intent i = new Intent(LoginActivity.this, MainAppActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        getApplicationContext().startActivity(i);
+        LoginActivity.this.finish();
+    }
 }

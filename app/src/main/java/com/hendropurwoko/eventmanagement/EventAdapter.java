@@ -32,6 +32,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 class EventAdapter extends RecyclerView.Adapter<EventAdapter.CardViewHolder> {
     AlertDialog.Builder dialog;
     private List<Event> list;
@@ -66,10 +68,11 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.CardViewHolder> {
         holder.tv_jam.setText(jam);
 
         if (visible.equals("0")){
-            holder.ll.setBackgroundResource(R.drawable.redpastelrcorner);
+            //holder.ll.setBackgroundResource(R.drawable.red_pastel_round_corner);
+            holder.tv_inactive.setVisibility(TextView.VISIBLE);
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.ivInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle b = new Bundle();
@@ -88,6 +91,13 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.CardViewHolder> {
                 MainAppActivity.hideBar();
             }
         });
+
+        holder.ivShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
@@ -97,7 +107,8 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.CardViewHolder> {
 
     public class CardViewHolder extends RecyclerView.ViewHolder {
         LinearLayout ll;
-        TextView tv_event, tv_tanggal, tv_jam;
+        TextView tv_event, tv_tanggal, tv_jam, tv_inactive;
+        CircleImageView ivInfo, ivShare;
 
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -105,6 +116,9 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.CardViewHolder> {
             tv_event = (TextView) itemView.findViewById(R.id.tv_event_event);
             tv_tanggal = (TextView) itemView.findViewById(R.id.tv_event_date);
             tv_jam = (TextView) itemView.findViewById(R.id.tv_event_time);
+            tv_inactive = (TextView) itemView.findViewById(R.id.tv_inactive);
+            ivInfo = (CircleImageView) itemView.findViewById(R.id.iv_detail);
+            ivShare = (CircleImageView) itemView.findViewById(R.id.iv_share);
         }
     }
 }

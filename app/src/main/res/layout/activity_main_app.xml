@@ -50,9 +50,9 @@
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottom_app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="bottom"
-        app:backgroundTint="@color/blue"
+        app:backgroundTint="@color/blueDark"
         app:hideOnScroll="true"
         app:layout_scrollFlags="scroll|enterAlways"
         app:navigationIcon="@drawable/ic_menu_white_24dp"
@@ -66,7 +66,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         app:fabSize="normal"
-        app:rippleColor="#A30505"
+        app:backgroundTint="@color/red"
+        app:rippleColor="@color/redDark"
         app:layout_anchor="@id/bottom_app_bar"
         android:src="@drawable/ic_add_white_24dp"/>
 

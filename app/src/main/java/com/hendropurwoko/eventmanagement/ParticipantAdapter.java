@@ -51,7 +51,8 @@ class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.CardVie
         holder.tv_input.setText(input);
 
         if (active.equals("No")){
-            holder.ll.setBackgroundResource(R.drawable.redpastelrcorner);
+            holder.tv_inactive.setVisibility(TextView.VISIBLE);
+            //holder.ll.setBackgroundResource(R.drawable.red_pastel_round_corner);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +84,7 @@ class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.CardVie
     }
 
     public class CardViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_name, tv_institution, tv_phone, tv_input;
+        TextView tv_name, tv_institution, tv_phone, tv_input, tv_inactive;
         LinearLayout ll;
 
         public CardViewHolder(@NonNull View itemView) {
@@ -92,6 +93,7 @@ class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.CardVie
             tv_institution = (TextView) itemView.findViewById(R.id.tv_rv_campus);
             tv_phone = (TextView) itemView.findViewById(R.id.tv_rv_phone);
             tv_input = (TextView) itemView.findViewById(R.id.tv_rv_input);
+            tv_inactive = (TextView) itemView.findViewById(R.id.tv_rv_inactive);
             ll = (LinearLayout) itemView.findViewById(R.id.wrap);
         }
     }
