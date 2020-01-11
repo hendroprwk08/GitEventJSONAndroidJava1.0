@@ -2,44 +2,48 @@ package com.hendropurwoko.eventmanagement;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.bottomappbar.BottomAppBar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 class EventAdapter extends RecyclerView.Adapter<EventAdapter.CardViewHolder> {
-    AlertDialog.Builder dialog;
     private List<Event> list;
     private Context context;
-    private String url;
-    private int pos;
+
+    String mail_event, mail_deskripsi;
 
     public EventAdapter(Context context, List<Event> list) {
         this.context = context;
@@ -62,6 +66,9 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.CardViewHolder> {
         final String tgl = list.get(position).getDate();
         final String jam = list.get(position).getTime();
         final String visible = list.get(position).getVisible();
+
+        mail_event = list.get(position).getEvent();
+        mail_deskripsi = list.get(position).getDescription();
 
         holder.tv_event.setText(event);
         holder.tv_tanggal.setText(tgl);
@@ -96,6 +103,66 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.CardViewHolder> {
             @Override
             public void onClick(View v) {
 
+                //collect email address to an array
+                RequestQueue queue = Volley.newRequestQueue(context);
+                String url = Cons.BASE_URL +"peserta.php?action=4";
+
+                JsonObjectRequest jsObjRequest = new JsonObjectRequest(
+                        Request.Method.GET,
+                        url,
+                        null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                //Log.d(Cons.TAG, "onResponse: " + response.toString());
+
+                                try {
+                                    JSONArray jsonArray = response.getJSONArray("result");
+
+                                    String[] emails = new String[jsonArray.length()];
+
+                                    if (jsonArray.length() != 0) {
+                                        for (int i = 0; i < jsonArray.length(); i++) {
+                                            JSONObject data = jsonArray.getJSONObject(i);
+
+                                            emails[i] =  data.getString("EMAIL").trim();
+                                        }
+                                    }
+                                    Intent selectorIntent = new Intent(Intent.ACTION_SENDTO);
+                                    selectorIntent.setData(Uri.parse("mailto:"));
+
+                                    final Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                                    emailIntent.putExtra(Intent.EXTRA_EMAIL, emails);
+                                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, event);
+                                    emailIntent.putExtra(Intent.EXTRA_TEXT, deskripsi);
+                                    emailIntent.setSelector( selectorIntent );
+
+                                    context.startActivity(Intent.createChooser(emailIntent, "Send email..."));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) { //time out or there is no connection
+                            Toast.makeText(context, R.string.time_out_try_again, Toast.LENGTH_SHORT).show();
+                        } else if (error instanceof AuthFailureError) { //there was an Authentication Failure
+                            Toast.makeText(context, R.string.auth_failed, Toast.LENGTH_SHORT).show();
+                        } else if (error instanceof ServerError) { //server responded with a error response
+                            Toast.makeText(context, R.string.server_problem, Toast.LENGTH_SHORT).show();
+                        } else if (error instanceof NetworkError) {//network error while performing the request
+                            Toast.makeText(context, R.string.please_check_your_connection, Toast.LENGTH_SHORT).show();
+                        } else if (error instanceof ParseError) {//the server response could not be parsed
+                            Toast.makeText(context, R.string.reading_data_failed, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, R.string.server_problem, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                queue.add(jsObjRequest);
             }
         });
     }
