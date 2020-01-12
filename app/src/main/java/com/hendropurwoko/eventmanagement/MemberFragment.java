@@ -1,8 +1,10 @@
 package com.hendropurwoko.eventmanagement;
 
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,10 +13,19 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -38,6 +49,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,11 +61,8 @@ public class MemberFragment extends Fragment {
     private SwipeRefreshLayout swipeContainer;
     public List<Member> members;
     ProgressBar pb;
-
-    public MemberFragment() {
-        // Required empty public constructor
-    }
-
+    boolean show;
+    String cari = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,6 +74,63 @@ public class MemberFragment extends Fragment {
 
         pb = (ProgressBar) view.findViewById(R.id.pb);
 
+        final ConstraintLayout llTitle = (ConstraintLayout) view.findViewById(R.id.ll_tittle);
+        final ConstraintLayout llSearch = (ConstraintLayout) view.findViewById(R.id.ll_search);
+
+        final EditText etSearch = (EditText) view.findViewById(R.id.et_search);
+        etSearch.setOnEditorActionListener(new EditText.OnEditorActionListener(){
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                        event.getAction() == KeyEvent.KEYCODE_ENTER){
+                    load(etSearch.getText().toString().trim());
+                    return true; //still focus
+                }
+                return false;
+            }
+        });
+
+        //detect focus
+        etSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) {
+                    //hide keyboard
+                    InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(etSearch.getWindowToken(), 0);
+                } else{
+                    //show keyboard
+                    InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                }
+            }
+        });
+
+        final ImageView ivSearch = (ImageView) view.findViewById(R.id.iv_search);
+        ivSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etSearch.requestFocus();
+
+                //show layout
+                llSearch.setVisibility(LinearLayout.VISIBLE);
+                llTitle.setVisibility(LinearLayout.GONE);
+            }
+        });
+
+        final ImageView ivClose = (ImageView) view.findViewById(R.id.iv_close);
+        ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etSearch.setText(null);
+                load(null);
+
+                llSearch.setVisibility(LinearLayout.GONE);
+                llTitle.setVisibility(LinearLayout.VISIBLE);
+            }
+        });
+
         // Lookup the swipe container view
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.eventSwipeRefreshLayout);
 
@@ -74,7 +141,7 @@ public class MemberFragment extends Fragment {
                 // Your code to refresh the list here.
                 // Make sure you call swipeContainer.setRefreshing(false)
                 // once the network request has completed successfully.
-                load();
+                load(cari);
 
                 new Handler().postDelayed(new Runnable() {
                     @Override public void run() {
@@ -91,16 +158,22 @@ public class MemberFragment extends Fragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-        load();
+        load(null);
 
         return view;
     }
 
-    void load() {
+    void load(String find) {
         pb.setVisibility(ProgressBar.VISIBLE);
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
-        String url = Cons.BASE_URL + "peserta.php?action=8";
+        String url;
+
+        if (find == null) {
+            url =  Cons.BASE_URL + "peserta.php?action=8";
+        }else{
+            url =  Cons.BASE_URL + "peserta.php?action=9&find="+ find;
+        }
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest(
                 Request.Method.GET,

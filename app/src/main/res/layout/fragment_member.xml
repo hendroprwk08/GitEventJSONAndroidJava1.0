@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".EventFragment"
     android:padding="@dimen/layout_15"
     android:orientation="vertical">
@@ -15,13 +16,89 @@
         android:visibility="gone"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:textColor="@color/grey"
-        android:text="@string/member"/>
+        android:id="@+id/ll_tittle">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:text="@string/member"
+            android:textColor="@color/grey"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@+id/iv_search"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:src="@drawable/ic_search_grey_dark_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/tv_title"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/ll_search">
+
+        <TextView
+            android:id="@+id/tv_small_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/member"
+            android:textColor="@color/grey"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:clickable="true"
+            android:src="@drawable/ic_arrow_back_grey_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/et_search"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_small_title" />
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/layout_10"
+            android:background="@drawable/greyedittextrcorner"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLines="1"
+            android:singleLine="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_close"
+            app:layout_constraintTop_toBottomOf="@id/tv_small_title"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

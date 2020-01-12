@@ -206,29 +206,8 @@ public class MainAppActivity extends AppCompatActivity {
 
         this.doubleBackToExitPressedOnce = true;
 
-        if (Cons.ACTIVE_FRAGMENT.equals("event")) {
-            fragment = new EventFragment();
-        }else if (Cons.ACTIVE_FRAGMENT.equals("user")) {
-            fragment = new UserFragment();
-        }else if (Cons.ACTIVE_FRAGMENT.equals("registration") ||
-                Cons.ACTIVE_FRAGMENT.equals("profile") ||
-                Cons.ACTIVE_FRAGMENT.equals("member") ||
-                Cons.ACTIVE_FRAGMENT.equals("participant") ||
-                Cons.ACTIVE_FRAGMENT.equals("home")){
-            if (Cons.LAST_FRAGMENT == "user") {
-                fragment = new UserFragment();
-            }else if (Cons.LAST_FRAGMENT ==  "participant") {
-                fragment = new ParticipantFragment();
-            }else if (Cons.LAST_FRAGMENT ==  "event") {
-                fragment = new EventFragment();
-            }else {
-                fragment = new HomeFragment();
-            }
-        }
-
         showBar();
-
-        loadFragment(fragment);
+        loadFragment(new HomeFragment());
 
         Toast.makeText(this, R.string.press_back_exit, Toast.LENGTH_SHORT).show();
 

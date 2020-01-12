@@ -120,18 +120,22 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.CardViewHolder> {
                                     JSONArray jsonArray = response.getJSONArray("result");
 
                                     String[] emails = new String[jsonArray.length()];
+                                    //String emails = "";
 
                                     if (jsonArray.length() != 0) {
                                         for (int i = 0; i < jsonArray.length(); i++) {
                                             JSONObject data = jsonArray.getJSONObject(i);
-
                                             emails[i] =  data.getString("EMAIL").trim();
+                                            //emails += data.getString("EMAIL").trim() + ", ";
                                         }
                                     }
                                     Intent selectorIntent = new Intent(Intent.ACTION_SENDTO);
                                     selectorIntent.setData(Uri.parse("mailto:"));
 
                                     final Intent emailIntent = new Intent(Intent.ACTION_SEND);
+
+                                    //String [] emailList = emails.split(", ");
+
                                     emailIntent.putExtra(Intent.EXTRA_EMAIL, emails);
                                     emailIntent.putExtra(Intent.EXTRA_SUBJECT, event);
                                     emailIntent.putExtra(Intent.EXTRA_TEXT, deskripsi);

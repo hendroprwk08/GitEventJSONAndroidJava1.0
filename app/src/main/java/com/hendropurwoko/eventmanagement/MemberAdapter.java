@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -298,6 +299,26 @@ class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.CardViewHolder> {
             }
         });
 
+        holder.btEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle b = new Bundle();
+                b.putString("bid", id);
+                b.putString("bname", name);
+                b.putString("binstitution", institution);
+                b.putString("bemail", email);
+                b.putString("bphone", phone);
+                b.putString("bwhatsapp", whatsapp);
+                b.putString("bactive", active);
+
+                ParticipantFormFragment fragment = new ParticipantFormFragment("edit");
+                fragment.setArguments(b);
+                ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.fl_container, fragment).commit();
+
+                MainAppActivity.hideBar();
+            }
+        });
+
     }
 
     public boolean selfPermissionGranted(String permission) {
@@ -339,6 +360,7 @@ class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.CardViewHolder> {
 
     public class CardViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvInstitution, tvWhatsapp, tvPhone, tvTimes, tvEmail, tvActivity, tvInactive;
+        Button btEdit;
         LinearLayout llEmail, llActivity, llPhone, llWa;
         CircleImageView iv, ivEmail, ivSendMail, ivCallWa, ivMsgWa, ivCallPhone, ivMsgPhone;
 
@@ -363,6 +385,7 @@ class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.CardViewHolder> {
             llEmail = (LinearLayout) itemView.findViewById(R.id.ll_email);
             llWa = (LinearLayout) itemView.findViewById(R.id.ll_wa);
             llActivity = (LinearLayout) itemView.findViewById(R.id.ll_rv_activity);
+            btEdit = (Button) itemView.findViewById(R.id.bt_rv_edit);
         }
     }
 
