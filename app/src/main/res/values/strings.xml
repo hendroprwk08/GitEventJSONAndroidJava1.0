@@ -51,6 +51,11 @@
     <string name="whatsapp_not_installed">Whatsapp app not installed in your phone</string>
     <string name="press_back_exit">Press BACK again to exit</string>
     <string name="edit">Edit</string>
+    <string name="summary_participant_base_on_event">Summary Participant Base On Event</string>
+    <string name="data">Data</string>
+    <string name="the_5_most_participants">The 5 most participants</string>
+    <string name="_5_active_participants">5 active participants</string>
+    <string name="recap">Recap</string>
 
     <string-array name="yes_no">
         <item>No</item>

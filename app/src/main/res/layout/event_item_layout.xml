@@ -27,26 +27,15 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/tv_event_event"
+            android:layout_width="343dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/title_events"
-            android:textStyle="bold"
             android:textAllCaps="true"
             android:textSize="@dimen/text_16"
-            android:id="@+id/tv_event_event"
-            android:layout_weight="1"/>
+            android:textStyle="bold" />
         <!-- android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"-->
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_detail"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginLeft="@dimen/layout_5"
-            android:tint="@color/white"
-            android:padding="@dimen/layout_5"
-            android:clickable="true"
-            android:background="@drawable/yellow_round_corner_50"
-            android:src="@drawable/ic_info_outline_white_24dp"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_share"
@@ -57,7 +46,7 @@
             android:padding="@dimen/layout_5"
             android:clickable="true"
             android:background="@drawable/blue_round_corner_50"
-            android:src="@drawable/ic_share_white_24dp"/>
+            android:src="@drawable/ic_email_white_24dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -66,18 +55,17 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="DATE"
             android:id="@+id/tv_event_date"/>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/layout_5"
             android:text="TIME"
-            android:gravity="right"
             android:id="@+id/tv_event_time"/>
 
     </LinearLayout>

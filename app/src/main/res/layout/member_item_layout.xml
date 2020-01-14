@@ -206,16 +206,4 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
 
     </LinearLayout>
-
-    <Button
-        android:layout_width="50dp"
-        android:layout_height="20dp"
-        android:id="@+id/bt_rv_edit"
-        android:layout_marginTop="@dimen/layout_10"
-        android:layout_gravity="right"
-        android:textSize="@dimen/text_12"
-        android:textColor="@color/yellow"
-        android:background="@drawable/orange_round_corner_outline"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:text="@string/edit"/>
 </LinearLayout>

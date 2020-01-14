@@ -114,7 +114,9 @@ public class MainAppActivity extends AppCompatActivity {
                         fragment = new EventFormFragment("add");
                     }else if (Cons.ACTIVE_FRAGMENT.equals("user")) {
                         fragment = new UserFormFragment("add");
-                    }else if (Cons.ACTIVE_FRAGMENT.equals("home") || Cons.ACTIVE_FRAGMENT.equals("participant")) {
+                    }else if (Cons.ACTIVE_FRAGMENT.equals("home") ||
+                            Cons.ACTIVE_FRAGMENT.equals("participant") ||
+                            Cons.ACTIVE_FRAGMENT.equals("member")) {
                         Cons.LAST_FRAGMENT = Cons.ACTIVE_FRAGMENT;
                         Toast.makeText(getBaseContext(), R.string.opening_web_page, Toast.LENGTH_SHORT).show();
                         fragment = new RegistrationFragment();
@@ -139,6 +141,8 @@ public class MainAppActivity extends AppCompatActivity {
                             fragment = new ParticipantFragment();
                         }else if (Cons.LAST_FRAGMENT ==  "event") {
                             fragment = new EventFragment();
+                       }else if (Cons.LAST_FRAGMENT ==  "member") {
+                            fragment = new MemberFragment();
                         }else {
                             fragment = new HomeFragment();
                         }

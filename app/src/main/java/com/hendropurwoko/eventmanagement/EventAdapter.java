@@ -79,26 +79,6 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.CardViewHolder> {
             holder.tv_inactive.setVisibility(TextView.VISIBLE);
         }
 
-        holder.ivInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle b = new Bundle();
-                b.putString("bid", id);
-                b.putString("bevent", event);
-                b.putString("bdeskripsi", deskripsi);
-                b.putString("btgl", tgl);
-                b.putString("bjam", jam);
-                b.putString("bvisible", visible);
-
-                EventFormFragment fragment = new EventFormFragment("edit");
-                fragment.setArguments(b);
-
-                ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.fl_container, fragment).commit();
-
-                MainAppActivity.hideBar();
-            }
-        });
-
         holder.ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,7 +149,40 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.CardViewHolder> {
                 queue.add(jsObjRequest);
             }
         });
+
+        holder.tv_event.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                detail(id, event, deskripsi, tgl, jam, visible);
+            }
+        });
+
+        holder.tv_tanggal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                detail(id, event, deskripsi, tgl, jam, visible);
+            }
+        });
     }
+
+    void detail(String id, String event, String deskripsi,String tgl, String jam, String visible){
+
+        Bundle b = new Bundle();
+        b.putString("bid", id);
+        b.putString("bevent", event);
+        b.putString("bdeskripsi", deskripsi);
+        b.putString("btgl", tgl);
+        b.putString("bjam", jam);
+        b.putString("bvisible", visible);
+
+        Cons.LAST_FRAGMENT = "event";
+        EventFormFragment fragment = new EventFormFragment("edit");
+        fragment.setArguments(b);
+
+        ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.fl_container, fragment).commit();
+
+        MainAppActivity.hideBar();
+      }
 
     @Override
     public int getItemCount() {
@@ -179,7 +192,7 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.CardViewHolder> {
     public class CardViewHolder extends RecyclerView.ViewHolder {
         LinearLayout ll;
         TextView tv_event, tv_tanggal, tv_jam, tv_inactive;
-        CircleImageView ivInfo, ivShare;
+        CircleImageView ivShare;
 
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -188,7 +201,6 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.CardViewHolder> {
             tv_tanggal = (TextView) itemView.findViewById(R.id.tv_event_date);
             tv_jam = (TextView) itemView.findViewById(R.id.tv_event_time);
             tv_inactive = (TextView) itemView.findViewById(R.id.tv_inactive);
-            ivInfo = (CircleImageView) itemView.findViewById(R.id.iv_detail);
             ivShare = (CircleImageView) itemView.findViewById(R.id.iv_share);
         }
     }

@@ -108,7 +108,6 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
 
                         //panggil method yang ada di activity lain
                         ((MainAppActivity)getActivity()).loadFragment(new MemberFragment());
-                        ((MainAppActivity)getActivity()).hideBar();
 
                         break;
                     case R.id.menu_activity:
