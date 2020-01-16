@@ -155,6 +155,7 @@
                 android:layout_marginTop="@dimen/layout_5"
                 android:layout_marginBottom="@dimen/layout_10"
                 android:layout_height="wrap_content"
+                android:text="@string/please_wait"
                 android:id="@+id/tv_home_participant"
                 android:background="@drawable/greyedittextrcorner"/>
 
@@ -174,7 +175,8 @@
                 android:padding="@dimen/layout_20"
                 android:layout_marginTop="@dimen/layout_5"
                 android:background="@drawable/greyedittextrcorner"
-                android:id="@+id/tv_home_member"/>
+                android:id="@+id/tv_home_member"
+                android:text="@string/please_wait"/>
 
         </LinearLayout>
 

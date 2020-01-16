@@ -12,28 +12,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0bdf651-8b59-4f70-bae8-f1f8bf0ba621" name="Default Changelist" comment="ok">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_refresh_grey_24dp.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/BottomSheetNavigationFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/BottomSheetNavigationFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/EventAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/EventAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/HomeFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/MainAppActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/MainAppActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/MemberAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/MemberAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/red_round_corner_10.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/red_round_corner_10.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main_app.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main_app.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/event_item_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/event_item_layout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/member_item_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/member_item_layout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/build/classes/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -47,7 +37,7 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="J8AXGF04N122SF7" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_3a_API_28" />
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
@@ -62,46 +52,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="238">
               <caret line="52" column="54" selection-start-line="52" selection-start-column="54" selection-end-line="52" selection-end-column="54" />
-              <folding>
-                <element signature="e#2145#2387#0" expanded="true" />
-                <element signature="e#2386#2387#0" expanded="true" />
-                <element signature="e#2602#4356#0" expanded="true" />
-                <element signature="e#4355#4356#0" expanded="true" />
-                <element signature="e#4703#4730#0" expanded="true" />
-                <element signature="e#4911#4931#0" expanded="true" />
-                <element signature="e#5110#5133#0" expanded="true" />
-                <element signature="e#5316#5353#0" expanded="true" />
-                <element signature="e#5531#5559#0" expanded="true" />
-                <element signature="e#5663#5686#0" expanded="true" />
-                <element signature="e#6176#7732#0" expanded="true" />
-                <element signature="e#7731#7732#0" expanded="true" />
-                <element signature="e#7734#9133#0" expanded="true" />
-                <element signature="e#8079#8106#0" expanded="true" />
-                <element signature="e#8287#8307#0" expanded="true" />
-                <element signature="e#8486#8509#0" expanded="true" />
-                <element signature="e#8692#8729#0" expanded="true" />
-                <element signature="e#8907#8935#0" expanded="true" />
-                <element signature="e#9039#9062#0" expanded="true" />
-                <element signature="e#9132#9133#0" expanded="true" />
-                <element signature="e#9548#10541#0" expanded="true" />
-                <element signature="e#10540#10541#0" expanded="true" />
-                <element signature="e#10543#11942#0" expanded="true" />
-                <element signature="e#10888#10915#0" expanded="true" />
-                <element signature="e#11096#11116#0" expanded="true" />
-                <element signature="e#11295#11318#0" expanded="true" />
-                <element signature="e#11501#11538#0" expanded="true" />
-                <element signature="e#11716#11744#0" expanded="true" />
-                <element signature="e#11848#11871#0" expanded="true" />
-                <element signature="e#11941#11942#0" expanded="true" />
-                <element signature="e#12356#13348#0" expanded="true" />
-                <element signature="e#13347#13348#0" expanded="true" />
-                <element signature="e#13695#13722#0" expanded="true" />
-                <element signature="e#13903#13923#0" expanded="true" />
-                <element signature="e#14102#14125#0" expanded="true" />
-                <element signature="e#14308#14345#0" expanded="true" />
-                <element signature="e#14523#14551#0" expanded="true" />
-                <element signature="e#14655#14678#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -109,7 +59,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/ParticipantFormFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
+            <state relative-caret-position="2312">
               <caret line="180" column="110" selection-start-line="180" selection-start-column="94" selection-end-line="180" selection-end-column="110" />
             </state>
           </provider>
@@ -117,24 +67,16 @@
       </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml">
+          <provider editor-type-id="android-designer2" />
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="140" column="12" selection-start-line="140" selection-start-column="12" selection-end-line="140" selection-end-column="12" />
+            <state relative-caret-position="242">
+              <caret line="172" column="51" lean-forward="true" selection-start-line="172" selection-start-column="51" selection-end-line="172" selection-end-column="51" />
               <folding>
-                <element signature="e#3093#3110#0" expanded="true" />
-                <element signature="e#3313#3331#0" expanded="true" />
-                <element signature="e#4551#4569#0" expanded="true" />
-                <element signature="e#5929#5961#0" expanded="true" />
-                <element signature="e#6071#6089#0" expanded="true" />
-                <element signature="e#6131#6148#0" expanded="true" />
-                <element signature="e#6193#6211#0" expanded="true" />
-                <element signature="e#6766#6799#0" expanded="true" />
-                <element signature="e#6962#6980#0" expanded="true" />
-                <element signature="e#7022#7039#0" expanded="true" />
+                <element signature="e#6338#6359#0" expanded="true" />
+                <element signature="e#7291#7312#0" expanded="true" />
               </folding>
             </state>
           </provider>
-          <provider editor-type-id="android-designer2" />
         </entry>
       </file>
     </leaf>
@@ -220,8 +162,8 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-7" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="137" />
     <option name="width" value="697" />
     <option name="height" value="745" />
   </component>
@@ -233,18 +175,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
-            <path>
-              <item name="EventManagement" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-            </path>
-            <path>
-              <item name="EventManagement" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-            </path>
             <path>
               <item name="EventManagement" type="1abcf292:AndroidViewProjectNode" />
               <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
@@ -253,8 +187,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="ProjectPane" />
       <pane id="Scope">
         <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
           <expand>
@@ -322,6 +254,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -549,11 +482,11 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
+    <frame x="137" y="0" width="697" height="745" extended-state="0" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.4620853" visible="true" weight="0.14750378" />
-      <window_info id="Build Variants" order="2" sideWeight="0.5379147" side_tool="true" visible="true" weight="0.14750378" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.4585366" visible="true" weight="0.2543171" />
+      <window_info id="Build Variants" order="2" sideWeight="0.54146343" side_tool="true" visible="true" weight="0.2543171" />
       <window_info id="Structure" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
       <window_info id="Designer" order="5" />
@@ -561,15 +494,15 @@
       <window_info id="Capture Tool" order="7" />
       <window_info id="Favorites" order="8" side_tool="true" />
       <window_info id="simpleUML" order="9" />
-      <window_info anchor="bottom" id="Run" order="0" visible="true" weight="0.32263243" />
-      <window_info anchor="bottom" id="Logcat" order="1" weight="0.3258427" />
+      <window_info anchor="bottom" id="Run" order="0" weight="0.32263243" />
+      <window_info anchor="bottom" id="Logcat" order="1" visible="true" weight="0.33006537" />
       <window_info anchor="bottom" id="TODO" order="2" weight="0.32744783" />
       <window_info anchor="bottom" id="Android Profiler" order="3" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.32744783" />
       <window_info anchor="bottom" id="Terminal" order="5" weight="0.32744783" />
       <window_info anchor="bottom" id="Event Log" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32744783" />
-      <window_info anchor="bottom" id="Build" order="8" weight="0.32102728" />
+      <window_info anchor="bottom" id="Build" order="8" weight="0.32045087" />
       <window_info anchor="bottom" id="Find" order="9" weight="0.32744783" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
@@ -579,7 +512,7 @@
       <window_info anchor="right" id="Flutter Outline" order="5" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info anchor="right" id="Flutter Performance" order="7" />
-      <window_info active="true" anchor="right" id="Preview" order="8" visible="true" weight="0.40393344" />
+      <window_info active="true" anchor="right" id="Preview" order="8" visible="true" weight="0.69701725" />
     </layout>
     <layout-to-restore>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
@@ -1207,75 +1140,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/ParticipantFormFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="180" column="110" selection-start-line="180" selection-start-column="94" selection-end-line="180" selection-end-column="110" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/HomeFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="52" column="54" selection-start-line="52" selection-start-column="54" selection-end-line="52" selection-end-column="54" />
-          <folding>
-            <element signature="e#2145#2387#0" expanded="true" />
-            <element signature="e#2386#2387#0" expanded="true" />
-            <element signature="e#2602#4356#0" expanded="true" />
-            <element signature="e#4355#4356#0" expanded="true" />
-            <element signature="e#4703#4730#0" expanded="true" />
-            <element signature="e#4911#4931#0" expanded="true" />
-            <element signature="e#5110#5133#0" expanded="true" />
-            <element signature="e#5316#5353#0" expanded="true" />
-            <element signature="e#5531#5559#0" expanded="true" />
-            <element signature="e#5663#5686#0" expanded="true" />
-            <element signature="e#6176#7732#0" expanded="true" />
-            <element signature="e#7731#7732#0" expanded="true" />
-            <element signature="e#7734#9133#0" expanded="true" />
-            <element signature="e#8079#8106#0" expanded="true" />
-            <element signature="e#8287#8307#0" expanded="true" />
-            <element signature="e#8486#8509#0" expanded="true" />
-            <element signature="e#8692#8729#0" expanded="true" />
-            <element signature="e#8907#8935#0" expanded="true" />
-            <element signature="e#9039#9062#0" expanded="true" />
-            <element signature="e#9132#9133#0" expanded="true" />
-            <element signature="e#9548#10541#0" expanded="true" />
-            <element signature="e#10540#10541#0" expanded="true" />
-            <element signature="e#10543#11942#0" expanded="true" />
-            <element signature="e#10888#10915#0" expanded="true" />
-            <element signature="e#11096#11116#0" expanded="true" />
-            <element signature="e#11295#11318#0" expanded="true" />
-            <element signature="e#11501#11538#0" expanded="true" />
-            <element signature="e#11716#11744#0" expanded="true" />
-            <element signature="e#11848#11871#0" expanded="true" />
-            <element signature="e#11941#11942#0" expanded="true" />
-            <element signature="e#12356#13348#0" expanded="true" />
-            <element signature="e#13347#13348#0" expanded="true" />
-            <element signature="e#13695#13722#0" expanded="true" />
-            <element signature="e#13903#13923#0" expanded="true" />
-            <element signature="e#14102#14125#0" expanded="true" />
-            <element signature="e#14308#14345#0" expanded="true" />
-            <element signature="e#14523#14551#0" expanded="true" />
-            <element signature="e#14655#14678#0" expanded="true" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/ParticipantFormFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2312">
+          <caret line="180" column="110" selection-start-line="180" selection-start-column="94" selection-end-line="180" selection-end-column="110" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="140" column="12" selection-start-line="140" selection-start-column="12" selection-end-line="140" selection-end-column="12" />
+        <state relative-caret-position="242">
+          <caret line="172" column="51" lean-forward="true" selection-start-line="172" selection-start-column="51" selection-end-line="172" selection-end-column="51" />
           <folding>
-            <element signature="e#3093#3110#0" expanded="true" />
-            <element signature="e#3313#3331#0" expanded="true" />
-            <element signature="e#4551#4569#0" expanded="true" />
-            <element signature="e#5929#5961#0" expanded="true" />
-            <element signature="e#6071#6089#0" expanded="true" />
-            <element signature="e#6131#6148#0" expanded="true" />
-            <element signature="e#6193#6211#0" expanded="true" />
-            <element signature="e#6766#6799#0" expanded="true" />
-            <element signature="e#6962#6980#0" expanded="true" />
-            <element signature="e#7022#7039#0" expanded="true" />
+            <element signature="e#6338#6359#0" expanded="true" />
+            <element signature="e#7291#7312#0" expanded="true" />
           </folding>
         </state>
       </provider>
