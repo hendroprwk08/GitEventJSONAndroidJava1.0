@@ -19,8 +19,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -43,27 +47,35 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EventFragment extends Fragment {
-    View fragment_view;
-    private SwipeRefreshLayout swipeContainer;
-    public List<Event> events;
-    ProgressBar pb;
+    @BindView(R.id.pb) ProgressBar pb;
+    @BindView(R.id.eventSwipeRefreshLayout) SwipeRefreshLayout swipeContainer;
+    @BindView(R.id.rv_events)  RecyclerView recyclerView;
 
-    public EventFragment() { }
+    String ACTION, ID;
+
+    View fragment_view;
+    public List<Event> events;
+
+    private Unbinder unbinder;
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_event, container, false);
+        unbinder = ButterKnife.bind(this, view); //bind butter knife
         fragment_view = view;
-
-        pb = (ProgressBar) view.findViewById(R.id.pb);
-
-        // Lookup the swipe container view
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.eventSwipeRefreshLayout);
 
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -130,7 +142,6 @@ public class EventFragment extends Fragment {
                                     events.add(new Event(id, event, description, date, time, visible));
                                 }
 
-                                RecyclerView recyclerView = (RecyclerView) fragment_view.findViewById(R.id.rv_events);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
                                 EventAdapter mAdapter = new EventAdapter(getContext(), events);

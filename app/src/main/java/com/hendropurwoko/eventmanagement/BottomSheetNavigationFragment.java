@@ -20,13 +20,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
-
     SharedPref sp;
     ImageView ivPhoto;
     TextView tvUsername, tvEmail;
 
     public static BottomSheetNavigationFragment newInstance() {
-
         Bundle args = new Bundle();
 
         BottomSheetNavigationFragment fragment = new BottomSheetNavigationFragment();

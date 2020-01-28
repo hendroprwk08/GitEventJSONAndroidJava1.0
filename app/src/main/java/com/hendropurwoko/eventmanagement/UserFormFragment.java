@@ -38,16 +38,34 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Arrays;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 
 public class UserFormFragment extends Fragment {
+    @BindView(R.id.pb) ProgressBar pb;
+    @BindView(R.id.ll_new) LinearLayout llAdd;
+    @BindView(R.id.ll_edit) LinearLayout llEdit;
+    @BindView(R.id.et_form_user_username) EditText etUsername;
+    @BindView(R.id.et_form_user_password) EditText etPassword;
+    @BindView(R.id.et_form_user_phone) EditText etPhone;
+    @BindView(R.id.et_form_user_email) EditText etEmail;
+    @BindView(R.id.sp_form_user_active)  Spinner spActive;
+    @BindView(R.id.sp_form_user_type) Spinner spType;
+
     String ACTION;
-    LinearLayout llAdd, llEdit;
-    ProgressBar pb;
     SharedPref sp;
 
+    private Unbinder unbinder;
 
     public UserFormFragment(String action) {
         this.ACTION = action;
+    }
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     @Override
@@ -55,18 +73,7 @@ public class UserFormFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_form, container, false);
-
-        pb = (ProgressBar) view.findViewById(R.id.pb);
-
-        llAdd = (LinearLayout) view.findViewById(R.id.ll_new);
-        llEdit = (LinearLayout) view.findViewById(R.id.ll_edit);
-
-        final EditText etUsername = (EditText) view.findViewById(R.id.et_form_user_username);
-        final EditText etPassword = (EditText) view.findViewById(R.id.et_form_user_password);
-        final EditText etPhone = (EditText) view.findViewById(R.id.et_form_user_phone);
-        final EditText etEmail = (EditText) view.findViewById(R.id.et_form_user_email);
-        final Spinner spActive = (Spinner) view.findViewById(R.id.sp_form_user_active);
-        final Spinner spType = (Spinner) view.findViewById(R.id.sp_form_user_type);
+        unbinder = ButterKnife.bind(this, view); //bind butter knife
 
         if(ACTION.equals("add")) {
             llEdit.setVisibility(View.GONE);

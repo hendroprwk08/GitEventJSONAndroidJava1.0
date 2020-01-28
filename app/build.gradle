@@ -3,6 +3,12 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     defaultConfig {
         applicationId "com.hendropurwoko.eventmanagement"
         minSdkVersion 15
@@ -27,7 +33,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    implementation 'com.google.android.material:material:1.0.0'
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0' //MPAndroidChart
+
+    implementation 'com.google.android.material:material:1.0.0' //material
 
     implementation 'com.android.volley:volley:1.1.1'
     implementation 'com.google.code.gson:gson:2.8.2' //GSON
@@ -43,4 +52,7 @@ dependencies {
 
     implementation 'com.amitshekhar.android:android-networking:1.0.2' //fast android networking
 
+    //butter knife
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
 }

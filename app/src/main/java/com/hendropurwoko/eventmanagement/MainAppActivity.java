@@ -46,22 +46,21 @@ import java.io.Console;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainAppActivity extends AppCompatActivity {
+    static BottomAppBar bottomAppBar;
+    static FloatingActionButton fab;
 
     public static Context MAIN_CONTEXT;
     public static String ACTION;
     public static Fragment LAST_FRAGMENT;
     public static View MAIN_VIEW;
 
-    public static BottomAppBar bottomAppBar;
-    public static FloatingActionButton fab;
-
     boolean doubleBackToExitPressedOnce = false;
 
     public static Fragment fragment = null;
-
-    public MainAppActivity() {
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +71,7 @@ public class MainAppActivity extends AppCompatActivity {
         MAIN_VIEW = getWindow().getDecorView().getRootView();
 
         //bottom app bar
-        bottomAppBar = findViewById(R.id.bottom_app_bar);
+        bottomAppBar = (BottomAppBar) findViewById(R.id.bottom_app_bar);
         bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
         //bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
         bottomAppBar.replaceMenu(R.menu.menu_item);
@@ -149,7 +148,6 @@ public class MainAppActivity extends AppCompatActivity {
                     }
 
                     showBar();
-
                     loadFragment(fragment);
                }
 

@@ -12,14 +12,6 @@
         android:orientation="vertical"
         android:padding="@dimen/layout_15">
 
-        <ProgressBar
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/layout_5"
-            android:id="@+id/pb"
-            android:indeterminate="true"
-            android:visibility="gone"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -68,7 +60,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:textAllCaps="true"
                 android:textColor="@color/grey"
@@ -95,6 +87,17 @@
                         android:gravity="right"
                         android:text="@string/title_events"
                         android:textColor="@color/white" />
+
+                    <ProgressBar
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/layout_30"
+                        android:id="@+id/pb_j_event"
+                        android:layout_marginTop="@dimen/layout_10"
+                        android:layout_marginBottom="@dimen/layout_10"
+                        android:visibility="gone"
+                        android:indeterminate="true"
+                        android:indeterminateTintMode="src_atop"
+                        android:indeterminateTint="@color/white"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -125,6 +128,17 @@
                         android:gravity="right"
                         android:text="@string/member"/>
 
+                    <ProgressBar
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/layout_30"
+                        android:id="@+id/pb_j_member"
+                        android:layout_marginTop="@dimen/layout_10"
+                        android:layout_marginBottom="@dimen/layout_10"
+                        android:visibility="gone"
+                        android:indeterminate="true"
+                        android:indeterminateTintMode="src_atop"
+                        android:indeterminateTint="@color/white"/>
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -139,15 +153,64 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/layout_20">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/grey"
+                    android:textAllCaps="true"
+                    android:text="Activity Chart At"/>
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/layout_20"
+                    android:id="@+id/sp_thn"/>
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/layout_30"
+                    android:layout_marginTop="@dimen/layout_5"
+                    android:layout_marginLeft="-20dp"
+                    android:id="@+id/pb_chart"
+                    android:visibility="gone"
+                    android:indeterminate="true"
+                    android:indeterminateTint="@color/grey"/>
+
+            </LinearLayout>
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:layout_marginTop="@dimen/layout_20"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:id="@+id/bc_chart"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginTop="@dimen/layout_20"
                 android:textColor="@color/grey"
                 android:textAllCaps="true"
                 android:text="@string/_5_active_participants"/>
+
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_30"
+                android:id="@+id/pb_participant"
+                android:layout_marginTop="@dimen/layout_10"
+                android:layout_marginBottom="@dimen/layout_10"
+                android:visibility="gone"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/grey"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -162,12 +225,22 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginTop="@dimen/layout_20"
                 android:textColor="@color/grey"
                 android:textAllCaps="true"
                 android:text="@string/the_5_most_participants"/>
+
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_30"
+                android:id="@+id/pb_member"
+                android:layout_marginTop="@dimen/layout_10"
+                android:layout_marginBottom="@dimen/layout_10"
+                android:visibility="gone"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/grey"/>
 
             <TextView
                 android:layout_width="match_parent"

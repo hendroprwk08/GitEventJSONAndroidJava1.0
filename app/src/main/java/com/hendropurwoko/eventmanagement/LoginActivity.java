@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -35,37 +36,39 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 public class LoginActivity extends AppCompatActivity {
+    @BindView(R.id.pb) ProgressBar pb;
+    @BindView(R.id.login_et_email) EditText etLoginEmail;
+    @BindView(R.id.login_et_password) EditText etPassword;
+    @BindView(R.id.regis_et_email) EditText etRegisEmail;
+    @BindView(R.id.regis_et_password) EditText etRegisPassword;
+    @BindView(R.id.veri_et_vericode) EditText etVerification;
+    @BindView(R.id.ll_login) LinearLayout llLogin;
+    @BindView(R.id.ll_registration) LinearLayout llRegistration;
+    @BindView(R.id.ll_verification) LinearLayout llVerification;
+    @BindView(R.id.login_bt_login) Button btLogin;
+    @BindView(R.id.regis_bt_back) Button btBack;
+    @BindView(R.id.veri_bt_back) Button btBackVeri;
+    @BindView(R.id.veri_bt_confirm) Button btConfirmVeri;
 
-    LinearLayout llLogin, llRegistration, llVerification;
-    EditText etPassword, etLoginEmail, etRegisEmail, etRegisPassword, etRegisUsername, etVerification;
-    ProgressBar pb;
     SharedPref sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
 
         hide();
 
-        pb = (ProgressBar) findViewById(R.id.pb);
-
-        etLoginEmail = (EditText) findViewById(R.id.login_et_email);
-        etPassword = (EditText) findViewById(R.id.login_et_password);
-        etRegisEmail = (EditText) findViewById(R.id.regis_et_email);
-        etRegisPassword = (EditText) findViewById(R.id.regis_et_password);
-        etVerification = (EditText) findViewById(R.id.veri_et_vericode);
-
-        llLogin = (LinearLayout) findViewById(R.id.ll_login);
-        llRegistration = (LinearLayout) findViewById(R.id.ll_registration);
-        llVerification = (LinearLayout) findViewById(R.id.ll_verification);
-
-        final Button btLogin = (Button) findViewById(R.id.login_bt_login);
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,7 +93,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });*/
 
-        final Button btBack = (Button) findViewById(R.id.regis_bt_back);
         btBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,7 +101,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        final Button btBackVeri = (Button) findViewById(R.id.veri_bt_back);
         btBackVeri.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,7 +109,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        final Button btConfirmVeri = (Button) findViewById(R.id.veri_bt_confirm);
         btConfirmVeri.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

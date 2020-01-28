@@ -6,10 +6,12 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.text.Html;
 import android.util.Log;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -45,20 +48,35 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Arrays;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ParticipantFormFragment extends Fragment {
+    @BindView(R.id.pb) ProgressBar pb;
+    @BindView(R.id.ll_new) LinearLayout llAdd;
+    @BindView(R.id.ll_edit) LinearLayout llEdit;
+    @BindView(R.id.et_form_member_name) EditText etName;
+    @BindView(R.id.et_form_member_institution) EditText etInstitution;
+    @BindView(R.id.et_form_member_email) EditText etEmail;
+    @BindView(R.id.et_form_member_phone) EditText etPhone;
+    @BindView(R.id.et_form_member_whatsapp) EditText etWhatsapp;
+    @BindView(R.id.tv_form_member_events) TextView tvEvents;
+    @BindView(R.id.sp_form_member_active) Spinner spActive;
+    @BindView(R.id.bt_form_user_update) Button btUpdate;
+    @BindView(R.id.bt_form_user_save) Button btSave;
 
     String ACTION, ID;
-    LinearLayout llAdd, llEdit;
-    ProgressBar pb;
 
-    TextView tvEvents;
+    private Unbinder unbinder;
 
     public ParticipantFormFragment(String action) {
         this.ACTION = action;
+    }
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     @Override
@@ -66,16 +84,7 @@ public class ParticipantFormFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_participant_form, container, false);
-
-        final EditText etName = (EditText) view.findViewById(R.id.et_form_member_name);
-        final EditText etInstitution = (EditText) view.findViewById(R.id.et_form_member_institution);
-        final EditText etEmail = (EditText) view.findViewById(R.id.et_form_member_email);
-        final EditText etPhone = (EditText) view.findViewById(R.id.et_form_member_phone);
-        final EditText etWhatsapp = (EditText) view.findViewById(R.id.et_form_member_whatsapp);
-        final Spinner spActive = (Spinner) view.findViewById(R.id.sp_form_member_active);
-
-        llAdd = (LinearLayout) view.findViewById(R.id.ll_new);
-        llEdit = (LinearLayout) view.findViewById(R.id.ll_edit);
+        unbinder = ButterKnife.bind(this, view); //bind butter knife
 
         if(ACTION.equals("add")) {
             llEdit.setVisibility(View.GONE);
@@ -101,7 +110,6 @@ public class ParticipantFormFragment extends Fragment {
             llAdd.setVisibility(View.GONE);
         }
 
-        final Button btSave = (Button) view.findViewById(R.id.bt_form_user_save);
         btSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,8 +124,6 @@ public class ParticipantFormFragment extends Fragment {
             }
         });
 
-
-        final Button btUpdate = (Button) view.findViewById(R.id.bt_form_user_update);
         btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,10 +146,7 @@ public class ParticipantFormFragment extends Fragment {
             }
         }); */
 
-        pb = (ProgressBar) view.findViewById(R.id.pb);
-
-        tvEvents = (TextView) view.findViewById(R.id.tv_form_member_events);
-        return view;
+       return view;
     }
 
     private void loadEventPeserta(int id) {

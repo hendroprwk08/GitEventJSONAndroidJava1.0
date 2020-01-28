@@ -39,27 +39,35 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 public class UserFragment extends Fragment {
+    @BindView(R.id.pb) ProgressBar pb;
+    @BindView(R.id.userSwipeRefreshLayout) SwipeRefreshLayout swipeContainer;
+    @BindView(R.id.rv_users) RecyclerView recyclerView;
 
     View fragment_view;
-    private SwipeRefreshLayout swipeContainer;
     public List<User> users;
-    ProgressBar pb;
+
+    private Unbinder unbinder;
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_user, container, false);
+        unbinder = ButterKnife.bind(this, view); //bind butter knife
 
         fragment_view = view;
 
-        pb = (ProgressBar) view.findViewById(R.id.pb);
-
         load();
-
-        // Lookup the swipe container view
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.userSwipeRefreshLayout);
 
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -122,7 +130,6 @@ public class UserFragment extends Fragment {
                                             data.getString("TYPE").toString().trim()));
                                 }
 
-                                RecyclerView recyclerView = (RecyclerView) fragment_view.findViewById(R.id.rv_users);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
                                 UserAdapter mAdapter = new UserAdapter(getContext(), users);

@@ -7,13 +7,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class WebRegistrationActivity extends AppCompatActivity {
+    @BindView(R.id.web_view) WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_registration);
+        ButterKnife.bind(this);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //back button
         getSupportActionBar().setTitle("Registration");
@@ -24,7 +30,6 @@ public class WebRegistrationActivity extends AppCompatActivity {
         progressDialog.setCancelable(true);
         progressDialog.show();
 
-        WebView webView = (WebView) findViewById(R.id.web_view);
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
@@ -42,7 +47,7 @@ public class WebRegistrationActivity extends AppCompatActivity {
                 progressDialog.hide();
             }
         });
-        webView.loadUrl("http://event-lcc-me.000webhostapp.com/registration.html");
 
+        webView.loadUrl("http://event-lcc-me.000webhostapp.com/registration.html");
     }
 }

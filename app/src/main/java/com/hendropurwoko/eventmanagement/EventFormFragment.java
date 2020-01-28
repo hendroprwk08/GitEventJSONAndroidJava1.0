@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.mikephil.charting.charts.BarChart;
 
 import org.json.JSONObject;
 
@@ -47,18 +49,35 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 public class EventFormFragment extends Fragment {
+    @BindView(R.id.pb) ProgressBar pb;
+    @BindView(R.id.et_form_event_name) EditText etName;
+    @BindView(R.id.et_form_event_description) EditText etDescription;
+    @BindView(R.id.et_form_event_date) TextView etDate;
+    @BindView(R.id.et_form_event_time) TextView etTime;
+    @BindView(R.id.sp_form_event_visible) Spinner sp;
+    @BindView(R.id.bt_form_event_save) Button btSave;
+    @BindView(R.id.bt_form_event_update) Button btUpdate;
+    @BindView(R.id.event_button_new) LinearLayout llAdd;
+    @BindView(R.id.event_button_edit) LinearLayout llEdit;
 
     String ID, ACTION = null;
     Bundle bundle;
-    ProgressBar pb;
-
     final Calendar myCalendar = Calendar.getInstance();
-    EditText etDate, etTime;
-    Spinner sp;
+
+    private Unbinder unbinder;
 
     public EventFormFragment(String action){
         this.ACTION = action;
+    }
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     @Override
@@ -66,13 +85,8 @@ public class EventFormFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_event_form, container, false);
+        unbinder = ButterKnife.bind(this, view); //bind butter knife
 
-        pb = (ProgressBar) view.findViewById(R.id.pb);
-
-        final EditText etName = (EditText) view.findViewById(R.id.et_form_event_name);
-        final EditText etDescription = (EditText) view.findViewById(R.id.et_form_event_description);
-
-        etDate = (EditText) view.findViewById(R.id.et_form_event_date);
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,7 +113,6 @@ public class EventFormFragment extends Fragment {
             }
         });
 
-        etTime = (EditText) view.findViewById(R.id.et_form_event_time);
         etTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,7 +134,6 @@ public class EventFormFragment extends Fragment {
             }
         });
 
-        sp = (Spinner) view.findViewById(R.id.sp_form_event_visible);
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -150,7 +162,6 @@ public class EventFormFragment extends Fragment {
         // attaching data adapter to spinner
         sp.setAdapter(dataAdapter);*/
 
-        final Button btSave = (Button) view.findViewById(R.id.bt_form_event_save);
         btSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,7 +182,6 @@ public class EventFormFragment extends Fragment {
             }
         }); */
 
-        final Button btUpdate = (Button) view.findViewById(R.id.bt_form_event_update);
         btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,9 +193,6 @@ public class EventFormFragment extends Fragment {
                         String.valueOf(sp.getSelectedItemPosition()));
             }
         });
-
-        final LinearLayout llAdd = (LinearLayout) view.findViewById(R.id.event_button_new);
-        final LinearLayout llEdit = (LinearLayout) view.findViewById(R.id.event_button_edit);
 
         if(ACTION.equals("add")) {
             llEdit.setVisibility(View.GONE);

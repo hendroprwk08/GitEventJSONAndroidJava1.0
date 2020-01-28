@@ -49,6 +49,9 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -56,28 +59,35 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * A simple {@link Fragment} subclass.
  */
 public class MemberFragment extends Fragment {
+    @BindView(R.id.pb) ProgressBar pb;
+    @BindView(R.id.ll_tittle) ConstraintLayout llTitle;
+    @BindView(R.id.ll_search) ConstraintLayout llSearch;
+    @BindView(R.id.et_search) EditText etSearch;
+    @BindView(R.id.iv_search) ImageView ivSearch;
+    @BindView(R.id.iv_close) ImageView ivClose;
+    @BindView(R.id.eventSwipeRefreshLayout) SwipeRefreshLayout swipeContainer;
 
     View fragment_view;
-    private SwipeRefreshLayout swipeContainer;
     public List<Member> members;
-    ProgressBar pb;
     boolean show;
     String cari = null;
+
+    private Unbinder unbinder;
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_member, container, false);
+        unbinder = ButterKnife.bind(this, view); //bind butter knife
 
         fragment_view = view;
 
-        pb = (ProgressBar) view.findViewById(R.id.pb);
-
-        final ConstraintLayout llTitle = (ConstraintLayout) view.findViewById(R.id.ll_tittle);
-        final ConstraintLayout llSearch = (ConstraintLayout) view.findViewById(R.id.ll_search);
-
-        final EditText etSearch = (EditText) view.findViewById(R.id.et_search);
         etSearch.setOnEditorActionListener(new EditText.OnEditorActionListener(){
 
             @Override
@@ -107,7 +117,6 @@ public class MemberFragment extends Fragment {
             }
         });
 
-        final ImageView ivSearch = (ImageView) view.findViewById(R.id.iv_search);
         ivSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,7 +128,6 @@ public class MemberFragment extends Fragment {
             }
         });
 
-        final ImageView ivClose = (ImageView) view.findViewById(R.id.iv_close);
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,9 +138,6 @@ public class MemberFragment extends Fragment {
                 llTitle.setVisibility(LinearLayout.VISIBLE);
             }
         });
-
-        // Lookup the swipe container view
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.eventSwipeRefreshLayout);
 
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

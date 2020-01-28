@@ -1,6 +1,5 @@
 package com.hendropurwoko.eventmanagement;
 
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -56,41 +55,44 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.BitSet;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ProfileFragment extends Fragment {
+    @BindView(R.id.pb) ProgressBar pb;
+    @BindView(R.id.tv_progress) TextView tvProgress;
+    @BindView(R.id.iv_profile) CircleImageView iv;
+    @BindView(R.id.bt_profile_logout) Button btLogout;
+    @BindView(R.id.et_profile_username) EditText etUsername;
+    @BindView(R.id.et_profile_email) EditText etEmail;
+    @BindView(R.id.et_ad_pw) EditText etPassword;
+    @BindView(R.id.bt_profile_cpassword) Button btChangePassword;
+    @BindView(R.id.bt_profile_upload) Button btUpload;
 
     final static int IMAGE_PICK_CODE = 1000;
     final static int PERMISSION_CODE = 1001;
 
-    CircleImageView iv;
-    TextView tvProgress;
-    Button btUpload;
-    EditText etPassword;
-
     String email, foto;
-    ProgressBar pb;
-
     AlertDialog.Builder alertDialog;
     LayoutInflater inf;
-
     SharedPref sp;
 
+    private Unbinder unbinder;
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
+        unbinder = ButterKnife.bind(this, view); //bind butter knife
 
-        pb = (ProgressBar) view.findViewById(R.id.pb);
-        tvProgress = (TextView) view.findViewById(R.id.tv_progress);
-
-        iv = (CircleImageView) view.findViewById(R.id.iv_profile);
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,7 +147,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        final Button btLogout = (Button) view.findViewById(R.id.bt_profile_logout);
         btLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,9 +181,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        final EditText etUsername = (EditText) view.findViewById(R.id.et_profile_username);
-        final EditText etEmail = (EditText) view.findViewById(R.id.et_profile_email);
-
         sp = new SharedPref(getContext());
 
         //ambil SP
@@ -205,13 +203,11 @@ public class ProfileFragment extends Fragment {
             etEmail.setText(email);
         }
 
-        btUpload = (Button)view.findViewById(R.id.bt_profile_upload);
+
 
         //fast android networking
         AndroidNetworking.initialize(getContext());
 
-
-        final Button btChangePassword = (Button) view.findViewById(R.id.bt_profile_cpassword);
         btChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -227,7 +223,6 @@ public class ProfileFragment extends Fragment {
                 alertDialog.setTitle("Type Your New Password");
 
                 //definisi objek
-                etPassword = (EditText) view.findViewById(R.id.et_ad_pw);
                 alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

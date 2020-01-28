@@ -41,35 +41,42 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 public class ParticipantFragment extends Fragment {
+    @BindView(R.id.pb) ProgressBar pb;
+    @BindView(R.id.userSwipeRefreshLayout) SwipeRefreshLayout swipeContainer;
+    @BindView(R.id.sp_participant) Spinner sp;
+    @BindView(R.id.tv_jumlah) TextView tvJumlah;
+
     View fragment_view;
-    private SwipeRefreshLayout swipeContainer;
     public List<Participant> participants;
 
     ArrayList<String> arr;
     HashMap<String, String> mapData;
-
-    ProgressBar pb;
-    Spinner sp;
-    TextView tvJumlah;
     int EVENT_ID;
+
+    private Unbinder unbinder;
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_participant, container, false);
+        unbinder = ButterKnife.bind(this, view); //bind butter knife
 
         fragment_view = view;
-
-        pb = (ProgressBar) view.findViewById(R.id.pb);
 
         pb.setVisibility(ProgressBar.VISIBLE);
 
         loadEvent();
-
-        // Lookup the swipe container view
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.participantSwipeRefreshLayout);
 
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -97,7 +104,6 @@ public class ParticipantFragment extends Fragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-        sp = (Spinner) view.findViewById(R.id.sp_participant);
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -123,7 +129,6 @@ public class ParticipantFragment extends Fragment {
             }
         });
 
-        tvJumlah = (TextView) view.findViewById(R.id.tv_jumlah);
         return view;
     }
 

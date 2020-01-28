@@ -13,27 +13,33 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class RegistrationFragment extends Fragment {
+    @BindView(R.id.pb) ProgressBar pb;
+    @BindView(R.id.web_view) WebView webView;
 
-    public RegistrationFragment() {
-        // Required empty public constructor
+    private Unbinder unbinder;
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_registration, container, false);
+        unbinder = ButterKnife.bind(this, view); //bind butter knife
 
-        final ProgressBar pb = (ProgressBar) view.findViewById(R.id.pb);
         pb.setVisibility(ProgressBar.VISIBLE);
-
-        final WebView webView = (WebView) view.findViewById(R.id.web_view);
 
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setJavaScriptEnabled(true);
