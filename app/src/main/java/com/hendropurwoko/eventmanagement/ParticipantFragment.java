@@ -47,7 +47,7 @@ import butterknife.Unbinder;
 
 public class ParticipantFragment extends Fragment {
     @BindView(R.id.pb) ProgressBar pb;
-    @BindView(R.id.userSwipeRefreshLayout) SwipeRefreshLayout swipeContainer;
+    @BindView(R.id.participantSwipeRefreshLayout) SwipeRefreshLayout swipeContainer;
     @BindView(R.id.sp_participant) Spinner sp;
     @BindView(R.id.tv_jumlah) TextView tvJumlah;
 

@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -69,16 +70,18 @@ public class ProfileFragment extends Fragment {
     @BindView(R.id.bt_profile_logout) Button btLogout;
     @BindView(R.id.et_profile_username) EditText etUsername;
     @BindView(R.id.et_profile_email) EditText etEmail;
-    @BindView(R.id.et_ad_pw) EditText etPassword;
     @BindView(R.id.bt_profile_cpassword) Button btChangePassword;
     @BindView(R.id.bt_profile_upload) Button btUpload;
+
+    //alert dialog
+    @Nullable
+    @BindView(R.id.et_ad_pw) EditText etPassword;
 
     final static int IMAGE_PICK_CODE = 1000;
     final static int PERMISSION_CODE = 1001;
 
+    View fragmentView;
     String email, foto;
-    AlertDialog.Builder alertDialog;
-    LayoutInflater inf;
     SharedPref sp;
 
     private Unbinder unbinder;
@@ -87,10 +90,13 @@ public class ProfileFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
+        fragmentView = view;
+
         unbinder = ButterKnife.bind(this, view); //bind butter knife
 
         iv.setOnClickListener(new View.OnClickListener() {
@@ -203,27 +209,31 @@ public class ProfileFragment extends Fragment {
             etEmail.setText(email);
         }
 
-
-
         //fast android networking
         AndroidNetworking.initialize(getContext());
 
         btChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alertDialog = new AlertDialog.Builder(getContext());
+                //alertDialog = new AlertDialog.Builder(getContext());
 
-                inf = getActivity().getLayoutInflater();
-                view = inf.inflate(R.layout.alertdialog_change_password_form, null);
+                //inf = getActivity().getLayoutInflater();
+                //view = inf.inflate(R.layout.alertdialog_change_password_form, null);
 
-                final View diagView = view;
+                //final View diagView = view;
 
-                alertDialog.setView(diagView);
-                alertDialog.setCancelable(true);
-                alertDialog.setTitle("Type Your New Password");
+                //EditText etPassword = (EditText) diagView.findViewById(R.id.et_ad_pw);
+
+                final AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+                view = getLayoutInflater().inflate(R.layout.alertdialog_change_password_form,null);
+                unbinder = ButterKnife.bind(fragmentView, view);
+                alert.setCancelable(false);
+                alert.setView(view);
+
+                final AlertDialog dialog = alert.create();
 
                 //definisi objek
-                alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         AndroidNetworking.get(Cons.BASE_URL +"cpassword.php")
@@ -255,20 +265,19 @@ public class ProfileFragment extends Fragment {
                                     Toast.makeText(getContext(),
                                             "Error: " + error,
                                             Toast.LENGTH_SHORT).show();
-
                                 }
                             });
                     }
                 });
 
-                alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
                 });
 
-                alertDialog.show();
+                alert.show();
             }
         });
 
