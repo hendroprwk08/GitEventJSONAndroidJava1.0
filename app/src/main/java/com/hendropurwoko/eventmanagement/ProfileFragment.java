@@ -19,6 +19,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -72,10 +73,6 @@ public class ProfileFragment extends Fragment {
     @BindView(R.id.et_profile_email) EditText etEmail;
     @BindView(R.id.bt_profile_cpassword) Button btChangePassword;
     @BindView(R.id.bt_profile_upload) Button btUpload;
-
-    //alert dialog
-    @Nullable
-    @BindView(R.id.et_ad_pw) EditText etPassword;
 
     final static int IMAGE_PICK_CODE = 1000;
     final static int PERMISSION_CODE = 1001;
@@ -215,6 +212,11 @@ public class ProfileFragment extends Fragment {
         btChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                PasswordAlertDialog passwordAlertDialog = PasswordAlertDialog.newInstance(email);
+                passwordAlertDialog.show(fm, "fragment_edit_name");
+
                 //alertDialog = new AlertDialog.Builder(getContext());
 
                 //inf = getActivity().getLayoutInflater();
@@ -224,6 +226,7 @@ public class ProfileFragment extends Fragment {
 
                 //EditText etPassword = (EditText) diagView.findViewById(R.id.et_ad_pw);
 
+                /*
                 final AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
                 view = getLayoutInflater().inflate(R.layout.alertdialog_change_password_form,null);
                 unbinder = ButterKnife.bind(fragmentView, view);
@@ -277,7 +280,7 @@ public class ProfileFragment extends Fragment {
                     }
                 });
 
-                alert.show();
+                alert.show();*/
             }
         });
 
