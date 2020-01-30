@@ -45,8 +45,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/PasswordAlertDialog.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="107" column="30" selection-start-line="107" selection-start-column="30" selection-end-line="107" selection-end-column="30" />
+            <state relative-caret-position="850">
+              <caret line="77" column="25" lean-forward="true" selection-start-line="77" selection-start-column="25" selection-end-line="77" selection-end-column="25" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -470,7 +470,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="1" sideWeight="0.4539007" visible="true" weight="0.1633888" />
@@ -486,7 +485,7 @@
       <window_info anchor="bottom" id="Logcat" order="1" weight="0.33333334" />
       <window_info anchor="bottom" id="TODO" order="2" weight="0.32744783" />
       <window_info anchor="bottom" id="Android Profiler" order="3" />
-      <window_info active="true" anchor="bottom" id="Debug" order="4" visible="true" weight="0.3268921" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.3268921" />
       <window_info anchor="bottom" id="Terminal" order="5" weight="0.32744783" />
       <window_info anchor="bottom" id="Event Log" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32744783" />
@@ -1201,8 +1200,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/PasswordAlertDialog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="107" column="30" selection-start-line="107" selection-start-column="30" selection-end-line="107" selection-end-column="30" />
+        <state relative-caret-position="850">
+          <caret line="77" column="25" lean-forward="true" selection-start-line="77" selection-start-column="25" selection-end-line="77" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
