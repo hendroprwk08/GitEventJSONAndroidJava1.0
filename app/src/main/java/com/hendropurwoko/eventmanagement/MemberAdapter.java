@@ -58,6 +58,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static androidx.core.app.ActivityCompat.requestPermissions;
@@ -119,8 +121,7 @@ class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.CardViewHolder> {
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("message/rfc822");
                 i.putExtra(Intent.EXTRA_EMAIL  , new String[]{email});
-                //i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
-                //i.putExtra(Intent.EXTRA_TEXT   , "body of email");
+
                 try {
                     context.startActivity(Intent.createChooser(i, "Send mail..."));
                 } catch (android.content.ActivityNotFoundException ex) {
@@ -295,7 +296,6 @@ class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.CardViewHolder> {
 
                 member.setExpanded(!expanded);
                 notifyItemChanged(pos);
-
             }
         });
 
@@ -377,34 +377,32 @@ class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.CardViewHolder> {
     }
 
     public class CardViewHolder extends RecyclerView.ViewHolder {
-        TextView tvName, tvInstitution, tvWhatsapp, tvPhone, tvTimes, tvEmail, tvActivity, tvInactive;
-        LinearLayout llEmail, llActivity, llPhone, llWa;
-        CircleImageView iv, ivEmail, ivSendMail, ivCallWa, ivMsgWa, ivCallPhone, ivMsgPhone;
+        @BindView(R.id.tv_rv_name) TextView tvName;
+        @BindView(R.id.tv_rv_institution) TextView tvInstitution;
+        @BindView(R.id.tv_rv_whatsapp) TextView tvWhatsapp;
+        @BindView(R.id.tv_rv_phone) TextView tvPhone;
+        @BindView(R.id.tv_rv_email) TextView tvEmail;
+        @BindView(R.id.tv_rv_times) TextView tvTimes;
+        @BindView(R.id.tv_rv_activity) TextView tvActivity;
+        @BindView(R.id.tv_rv_inactive) TextView tvInactive;
+        @BindView(R.id.iv) CircleImageView iv;
+        @BindView(R.id.iv_send_email) CircleImageView ivSendMail;
+        @BindView(R.id.iv_call_phone) CircleImageView ivCallPhone;
+        @BindView(R.id.iv_call_wa) CircleImageView ivCallWa;
+        @BindView(R.id.iv_msg_phone) CircleImageView ivMsgPhone;
+        @BindView(R.id.iv_msg_wa) CircleImageView ivMsgWa;
+        @BindView(R.id.ll_phone) LinearLayout llPhone;
+        @BindView(R.id.ll_email) LinearLayout llEmail;
+        @BindView(R.id.ll_wa) LinearLayout llWa;
+        @BindView(R.id.ll_rv_activity) LinearLayout llActivity;
 
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvName = (TextView) itemView.findViewById(R.id.tv_rv_name);
-            tvInstitution = (TextView) itemView.findViewById(R.id.tv_rv_institution);
-            tvWhatsapp = (TextView) itemView.findViewById(R.id.tv_rv_whatsapp);
-            tvPhone = (TextView) itemView.findViewById(R.id.tv_rv_phone);
-            tvEmail = (TextView) itemView.findViewById(R.id.tv_rv_email);
-            tvTimes = (TextView) itemView.findViewById(R.id.tv_rv_times);
-            tvActivity = (TextView) itemView.findViewById(R.id.tv_rv_activity);
-            tvInactive = (TextView) itemView.findViewById(R.id.tv_rv_inactive);
-            iv = (CircleImageView) itemView.findViewById(R.id.iv);
-            ivSendMail = (CircleImageView) itemView.findViewById(R.id.iv_send_email);
-            ivCallPhone = (CircleImageView) itemView.findViewById(R.id.iv_call_phone);
-            ivCallWa = (CircleImageView) itemView.findViewById(R.id.iv_call_wa);
-            ivMsgPhone = (CircleImageView) itemView.findViewById(R.id.iv_msg_phone);
-            ivMsgWa = (CircleImageView) itemView.findViewById(R.id.iv_msg_wa);
-            ivEmail = (CircleImageView) itemView.findViewById(R.id.iv_send_email);
-            llPhone = (LinearLayout) itemView.findViewById(R.id.ll_phone);
-            llEmail = (LinearLayout) itemView.findViewById(R.id.ll_email);
-            llWa = (LinearLayout) itemView.findViewById(R.id.ll_wa);
-            llActivity = (LinearLayout) itemView.findViewById(R.id.ll_rv_activity);
+            ButterKnife.bind(this, itemView);
         }
     }
 
+    /*
     // Clean all elements of the recycler
     public void clear() {
         list.clear();
@@ -416,8 +414,5 @@ class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.CardViewHolder> {
         notifyDataSetChanged();
     }
 
-    private void loadEventPeserta(String id) {
-
-
-    }
+     */
 }

@@ -30,6 +30,10 @@ import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
+
 class UserAdapter extends RecyclerView.Adapter<UserAdapter.CardViewHolder> {
     private List<User> users;
     private Context context;
@@ -93,17 +97,16 @@ class UserAdapter extends RecyclerView.Adapter<UserAdapter.CardViewHolder> {
     }
 
     public class CardViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_username, tv_email, tv_phone, tv_type, tv_inactive;
-        LinearLayout ll;
+        @BindView(R.id.wrap) LinearLayout ll;
+        @BindView(R.id.tv_rv_username) TextView tv_username;
+        @BindView(R.id.tv_rv_email) TextView tv_email;
+        @BindView(R.id.tv_rv_phone) TextView tv_phone;
+        @BindView(R.id.tv_rv_type) TextView tv_type;
+        @BindView(R.id.tv_rv_inactive) TextView tv_inactive;
 
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_username = (TextView) itemView.findViewById(R.id.tv_rv_username);
-            tv_email = (TextView) itemView.findViewById(R.id.tv_rv_email);
-            tv_phone = (TextView) itemView.findViewById(R.id.tv_rv_phone);
-            tv_type = (TextView) itemView.findViewById(R.id.tv_rv_type);
-            tv_inactive = (TextView) itemView.findViewById(R.id.tv_rv_inactive);
-            ll = (LinearLayout) itemView.findViewById(R.id.wrap);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

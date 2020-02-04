@@ -12,6 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
+
 class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.CardViewHolder> {
     private List<Participant> list;
     private Context context;
@@ -83,22 +87,22 @@ class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.CardVie
         return list.size();
     }
 
+
     public class CardViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_name, tv_institution, tv_phone, tv_input, tv_inactive;
-        LinearLayout ll;
+        @BindView(R.id.wrap) LinearLayout ll;
+        @BindView(R.id.tv_rv_name) TextView tv_name;
+        @BindView(R.id.tv_rv_campus) TextView tv_institution;
+        @BindView(R.id.tv_rv_phone) TextView tv_phone;
+        @BindView(R.id.tv_rv_input) TextView tv_input;
+        @BindView(R.id.tv_rv_inactive) TextView tv_inactive;
 
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_name = (TextView) itemView.findViewById(R.id.tv_rv_name);
-            tv_institution = (TextView) itemView.findViewById(R.id.tv_rv_campus);
-            tv_phone = (TextView) itemView.findViewById(R.id.tv_rv_phone);
-            tv_input = (TextView) itemView.findViewById(R.id.tv_rv_input);
-            tv_inactive = (TextView) itemView.findViewById(R.id.tv_rv_inactive);
-            ll = (LinearLayout) itemView.findViewById(R.id.wrap);
+            ButterKnife.bind(this, itemView);
         }
     }
 
-    // Clean all elements of the recycler
+    /* Clean all elements of the recycler
     public void clear() {
         list.clear();
         notifyDataSetChanged();
@@ -107,5 +111,5 @@ class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.CardVie
     public void addAll(List<Participant> members) {
         list = members;
         notifyDataSetChanged();
-    }
+    }*/
 }

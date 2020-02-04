@@ -37,6 +37,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 class EventAdapter extends RecyclerView.Adapter<EventAdapter.CardViewHolder> {
@@ -73,6 +76,7 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.CardViewHolder> {
         holder.tv_event.setText(event);
         holder.tv_tanggal.setText(tgl);
         holder.tv_jam.setText(jam);
+        //holder.getPosition = position;
 
         if (visible.equals("0")){
             //holder.ll.setBackgroundResource(R.drawable.red_pastel_round_corner);
@@ -190,18 +194,16 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.CardViewHolder> {
     }
 
     public class CardViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout ll;
-        TextView tv_event, tv_tanggal, tv_jam, tv_inactive;
-        CircleImageView ivShare;
+        @BindView(R.id.wrap) LinearLayout ll;
+        @BindView(R.id.tv_event_event) TextView tv_event;
+        @BindView(R.id.tv_event_date) TextView tv_tanggal;
+        @BindView(R.id.tv_event_time) TextView tv_jam;
+        @BindView(R.id.tv_inactive) TextView tv_inactive;
+        @BindView(R.id.iv_share) CircleImageView ivShare;
 
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
-            ll = (LinearLayout) itemView.findViewById(R.id.wrap);
-            tv_event = (TextView) itemView.findViewById(R.id.tv_event_event);
-            tv_tanggal = (TextView) itemView.findViewById(R.id.tv_event_date);
-            tv_jam = (TextView) itemView.findViewById(R.id.tv_event_time);
-            tv_inactive = (TextView) itemView.findViewById(R.id.tv_inactive);
-            ivShare = (CircleImageView) itemView.findViewById(R.id.iv_share);
+            ButterKnife.bind(this, itemView);
         }
     }
 }
