@@ -101,15 +101,4 @@ class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.CardVie
             ButterKnife.bind(this, itemView);
         }
     }
-
-    /* Clean all elements of the recycler
-    public void clear() {
-        list.clear();
-        notifyDataSetChanged();
-    }
-
-    public void addAll(List<Participant> members) {
-        list = members;
-        notifyDataSetChanged();
-    }*/
 }

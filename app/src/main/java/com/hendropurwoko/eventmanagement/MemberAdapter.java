@@ -360,17 +360,6 @@ class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.CardViewHolder> {
         return result;
     }
 
-                /*holder.iv.setImageResource(R.drawable.ic_keyboard_arrow_up_black_24dp);
-                holder.llActivity.setVisibility(LinearLayout.VISIBLE);
-
-                }else{
-                    holder.iv.setImageResource(R.drawable.ic_keyboard_arrow_down_black_24dp);
-                    holder.llActivity.setVisibility(LinearLayout.GONE);
-                }
-            }
-        });
-    }*/
-
     @Override
     public int getItemCount() {
         return list.size();
