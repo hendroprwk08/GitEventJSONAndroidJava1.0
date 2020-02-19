@@ -2,9 +2,10 @@ package com.hendropurwoko.eventmanagement;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,13 +34,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 class EventAdapter extends RecyclerView.Adapter<EventAdapter.CardViewHolder> {
@@ -113,19 +111,60 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.CardViewHolder> {
                                             //emails += data.getString("EMAIL").trim() + ", ";
                                         }
                                     }
-                                    Intent selectorIntent = new Intent(Intent.ACTION_SENDTO);
+
+                                    try
+                                    {
+                                        Intent gmailIntent = new Intent(Intent.ACTION_SEND);
+                                        gmailIntent.setType("text/html");
+
+                                        final PackageManager pm = context.getPackageManager();
+                                        final List<ResolveInfo> matches = pm.queryIntentActivities(gmailIntent, 0);
+                                        String gmailActivityClass = null;
+
+                                        for (final ResolveInfo info : matches)
+                                        {
+                                            if (info.activityInfo.packageName.equals("com.google.android.gm"))
+                                            {
+                                                gmailActivityClass = info.activityInfo.name;
+
+                                                if (gmailActivityClass != null && !gmailActivityClass.isEmpty())
+                                                {
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        gmailIntent.setClassName("com.google.android.gm", gmailActivityClass);
+                                        gmailIntent.putExtra(Intent.EXTRA_EMAIL, emails);
+                                        gmailIntent.putExtra(Intent.EXTRA_SUBJECT, event);
+                                        gmailIntent.putExtra(Intent.EXTRA_TEXT, deskripsi);
+                                        gmailIntent.setData(Uri.parse("mailto:"));
+                                        context.startActivity(gmailIntent);
+                                    }
+
+                                    catch (Exception e)
+                                    {
+                                        Intent i = new Intent(Intent.ACTION_SEND);
+                                        i.putExtra(Intent.EXTRA_EMAIL, emails);
+                                        i.putExtra(Intent.EXTRA_SUBJECT, event);
+                                        i.putExtra(Intent.EXTRA_TEXT, deskripsi);
+                                        i.setType("plain/text");
+                                        context.startActivity(i);
+                                    }
+
+                                    /*Intent selectorIntent = new Intent(Intent.ACTION_SENDTO);
                                     selectorIntent.setData(Uri.parse("mailto:"));
 
                                     final Intent emailIntent = new Intent(Intent.ACTION_SEND);
 
-                                    //String [] emailList = emails.split(", ");
-
+                                    emailIntent.setType("message/rfc822");
                                     emailIntent.putExtra(Intent.EXTRA_EMAIL, emails);
                                     emailIntent.putExtra(Intent.EXTRA_SUBJECT, event);
                                     emailIntent.putExtra(Intent.EXTRA_TEXT, deskripsi);
                                     emailIntent.setSelector( selectorIntent );
 
-                                    context.startActivity(Intent.createChooser(emailIntent, "Send email..."));
+
+                                    context.startActivity(Intent.createChooser(emailIntent, "Send email..."));*/
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
