@@ -59,7 +59,7 @@ public class RegistrationFragment extends Fragment {
             }
         });
 
-        String url = Cons.BASE_URL +"registration.html";
+        String url = Cons.BASE_URL +"presensi.html";
         webView.loadUrl(url);
 
         return view;

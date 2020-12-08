@@ -223,8 +223,8 @@ public class HomeFragment extends Fragment {
                                         event = Integer.parseInt(data.getString("event").trim());
                                     }*/
 
-                                    peserta = Integer.parseInt((data.isNull("peserta")) ? "0" : data.getString("peserta").trim());
-                                    event = Integer.parseInt((data.isNull("event")) ? "0" : data.getString("event").trim());
+                                    peserta = Integer.parseInt((data.isNull("jpeserta")) ? "0" : data.getString("jpeserta").trim());
+                                    event = Integer.parseInt((data.isNull("jevent")) ? "0" : data.getString("jevent").trim());
 
                                     values1.add(new BarEntry(bulan, peserta));
                                     values2.add(new BarEntry(bulan, event));
