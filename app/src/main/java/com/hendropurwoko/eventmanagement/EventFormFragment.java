@@ -217,7 +217,7 @@ public class EventFormFragment extends Fragment {
         pb.setVisibility(ProgressBar.VISIBLE);
 
         try {
-            String url = "http://event-lcc-me.000webhostapp.com/event.php?action=1" +
+            String url = Cons.BASE_URL + "event.php?action=1" +
                     "&event=" + URLEncoder.encode(nm, "utf-8") +
                     "&deskripsi=" + URLEncoder.encode(ds, "utf-8") +
                     "&tgl=" + URLEncoder.encode(dt, "utf-8") +
@@ -279,7 +279,7 @@ public class EventFormFragment extends Fragment {
 
     void update(String id, final String nm, String ds, String dt, String tm, String vs ) {
         try {
-            String url = "http://event-lcc-me.000webhostapp.com/event.php?action=2" +
+            String url = Cons.BASE_URL + "event.php?action=2" +
                     "&id=" + id +
                     "&event=" + URLEncoder.encode(nm, "utf-8") +
                     "&deskripsi=" + URLEncoder.encode(ds, "utf-8") +

@@ -1,10 +1,7 @@
 package com.hendropurwoko.eventmanagement;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -15,14 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -41,14 +35,6 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.single.PermissionListener;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,8 +47,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static androidx.core.app.ActivityCompat.requestPermissions;
 
 class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.CardViewHolder> {
     private List<Member> list;
@@ -390,18 +374,4 @@ class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.CardViewHolder> {
             ButterKnife.bind(this, itemView);
         }
     }
-
-    /*
-    // Clean all elements of the recycler
-    public void clear() {
-        list.clear();
-        notifyDataSetChanged();
-    }
-
-    public void addAll(List<Member> members) {
-        list = members;
-        notifyDataSetChanged();
-    }
-
-     */
 }

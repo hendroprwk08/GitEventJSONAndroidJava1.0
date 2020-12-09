@@ -148,7 +148,7 @@ public class UserFormFragment extends Fragment {
         pb.setVisibility(ProgressBar.VISIBLE);
 
         try {
-            String url = "http://event-lcc-me.000webhostapp.com/pengguna.php?action=1" +
+            String url = Cons.BASE_URL + "pengguna.php?action=1" +
                     "&username=" + URLEncoder.encode(us, "utf-8") +
                     "&password=" + URLEncoder.encode(pw, "utf-8") +
                     "&email=" + URLEncoder.encode(em, "utf-8") +
@@ -217,7 +217,7 @@ public class UserFormFragment extends Fragment {
         }
 
         try {
-            String url = "http://event-lcc-me.000webhostapp.com/pengguna.php?action=2" +
+            String url = Cons.BASE_URL + "pengguna.php?action=2" +
                     "&username=" + URLEncoder.encode(us, "utf-8") +
                     "&password=" + URLEncoder.encode(pw, "utf-8") +
                     "&email=" + URLEncoder.encode(em, "utf-8") +

@@ -25,7 +25,7 @@
             android:id="@+id/tv_title"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:text="@string/member"
+            android:text="@string/title_participant"
             android:textColor="@color/grey"
             android:textSize="30sp"
             android:textStyle="bold"

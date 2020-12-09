@@ -38,7 +38,8 @@
             android:layout_gravity="end"
             android:textColor="@color/white"
             android:textSize="9sp"
-            android:background="@drawable/blue_round_corner_small"/>
+            android:background="@drawable/blue_round_corner_small"
+            tools:ignore="RtlCompat" />
 
         <TextView
             android:layout_width="50dp"
@@ -85,6 +86,12 @@
             android:text="@string/email"
             android:layout_gravity="center"
             android:layout_weight="1"/>
+
+<!--        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--            android:id="@+id/iv_send_email"-->
+<!--            android:layout_width="25dp"-->
+<!--            android:layout_height="25dp"-->
+<!--            android:layout_marginLeft="@dimen/layout_5"/>-->
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_send_email"
@@ -162,6 +169,15 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"/>
 
+<!--            <de.hdodenhof.circleimageview.CircleImageView-->
+<!--                android:id="@+id/iv_msg_wa"-->
+<!--                android:layout_width="25dp"-->
+<!--                android:layout_height="25dp"-->
+<!--                android:layout_marginLeft="@dimen/layout_5"-->
+<!--                android:tint="@color/white"-->
+<!--                android:padding="@dimen/layout_5"-->
+<!--                android:clickable="true"/>-->
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_msg_wa"
                 android:layout_width="25dp"
@@ -172,6 +188,15 @@
                 android:clickable="true"
                 android:background="@drawable/green_round_corner_50"
                 android:src="@drawable/whatsapp_xl"/>
+
+<!--            <de.hdodenhof.circleimageview.CircleImageView-->
+<!--                android:id="@+id/iv_call_wa"-->
+<!--                android:layout_width="25dp"-->
+<!--                android:layout_height="25dp"-->
+<!--                android:layout_marginLeft="@dimen/layout_5"-->
+<!--                android:tint="@color/white"-->
+<!--                android:padding="@dimen/layout_5"-->
+<!--                android:clickable="true"/>-->
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_call_wa"

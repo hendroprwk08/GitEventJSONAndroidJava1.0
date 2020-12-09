@@ -78,7 +78,6 @@ public class MainAppActivity extends AppCompatActivity {
         bottomAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-
                 // Handle presses on the action bar items
                 switch (item.getItemId()) {
                     case R.id.menu_home:
@@ -106,7 +105,7 @@ public class MainAppActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(Cons.TAG, "onClick: " + Cons.ACTIVE_FRAGMENT);
+                //Log.d(Cons.TAG, "onClick: " + Cons.ACTIVE_FRAGMENT);
 
                 if (bottomAppBar.getFabAlignmentMode() == BottomAppBar.FAB_ALIGNMENT_MODE_CENTER){
                     if (Cons.ACTIVE_FRAGMENT.equals("event")) {
@@ -122,7 +121,6 @@ public class MainAppActivity extends AppCompatActivity {
                     }
 
                     hideBar();
-
                     loadFragment(fragment);
                 }else{
                     if (Cons.ACTIVE_FRAGMENT.equals("event")) {
@@ -181,8 +179,8 @@ public class MainAppActivity extends AppCompatActivity {
 
     public static void hideBar() {
         //slide down bottomappbar
-        Animation moveDown = AnimationUtils.loadAnimation(MAIN_CONTEXT, R.anim.move_down);
-        bottomAppBar.startAnimation(moveDown);
+        //Animation moveDown = AnimationUtils.loadAnimation(MAIN_CONTEXT, R.anim.move_down);
+        //bottomAppBar.startAnimation(moveDown);
 
         //replace icon fab to arrow and end position fab
         bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
@@ -191,8 +189,8 @@ public class MainAppActivity extends AppCompatActivity {
 
     public static void showBar(){
         //slide up bottomappbar
-        Animation moveUp = AnimationUtils.loadAnimation(MAIN_CONTEXT, R.anim.move_up);
-        bottomAppBar.startAnimation(moveUp);
+        //Animation moveUp = AnimationUtils.loadAnimation(MAIN_CONTEXT, R.anim.move_up);
+        //bottomAppBar.startAnimation(moveUp);
 
         //replace icon fab to arrow and center fab
         bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);

@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -23,8 +22,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,14 +42,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
@@ -188,7 +183,7 @@ public class MemberFragment extends Fragment {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("Events: ", response.toString());
+                        //Log.d("Events: ", response.toString());
 
                         String id, name, institution, whatsapp, phone, email, active, jumlah;
                         members = new ArrayList<>();
@@ -218,7 +213,7 @@ public class MemberFragment extends Fragment {
 
                                 MemberAdapter mAdapter = new MemberAdapter(getContext(), members);
                                 recyclerView.setAdapter(mAdapter);
-                                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                                //recyclerView.setItemAnimator(new DefaultItemAnimator());
 
                                 pb.setVisibility(ProgressBar.GONE);
                             }

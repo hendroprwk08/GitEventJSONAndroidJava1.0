@@ -19,7 +19,7 @@
         android:layout_height="50dp"
         android:layout_gravity="bottom"
         app:backgroundTint="@color/blueDark"
-        app:hideOnScroll="true"
+        app:hideOnScroll="false"
         app:layout_scrollFlags="scroll|enterAlways"
         app:navigationIcon="@drawable/ic_menu_white_24dp"
         style="@style/Widget.MaterialComponents.BottomAppBar"/>

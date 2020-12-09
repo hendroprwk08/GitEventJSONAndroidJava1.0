@@ -154,7 +154,7 @@ public class ParticipantFormFragment extends Fragment {
             String url = Cons.BASE_URL + "peserta.php?action=7" +
                     "&id=" + URLEncoder.encode(String.valueOf(id), "utf-8");
 
-            Log.d(Cons.TAG, "save: " + url);
+            //Log.d(Cons.TAG, "save: " + url);
 
             RequestQueue queue = Volley.newRequestQueue(getContext());
             JsonObjectRequest jsObjRequest = new JsonObjectRequest(
