@@ -85,6 +85,7 @@ public class MainAppActivity extends AppCompatActivity {
                         fragment = new HomeFragment();
                         loadFragment(fragment);
                         Cons.ACTIVE_FRAGMENT = "home";
+                        showBar();
                         return true;
                 }
 

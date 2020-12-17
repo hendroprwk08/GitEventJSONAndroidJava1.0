@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@drawable/greyrcorner"
     android:padding="@dimen/layout_10"
     android:id="@+id/wrap"
     android:foreground="?attr/selectableItemBackground"
     android:layout_marginBottom="@dimen/layout_5">
-    <!-- riple effect gridview dengan menambhakparticipant_item_layout.xmlan foregorund -->
+    <!-- riple effect gridview dengan menambahkan participant_item_layout.xml foregorund -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -87,21 +87,15 @@
             android:layout_gravity="center"
             android:layout_weight="1"/>
 
-<!--        <de.hdodenhof.circleimageview.CircleImageView-->
-<!--            android:id="@+id/iv_send_email"-->
-<!--            android:layout_width="25dp"-->
-<!--            android:layout_height="25dp"-->
-<!--            android:layout_marginLeft="@dimen/layout_5"/>-->
-
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_send_email"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginLeft="@dimen/layout_5"
-            android:tint="@color/white"
-            android:padding="@dimen/layout_5"
             android:clickable="true"
-            android:background="@drawable/yellow_round_corner_50"
+            app:civ_border_width="4dp"
+            app:civ_border_color="@color/yellow"
+            app:civ_fill_color="@color/yellow"
             android:src="@drawable/ic_email_white_24dp"/>
 
     </LinearLayout>
@@ -134,9 +128,10 @@
                 android:layout_height="25dp"
                 android:layout_marginLeft="@dimen/layout_5"
                 android:tint="@color/white"
-                android:padding="@dimen/layout_5"
                 android:clickable="true"
-                android:background="@drawable/green_round_corner_50"
+                app:civ_border_width="4dp"
+                app:civ_border_color="@color/green"
+                app:civ_fill_color="@color/green"
                 android:src="@drawable/ic_message_white_24dp"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -145,10 +140,14 @@
                 android:layout_height="25dp"
                 android:layout_marginLeft="@dimen/layout_5"
                 android:tint="@color/white"
-                android:padding="@dimen/layout_5"
                 android:clickable="true"
-                android:background="@drawable/red_round_corner_50"
+                app:civ_border_width="4dp"
+                app:civ_border_color="@color/red"
+                app:civ_fill_color="@color/red"
                 android:src="@drawable/ic_phone_white_24dp"/>
+<!--            app:civ_border_width="2dp" ke tebalan outline-->
+<!--            app:civ_border_color="#FF000000" warna border-->
+<!--            app:civ_fill_color="@color/red" background-->
 
         </LinearLayout>
 
@@ -169,6 +168,17 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"/>
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_msg_wa"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="@dimen/layout_5"
+                app:civ_border_width="4dp"
+                app:civ_border_color="@color/green"
+                app:civ_fill_color="@color/green"
+                android:clickable="true"
+                android:src="@drawable/ic_whatsapp"/>
+
 <!--            <de.hdodenhof.circleimageview.CircleImageView-->
 <!--                android:id="@+id/iv_msg_wa"-->
 <!--                android:layout_width="25dp"-->
@@ -176,27 +186,9 @@
 <!--                android:layout_marginLeft="@dimen/layout_5"-->
 <!--                android:tint="@color/white"-->
 <!--                android:padding="@dimen/layout_5"-->
-<!--                android:clickable="true"/>-->
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/iv_msg_wa"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="@dimen/layout_5"
-                android:tint="@color/white"
-                android:padding="@dimen/layout_5"
-                android:clickable="true"
-                android:background="@drawable/green_round_corner_50"
-                android:src="@drawable/whatsapp_xl"/>
-
-<!--            <de.hdodenhof.circleimageview.CircleImageView-->
-<!--                android:id="@+id/iv_call_wa"-->
-<!--                android:layout_width="25dp"-->
-<!--                android:layout_height="25dp"-->
-<!--                android:layout_marginLeft="@dimen/layout_5"-->
-<!--                android:tint="@color/white"-->
-<!--                android:padding="@dimen/layout_5"-->
-<!--                android:clickable="true"/>-->
+<!--                android:clickable="true"-->
+<!--                android:background="@drawable/green_round_corner_50"-->
+<!--                android:src="@drawable/whatsapp_xl"/>-->
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_call_wa"
@@ -204,10 +196,11 @@
                 android:layout_height="25dp"
                 android:layout_marginLeft="@dimen/layout_5"
                 android:tint="@color/white"
-                android:padding="@dimen/layout_5"
-                android:clickable="true"
-                android:background="@drawable/red_round_corner_50"
-                android:src="@drawable/ic_phone_white_24dp"/>
+                app:civ_border_width="4dp"
+                app:civ_border_color="@color/red"
+                app:civ_fill_color="@color/red"
+                android:src="@drawable/ic_phone_white_24dp"
+                android:clickable="true"/>
 
         </LinearLayout>
 

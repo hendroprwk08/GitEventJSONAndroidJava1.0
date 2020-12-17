@@ -4,7 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="@dimen/layout_15"
+    android:paddingTop="@dimen/layout_15"
+    android:paddingLeft="@dimen/layout_15"
+    android:paddingRight="@dimen/layout_15"
+    android:paddingBottom="@dimen/layout_90"
     tools:context=".UserFragment">
 
     <ProgressBar

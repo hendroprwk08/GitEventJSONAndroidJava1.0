@@ -14,7 +14,7 @@
     <item
         android:id="@+id/menu_member"
         android:icon="@drawable/ic_people_black_24dp"
-        android:title="@string/member" />
+        android:title="@string/title_participant" />
 
     <item
         android:id="@+id/menu_user"

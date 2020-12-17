@@ -40,7 +40,6 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
             if (newState == BottomSheetBehavior.STATE_HIDDEN) {
                 dismiss();
             }
-
         }
 
         @Override
@@ -135,11 +134,12 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
 
                         //panggil method yang ada di activity lain
                         ((MainAppActivity)getActivity()).loadFragment(new ProfileFragment());
+                        ((MainAppActivity)getActivity()).hideBar();
 
                         break;
                 }
 
-                ((MainAppActivity)getActivity()).hideBar();
+
 
                 return false;
             }

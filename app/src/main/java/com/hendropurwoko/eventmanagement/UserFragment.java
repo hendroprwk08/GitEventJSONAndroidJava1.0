@@ -111,7 +111,7 @@ public class UserFragment extends Fragment {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("Users ", response.toString());
+                        //Log.d("Users ", response.toString());
 
                         users = new ArrayList<>();
 

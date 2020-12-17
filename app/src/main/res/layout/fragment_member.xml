@@ -5,7 +5,10 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".EventFragment"
-    android:padding="@dimen/layout_15"
+    android:paddingTop="@dimen/layout_15"
+    android:paddingLeft="@dimen/layout_15"
+    android:paddingRight="@dimen/layout_15"
+    android:paddingBottom="@dimen/layout_90"
     android:orientation="vertical">
 
     <ProgressBar

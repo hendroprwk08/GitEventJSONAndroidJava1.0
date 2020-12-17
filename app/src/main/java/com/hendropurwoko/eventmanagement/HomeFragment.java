@@ -195,7 +195,7 @@ public class HomeFragment extends Fragment {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("Events: ", response.toString());
+                        //Log.d("Events: ", response.toString());
 
                         try {
                             JSONArray jsonArray = response.getJSONArray("result");
@@ -349,7 +349,7 @@ public class HomeFragment extends Fragment {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("Events: ", response.toString());
+                        //Log.d("Events: ", response.toString());
                         String result = new String();
                         try {
                             JSONArray jsonArray = response.getJSONArray("result");
@@ -414,7 +414,7 @@ public class HomeFragment extends Fragment {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("Events: ", response.toString());
+                        //Log.d("Events: ", response.toString());
                         String result = new String();
                         try {
                             JSONArray jsonArray = response.getJSONArray("result");
@@ -478,7 +478,7 @@ public class HomeFragment extends Fragment {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("Events: ", response.toString());
+                        //Log.d("Events: ", response.toString());
                         String jumlah;
                         try {
                             JSONArray jsonArray = response.getJSONArray("result");
@@ -534,7 +534,7 @@ public class HomeFragment extends Fragment {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("Events: ", response.toString());
+                        //Log.d("Events: ", response.toString());
                         String jumlah;
                         try {
                             JSONArray jsonArray = response.getJSONArray("result");
