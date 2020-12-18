@@ -200,6 +200,36 @@
                 android:layout_marginTop="@dimen/layout_20"
                 android:textColor="@color/grey"
                 android:textAllCaps="true"
+                android:text="@string/_5_latest_event"/>
+
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_30"
+                android:id="@+id/pb_lat_event"
+                android:layout_marginTop="@dimen/layout_10"
+                android:layout_marginBottom="@dimen/layout_10"
+                android:visibility="gone"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/grey"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:padding="@dimen/layout_15"
+                android:layout_marginTop="@dimen/layout_5"
+                android:layout_marginBottom="@dimen/layout_10"
+                android:layout_height="wrap_content"
+                android:text="@string/please_wait"
+                android:id="@+id/tv_home_lat_event"
+                android:background="@drawable/greyedittextrcorner"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/layout_20"
+                android:textColor="@color/grey"
+                android:textAllCaps="true"
                 android:text="@string/_5_active_participants"/>
 
             <ProgressBar
@@ -214,7 +244,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:padding="@dimen/layout_20"
+                android:padding="@dimen/layout_15"
                 android:layout_marginTop="@dimen/layout_5"
                 android:layout_marginBottom="@dimen/layout_10"
                 android:layout_height="wrap_content"
@@ -245,7 +275,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/layout_20"
+                android:padding="@dimen/layout_15"
                 android:layout_marginTop="@dimen/layout_5"
                 android:background="@drawable/greyedittextrcorner"
                 android:id="@+id/tv_home_member"

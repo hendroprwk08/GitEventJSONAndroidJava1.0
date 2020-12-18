@@ -47,7 +47,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -60,12 +59,14 @@ public class HomeFragment extends Fragment {
     @BindView(R.id.pb_j_event) ProgressBar pbJEvent;
     @BindView(R.id.pb_j_member) ProgressBar pbJMember;
     @BindView(R.id.pb_chart) ProgressBar pbChart;
-    @BindView(R.id.pb_participant) ProgressBar pbParticipant;
     @BindView(R.id.pb_member) ProgressBar pbMember;
+    @BindView(R.id.pb_participant) ProgressBar pbParticipant;
+    @BindView(R.id.pb_lat_event) ProgressBar pbLatEvent;
     @BindView(R.id.tv_home_j_event) TextView tvJEvent;
     @BindView(R.id.tv_home_j_member) TextView tvJMember;
     @BindView(R.id.tv_home_participant) TextView tvParticipant;
     @BindView(R.id.tv_home_member) TextView tvMember;
+    @BindView(R.id.tv_home_lat_event) TextView tvLatEvent;
     @BindView(R.id.bc_chart) BarChart chart;
     @BindView(R.id.sp_thn) Spinner spThn;
 
@@ -92,8 +93,9 @@ public class HomeFragment extends Fragment {
                 loadSpinner();
                 loadJEvent();
                 loadJMember();
+                loadActivity();
+                loadEvent();
                 loadParticipant();
-                loadMember();
             }
         });
 
@@ -102,8 +104,9 @@ public class HomeFragment extends Fragment {
         loadSpinner();
         loadJEvent();
         loadJMember();
+        loadActivity();
         loadParticipant();
-        loadMember();
+        loadEvent();
 
         spThn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -334,7 +337,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void loadMember() {
+    private void loadEvent() {
         pbMember.setVisibility(ProgressBar.VISIBLE);
         tvMember.setVisibility(TextView.GONE);
 
@@ -357,10 +360,10 @@ public class HomeFragment extends Fragment {
                             if (jsonArray.length() != 0) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject data = jsonArray.getJSONObject(i);
-                                    result += "<h4>"+ data.getString("event").toString().trim().toUpperCase()
-                                            + "</h4> " + data.getString("date").toString().trim()
+                                    result += "<b>"+ data.getString("event").toString().trim().toUpperCase()
+                                            + "</b><br/><small>" + data.getString("date").toString().trim()
                                             + " " + data.getString("time").toString().trim().substring(0, 5)
-                                            + " [ "+ data.getString("jumlah").toString().trim() + " ]<br/><br/>";
+                                            + " [ "+ data.getString("jumlah").toString().trim() + " ]</small><br/><br/>";
                                 }
 
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -422,9 +425,9 @@ public class HomeFragment extends Fragment {
                             if (jsonArray.length() != 0) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject data = jsonArray.getJSONObject(i);
-                                    result += "<h4>"+ data.getString("name").toString().trim().toUpperCase()
-                                            +"</h4>"+ data.getString("institution").toString().trim().toUpperCase()
-                                            +" [ "+ data.getString("jumlah").toString().trim() + " ]<br/><br/>";
+                                    result += "<b>"+ data.getString("name").toString().trim().toUpperCase()
+                                            +"</b><br/><small>"+ data.getString("institution").toString().trim().toUpperCase()
+                                            +" [ "+ data.getString("jumlah").toString().trim() + " ]</small><br/><br/>";
                                 }
 
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -438,6 +441,71 @@ public class HomeFragment extends Fragment {
                         } finally {
                             pbParticipant.setVisibility(ProgressBar.GONE);
                             tvParticipant.setVisibility(TextView.VISIBLE);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) { //time out or there is no connection
+                    Toast.makeText(getContext(), R.string.time_out_try_again, Toast.LENGTH_SHORT).show();
+                } else if (error instanceof AuthFailureError) { //there was an Authentication Failure
+                    Toast.makeText(getContext(), R.string.auth_failed, Toast.LENGTH_SHORT).show();
+                } else if (error instanceof ServerError) { //server responded with a error response
+                    Toast.makeText(getContext(), R.string.server_problem, Toast.LENGTH_SHORT).show();
+                } else if (error instanceof NetworkError) {//network error while performing the request
+                    Toast.makeText(getContext(), R.string.please_check_your_connection, Toast.LENGTH_SHORT).show();
+                } else if (error instanceof ParseError) {//the server response could not be parsed
+                    Toast.makeText(getContext(), R.string.reading_data_failed, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), R.string.server_problem, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        queue.add(jsObjRequest);
+    }
+
+    private void loadActivity() {
+        pbLatEvent.setVisibility(ProgressBar.VISIBLE);
+        tvLatEvent.setVisibility(TextView.GONE);
+
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        String url = Cons.BASE_URL + "dashboard.php?action=31";
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //Log.d("Events: ", response.toString());
+                        String result = new String();
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("result");
+
+                            if (jsonArray.length() != 0) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject data = jsonArray.getJSONObject(i);
+                                    result += "<b>"+ data.getString("event").toString().trim().toUpperCase()
+                                            + "</b><br/><small>" + data.getString("date").toString().trim()
+                                            + " " + data.getString("time").toString().trim().substring(0, 5)
+                                            + " [ "+ data.getString("jumlah").toString().trim() + " ]</small><br/><br/>";
+                                }
+
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    tvLatEvent.setText(Html.fromHtml(result.substring(0, result.length() - 10), Html.FROM_HTML_MODE_COMPACT));
+                                } else {
+                                    tvLatEvent.setText(Html.fromHtml(result.substring(0, result.length() - 10)));
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } finally {
+                            pbLatEvent.setVisibility(ProgressBar.GONE);
+                            tvLatEvent.setVisibility(TextView.VISIBLE);
                         }
                     }
                 }, new Response.ErrorListener() {

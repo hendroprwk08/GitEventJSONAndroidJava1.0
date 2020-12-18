@@ -222,7 +222,8 @@ public class EventFormFragment extends Fragment {
                     "&deskripsi=" + URLEncoder.encode(ds, "utf-8") +
                     "&tgl=" + URLEncoder.encode(dt, "utf-8") +
                     "&jam=" + URLEncoder.encode(tm, "utf-8") +
-                    "&visible=" + URLEncoder.encode(vs, "utf-8") ;
+                    "&active=" + URLEncoder.encode(vs, "utf-8");
+
 
             RequestQueue queue = Volley.newRequestQueue(getContext());
             JsonObjectRequest jsObjRequest = new JsonObjectRequest(
@@ -285,7 +286,9 @@ public class EventFormFragment extends Fragment {
                     "&deskripsi=" + URLEncoder.encode(ds, "utf-8") +
                     "&tgl=" + URLEncoder.encode(dt, "utf-8") +
                     "&jam=" + URLEncoder.encode(tm, "utf-8") +
-                    "&visible=" + URLEncoder.encode(vs, "utf-8");
+                    "&active=" + URLEncoder.encode(vs, "utf-8");
+
+            Log.d("Update: ", url);
 
             RequestQueue queue = Volley.newRequestQueue(getContext());
             JsonObjectRequest jsObjRequest = new JsonObjectRequest(

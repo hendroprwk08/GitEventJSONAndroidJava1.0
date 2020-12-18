@@ -63,7 +63,7 @@
             android:id="@+id/tv_small_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/member"
+            android:text="@string/title_participant"
             android:textColor="@color/grey"
             android:textSize="20sp"
             android:textStyle="bold"

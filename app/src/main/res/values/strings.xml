@@ -55,6 +55,7 @@
     <string name="data">Data</string>
     <string name="the_5_most_participants">The 5 most participants</string>
     <string name="_5_active_participants">5 active participants</string>
+    <string name="_5_latest_event">The 5 latest events</string>
     <string name="recap">Recap</string>
     <string name="loading">Loading...</string>
 

@@ -214,11 +214,10 @@
 
             <ProgressBar
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/layout_5"
+                android:layout_height="@dimen/layout_25"
                 android:id="@+id/pb"
                 android:indeterminate="true"
-                android:visibility="gone"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+                android:visibility="gone"/>
 
         </LinearLayout>
     </ScrollView>
