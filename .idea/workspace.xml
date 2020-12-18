@@ -12,6 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0bdf651-8b59-4f70-bae8-f1f8bf0ba621" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/release/app-release.apk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" afterDir="false" />
@@ -20,16 +21,9 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/debug/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/app/debug/app-debug.apk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/release/lcc.apk" beforeDir="false" afterPath="$PROJECT_DIR$/app/release/lcc.apk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/EventFormFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/EventFormFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/HomeFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/MemberFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/MemberFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/ParticipantFormFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/ParticipantFormFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/ParticipantFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/ParticipantFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/UserFormFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/UserFormFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/UserFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/UserFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/release/lcc.apk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/BottomSheetNavigationFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/BottomSheetNavigationFragment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -387,22 +381,22 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="557" y="49" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1608181350374" />
-    <state width="660" height="184" key="GridCell.Tab.0.bottom" timestamp="1608259461294">
+    <state width="940" height="145" key="GridCell.Tab.0.bottom" timestamp="1608263767069">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="660" height="184" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1608259461294" />
-    <state width="660" height="184" key="GridCell.Tab.0.center" timestamp="1608259461293">
+    <state width="940" height="145" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1608263767069" />
+    <state width="940" height="145" key="GridCell.Tab.0.center" timestamp="1608263767054">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="660" height="184" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1608259461293" />
-    <state width="660" height="184" key="GridCell.Tab.0.left" timestamp="1608259461293">
+    <state width="940" height="145" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1608263767054" />
+    <state width="940" height="145" key="GridCell.Tab.0.left" timestamp="1608263767054">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="660" height="184" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1608259461293" />
-    <state width="660" height="184" key="GridCell.Tab.0.right" timestamp="1608259461293">
+    <state width="940" height="145" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1608263767054" />
+    <state width="940" height="145" key="GridCell.Tab.0.right" timestamp="1608263767069">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="660" height="184" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1608259461293" />
+    <state width="940" height="145" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1608263767069" />
     <state x="184" y="13" key="SettingsEditor" timestamp="1608130543616">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
@@ -452,7 +446,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/hendropurwoko/eventmanagement/BottomSheetNavigationFragment.java</url>
-          <line>139</line>
+          <line>137</line>
           <option name="timeStamp" value="216" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
