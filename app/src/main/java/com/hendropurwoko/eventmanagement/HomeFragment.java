@@ -72,6 +72,9 @@ public class HomeFragment extends Fragment {
 
     private Unbinder unbinder;
 
+    RequestQueue requestQueue;
+    JsonObjectRequest jsObjRequest;
+
     @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
@@ -125,38 +128,38 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadSpinner() {
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        requestQueue = Volley.newRequestQueue(getContext());
         String url = Cons.BASE_URL + "dashboard.php?action=5";
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
-                new Response.Listener<JSONObject>() {
+        jsObjRequest = new JsonObjectRequest(
+            Request.Method.GET,
+            url,
+            null,
+            new Response.Listener<JSONObject>() {
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("result");
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        JSONArray jsonArray = response.getJSONArray("result");
 
-                            ArrayList<String> strings = new ArrayList<>();
+                        ArrayList<String> strings = new ArrayList<>();
 
-                            if (jsonArray.length() != 0) {
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject data = jsonArray.getJSONObject(i);
-                                    strings.add(data.getString("tahun").trim());
-                                }
-
-                                //set to spinner
-                                ArrayAdapter<String> thnAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item_layout, strings);
-                                spThn.setAdapter(thnAdapter);
-                                spThn.setSelection(0);
+                        if (jsonArray.length() != 0) {
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject data = jsonArray.getJSONObject(i);
+                                strings.add(data.getString("tahun").trim());
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+
+                            //set to spinner
+                            ArrayAdapter<String> thnAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item_layout, strings);
+                            spThn.setAdapter(thnAdapter);
+                            spThn.setSelection(0);
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                }, new Response.ErrorListener() {
+                }
+            }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -176,7 +179,8 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        queue.add(jsObjRequest);
+        jsObjRequest.setTag("tTahun");
+        requestQueue.add(jsObjRequest);
     }
 
     private void loadChart(String thn) {
@@ -185,134 +189,134 @@ public class HomeFragment extends Fragment {
         thn = (thn == null) ? String.valueOf(calendar.get(Calendar.YEAR)) : thn;
 
         // V O L L E Y
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        requestQueue = Volley.newRequestQueue(getContext());
         String url = Cons.BASE_URL + "dashboard.php?action=6&thn="+ thn;
 
         pbChart.setVisibility(ProgressBar.VISIBLE);
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
-                new Response.Listener<JSONObject>() {
+        jsObjRequest = new JsonObjectRequest(
+            Request.Method.GET,
+            url,
+            null,
+            new Response.Listener<JSONObject>() {
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        //Log.d("Events: ", response.toString());
+                @Override
+                public void onResponse(JSONObject response) {
+                    //Log.d("Events: ", response.toString());
 
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("result");
+                    try {
+                        JSONArray jsonArray = response.getJSONArray("result");
 
-                            if (jsonArray.length() != 0) {
-                                int peserta = 0, event = 0, bulan = 0;
+                        if (jsonArray.length() != 0) {
+                            int peserta = 0, event = 0, bulan = 0;
 
-                                ArrayList<BarEntry> values1 = new ArrayList<>();
-                                ArrayList<BarEntry> values2 = new ArrayList<>();
+                            ArrayList<BarEntry> values1 = new ArrayList<>();
+                            ArrayList<BarEntry> values2 = new ArrayList<>();
 
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject data = jsonArray.getJSONObject(i);
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject data = jsonArray.getJSONObject(i);
 
-                                    bulan = Integer.parseInt(data.getString("bulan").trim());
+                                bulan = Integer.parseInt(data.getString("bulan").trim());
 
-                                    /*if(data.isNull("peserta")){
-                                        peserta = 0;
-                                    } else {
-                                        peserta = Integer.parseInt(data.getString("peserta").trim());
-                                    }
-
-                                    if(data.isNull("event")){
-                                        event = 0;
-                                    } else {
-                                        event = Integer.parseInt(data.getString("event").trim());
-                                    }*/
-
-                                    peserta = Integer.parseInt((data.isNull("jpeserta")) ? "0" : data.getString("jpeserta").trim());
-                                    event = Integer.parseInt((data.isNull("jevent")) ? "0" : data.getString("jevent").trim());
-
-                                    values1.add(new BarEntry(bulan, peserta));
-                                    values2.add(new BarEntry(bulan, event));
+                                /*if(data.isNull("peserta")){
+                                    peserta = 0;
+                                } else {
+                                    peserta = Integer.parseInt(data.getString("peserta").trim());
                                 }
 
-                                /* BAR CHART */
-                                float groupSpace = 0.04f;
-                                float barSpace = 0.02f; // x2 dataset
-                                float barWidth = 0.46f; // x2 dataset
+                                if(data.isNull("event")){
+                                    event = 0;
+                                } else {
+                                    event = Integer.parseInt(data.getString("event").trim());
+                                }*/
 
-                                //float groupSpace = 0.08f;
-                                //float barSpace = 0.03f; // x4 DataSet
-                                //float barWidth = 0.2f; // x4 DataSet
-                                //(0.2 + 0.03) * 4 + 0.08 = 1.00 -> interval per "group"
+                                peserta = Integer.parseInt((data.isNull("jpeserta")) ? "0" : data.getString("jpeserta").trim());
+                                event = Integer.parseInt((data.isNull("jevent")) ? "0" : data.getString("jevent").trim());
 
-                                int groupCount = jsonArray.length();
-                                int startYear = 1;
-                                int endYear = startYear + groupCount;
-
-                                //BarChart chart = (BarChart) view.findViewById(R.id.bc_chart);
-                                chart.getDescription().setEnabled(false);
-
-                                Legend l = chart.getLegend();
-                                l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-                                l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-                                l.setOrientation(Legend.LegendOrientation.VERTICAL);
-                                l.setDrawInside(true);
-                                l.setYOffset(0f);
-                                l.setXOffset(10f);
-                                l.setYEntrySpace(0f);
-                                l.setTextSize(8f);
-
-                                XAxis xAxis = chart.getXAxis();
-                                xAxis.setGranularity(1f);
-                                xAxis.setCenterAxisLabels(true);
-                                xAxis.setValueFormatter(new ValueFormatter() {
-                                    @Override
-                                    public String getFormattedValue(float value) {
-                                        return String.valueOf((int) value);
-                                    }
-                                });
-
-                                YAxis leftAxis = chart.getAxisLeft();
-                                leftAxis.setValueFormatter(new LargeValueFormatter());
-                                leftAxis.setDrawGridLines(false);
-                                leftAxis.setSpaceTop(35f);
-                                leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
-
-                                chart.getAxisRight().setEnabled(false);
-
-                                float start = 1f;
-                                int count = 12;
-
-                                BarDataSet set1 = new BarDataSet(values1, "Participants");
-                                set1.setColor(Color.rgb(24, 116, 205));
-
-                                BarDataSet set2 = new BarDataSet(values2, "Event");
-                                set2.setColor(Color.rgb(255, 185, 15));
-
-                                BarData data = new BarData(set1, set2);
-                                data.setValueFormatter(new LargeValueFormatter());
-
-                                chart.setData(data);
-
-                                // specify the width each bar should have
-                                chart.getBarData().setBarWidth(barWidth);
-
-                                // restrict the x-axis range
-                                chart.getXAxis().setAxisMinimum(startYear);
-
-                                // barData.getGroupWith(...) is a helper that calculates the width each group needs based on the provided parameters
-                                chart.getXAxis().setAxisMaximum(startYear + chart.getBarData().getGroupWidth(groupSpace, barSpace) * groupCount);
-                                chart.groupBars(startYear, groupSpace, barSpace);
-                                chart.invalidate();
+                                values1.add(new BarEntry(bulan, peserta));
+                                values2.add(new BarEntry(bulan, event));
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Log.d(Cons.TAG, "onResponse: " + e.getMessage());
-                        } catch (NullPointerException n){
-                            Log.d(Cons.TAG, "onResponse: " + n.getMessage());
-                        } finally {
-                            pbChart.setVisibility(ProgressBar.GONE);
+
+                            /* BAR CHART */
+                            float groupSpace = 0.04f;
+                            float barSpace = 0.02f; // x2 dataset
+                            float barWidth = 0.46f; // x2 dataset
+
+                            //float groupSpace = 0.08f;
+                            //float barSpace = 0.03f; // x4 DataSet
+                            //float barWidth = 0.2f; // x4 DataSet
+                            //(0.2 + 0.03) * 4 + 0.08 = 1.00 -> interval per "group"
+
+                            int groupCount = jsonArray.length();
+                            int startYear = 1;
+                            int endYear = startYear + groupCount;
+
+                            //BarChart chart = (BarChart) view.findViewById(R.id.bc_chart);
+                            chart.getDescription().setEnabled(false);
+
+                            Legend l = chart.getLegend();
+                            l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+                            l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+                            l.setOrientation(Legend.LegendOrientation.VERTICAL);
+                            l.setDrawInside(true);
+                            l.setYOffset(0f);
+                            l.setXOffset(10f);
+                            l.setYEntrySpace(0f);
+                            l.setTextSize(8f);
+
+                            XAxis xAxis = chart.getXAxis();
+                            xAxis.setGranularity(1f);
+                            xAxis.setCenterAxisLabels(true);
+                            xAxis.setValueFormatter(new ValueFormatter() {
+                                @Override
+                                public String getFormattedValue(float value) {
+                                    return String.valueOf((int) value);
+                                }
+                            });
+
+                            YAxis leftAxis = chart.getAxisLeft();
+                            leftAxis.setValueFormatter(new LargeValueFormatter());
+                            leftAxis.setDrawGridLines(false);
+                            leftAxis.setSpaceTop(35f);
+                            leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+
+                            chart.getAxisRight().setEnabled(false);
+
+                            float start = 1f;
+                            int count = 12;
+
+                            BarDataSet set1 = new BarDataSet(values1, "Participants");
+                            set1.setColor(Color.rgb(24, 116, 205));
+
+                            BarDataSet set2 = new BarDataSet(values2, "Event");
+                            set2.setColor(Color.rgb(255, 185, 15));
+
+                            BarData data = new BarData(set1, set2);
+                            data.setValueFormatter(new LargeValueFormatter());
+
+                            chart.setData(data);
+
+                            // specify the width each bar should have
+                            chart.getBarData().setBarWidth(barWidth);
+
+                            // restrict the x-axis range
+                            chart.getXAxis().setAxisMinimum(startYear);
+
+                            // barData.getGroupWith(...) is a helper that calculates the width each group needs based on the provided parameters
+                            chart.getXAxis().setAxisMaximum(startYear + chart.getBarData().getGroupWidth(groupSpace, barSpace) * groupCount);
+                            chart.groupBars(startYear, groupSpace, barSpace);
+                            chart.invalidate();
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Log.d(Cons.TAG, "onResponse: " + e.getMessage());
+                    } catch (NullPointerException n){
+                        Log.d(Cons.TAG, "onResponse: " + n.getMessage());
+                    } finally {
+                        pbChart.setVisibility(ProgressBar.GONE);
                     }
-                }, new Response.ErrorListener() {
+                }
+            }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -332,54 +336,53 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        queue.add(jsObjRequest);
-
-
+        jsObjRequest.setTag("tGrafik");
+        requestQueue.add(jsObjRequest);
     }
 
     private void loadEvent() {
         pbMember.setVisibility(ProgressBar.VISIBLE);
         tvMember.setVisibility(TextView.GONE);
 
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        requestQueue = Volley.newRequestQueue(getContext());
         String url = Cons.BASE_URL + "dashboard.php?action=3";
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
-                new Response.Listener<JSONObject>() {
+        jsObjRequest = new JsonObjectRequest(
+            Request.Method.GET,
+            url,
+            null,
+            new Response.Listener<JSONObject>() {
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        //Log.d("Events: ", response.toString());
-                        String result = new String();
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("result");
+                @Override
+                public void onResponse(JSONObject response) {
+                    //Log.d("Events: ", response.toString());
+                    String result = new String();
+                    try {
+                        JSONArray jsonArray = response.getJSONArray("result");
 
-                            if (jsonArray.length() != 0) {
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject data = jsonArray.getJSONObject(i);
-                                    result += "<b>"+ data.getString("event").toString().trim().toUpperCase()
-                                            + "</b><br/><small>" + data.getString("date").toString().trim()
-                                            + " " + data.getString("time").toString().trim().substring(0, 5)
-                                            + " [ "+ data.getString("jumlah").toString().trim() + " ]</small><br/><br/>";
-                                }
-
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                    tvMember.setText(Html.fromHtml(result.substring(0, result.length() - 10), Html.FROM_HTML_MODE_COMPACT));
-                                } else {
-                                    tvMember.setText(Html.fromHtml(result.substring(0, result.length() - 10)));
-                                }
+                        if (jsonArray.length() != 0) {
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject data = jsonArray.getJSONObject(i);
+                                result += "<b>"+ data.getString("event").toString().trim().toUpperCase()
+                                        + "</b><br/><small>" + data.getString("date").toString().trim()
+                                        + " " + data.getString("time").toString().trim().substring(0, 5)
+                                        + " [ "+ data.getString("jumlah").toString().trim() + " ]</small><br/><br/>";
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } finally {
-                            pbMember.setVisibility(ProgressBar.GONE);
-                            tvMember.setVisibility(TextView.VISIBLE);
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                tvMember.setText(Html.fromHtml(result.substring(0, result.length() - 10), Html.FROM_HTML_MODE_COMPACT));
+                            } else {
+                                tvMember.setText(Html.fromHtml(result.substring(0, result.length() - 10)));
+                            }
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } finally {
+                        pbMember.setVisibility(ProgressBar.GONE);
+                        tvMember.setVisibility(TextView.VISIBLE);
                     }
-                }, new Response.ErrorListener() {
+                }
+            }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -399,51 +402,52 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        queue.add(jsObjRequest);
+        jsObjRequest.setTag("tEvent");
+        requestQueue.add(jsObjRequest);
     }
 
     private void loadParticipant() {
         pbParticipant.setVisibility(ProgressBar.VISIBLE);
         tvParticipant.setVisibility(TextView.GONE);
 
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        requestQueue = Volley.newRequestQueue(getContext());
         String url = Cons.BASE_URL + "dashboard.php?action=4";
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
-                new Response.Listener<JSONObject>() {
+        jsObjRequest = new JsonObjectRequest(
+            Request.Method.GET,
+            url,
+            null,
+            new Response.Listener<JSONObject>() {
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        //Log.d("Events: ", response.toString());
-                        String result = new String();
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("result");
+                @Override
+                public void onResponse(JSONObject response) {
+                    //Log.d("Events: ", response.toString());
+                    String result = new String();
+                    try {
+                        JSONArray jsonArray = response.getJSONArray("result");
 
-                            if (jsonArray.length() != 0) {
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject data = jsonArray.getJSONObject(i);
-                                    result += "<b>"+ data.getString("name").toString().trim().toUpperCase()
-                                            +"</b><br/><small>"+ data.getString("institution").toString().trim().toUpperCase()
-                                            +" [ "+ data.getString("jumlah").toString().trim() + " ]</small><br/><br/>";
-                                }
-
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                    tvParticipant.setText(Html.fromHtml(result.substring(0, result.length() - 10), Html.FROM_HTML_MODE_COMPACT));
-                                } else {
-                                    tvParticipant.setText(Html.fromHtml(result.substring(0, result.length() - 10)));
-                                }
+                        if (jsonArray.length() != 0) {
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject data = jsonArray.getJSONObject(i);
+                                result += "<b>"+ data.getString("name").toString().trim().toUpperCase()
+                                        +"</b><br/><small>"+ data.getString("institution").toString().trim().toUpperCase()
+                                        +" [ "+ data.getString("jumlah").toString().trim() + " ]</small><br/><br/>";
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } finally {
-                            pbParticipant.setVisibility(ProgressBar.GONE);
-                            tvParticipant.setVisibility(TextView.VISIBLE);
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                tvParticipant.setText(Html.fromHtml(result.substring(0, result.length() - 10), Html.FROM_HTML_MODE_COMPACT));
+                            } else {
+                                tvParticipant.setText(Html.fromHtml(result.substring(0, result.length() - 10)));
+                            }
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } finally {
+                        pbParticipant.setVisibility(ProgressBar.GONE);
+                        tvParticipant.setVisibility(TextView.VISIBLE);
                     }
-                }, new Response.ErrorListener() {
+                }
+            }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -463,52 +467,53 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        queue.add(jsObjRequest);
+        jsObjRequest.setTag("tActive");
+        requestQueue.add(jsObjRequest);
     }
 
     private void loadActivity() {
         pbLatEvent.setVisibility(ProgressBar.VISIBLE);
         tvLatEvent.setVisibility(TextView.GONE);
 
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        requestQueue = Volley.newRequestQueue(getContext());
         String url = Cons.BASE_URL + "dashboard.php?action=31";
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
-                new Response.Listener<JSONObject>() {
+        jsObjRequest = new JsonObjectRequest(
+            Request.Method.GET,
+            url,
+            null,
+            new Response.Listener<JSONObject>() {
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        //Log.d("Events: ", response.toString());
-                        String result = new String();
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("result");
+                @Override
+                public void onResponse(JSONObject response) {
+                    //Log.d("Events: ", response.toString());
+                    String result = new String();
+                    try {
+                        JSONArray jsonArray = response.getJSONArray("result");
 
-                            if (jsonArray.length() != 0) {
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject data = jsonArray.getJSONObject(i);
-                                    result += "<b>"+ data.getString("event").toString().trim().toUpperCase()
-                                            + "</b><br/><small>" + data.getString("date").toString().trim()
-                                            + " " + data.getString("time").toString().trim().substring(0, 5)
-                                            + " [ "+ data.getString("jumlah").toString().trim() + " ]</small><br/><br/>";
-                                }
-
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                    tvLatEvent.setText(Html.fromHtml(result.substring(0, result.length() - 10), Html.FROM_HTML_MODE_COMPACT));
-                                } else {
-                                    tvLatEvent.setText(Html.fromHtml(result.substring(0, result.length() - 10)));
-                                }
+                        if (jsonArray.length() != 0) {
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject data = jsonArray.getJSONObject(i);
+                                result += "<b>"+ data.getString("event").toString().trim().toUpperCase()
+                                        + "</b><br/><small>" + data.getString("date").toString().trim()
+                                        + " " + data.getString("time").toString().trim().substring(0, 5)
+                                        + " [ "+ data.getString("jumlah").toString().trim() + " ]</small><br/><br/>";
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } finally {
-                            pbLatEvent.setVisibility(ProgressBar.GONE);
-                            tvLatEvent.setVisibility(TextView.VISIBLE);
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                tvLatEvent.setText(Html.fromHtml(result.substring(0, result.length() - 10), Html.FROM_HTML_MODE_COMPACT));
+                            } else {
+                                tvLatEvent.setText(Html.fromHtml(result.substring(0, result.length() - 10)));
+                            }
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } finally {
+                        pbLatEvent.setVisibility(ProgressBar.GONE);
+                        tvLatEvent.setVisibility(TextView.VISIBLE);
                     }
-                }, new Response.ErrorListener() {
+                }
+            }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -528,43 +533,44 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        queue.add(jsObjRequest);
+        jsObjRequest.setTag("tLatest");
+        requestQueue.add(jsObjRequest);
     }
 
     private void loadJMember() {
         pbJMember.setVisibility(ProgressBar.VISIBLE);
         tvJMember.setVisibility(TextView.GONE);
 
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        requestQueue = Volley.newRequestQueue(getContext());
         String url = Cons.BASE_URL + "dashboard.php?action=2";
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
-                new Response.Listener<JSONObject>() {
+        jsObjRequest = new JsonObjectRequest(
+            Request.Method.GET,
+            url,
+            null,
+            new Response.Listener<JSONObject>() {
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        //Log.d("Events: ", response.toString());
-                        String jumlah;
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("result");
+                @Override
+                public void onResponse(JSONObject response) {
+                    //Log.d("Events: ", response.toString());
+                    String jumlah;
+                    try {
+                        JSONArray jsonArray = response.getJSONArray("result");
 
-                            if (jsonArray.length() != 0) {
-                                JSONObject data = jsonArray.getJSONObject(0);
-                                jumlah = data.getString("jumlah").toString().trim();
-                                tvJMember.setText(jumlah);
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } finally {
-                            pbJMember.setVisibility(ProgressBar.GONE);
-                            tvJMember.setVisibility(TextView.VISIBLE);
+                        if (jsonArray.length() != 0) {
+                            JSONObject data = jsonArray.getJSONObject(0);
+                            jumlah = data.getString("jumlah").toString().trim();
+                            tvJMember.setText(jumlah);
                         }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } finally {
+                        pbJMember.setVisibility(ProgressBar.GONE);
+                        tvJMember.setVisibility(TextView.VISIBLE);
                     }
-                }, new Response.ErrorListener() {
+                }
+            }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -584,42 +590,43 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        queue.add(jsObjRequest);
+        jsObjRequest.setTag("tJMember");
+        requestQueue.add(jsObjRequest);
     }
 
     private void loadJEvent() {
         pbJEvent.setVisibility(ProgressBar.VISIBLE);
         tvJEvent.setVisibility(TextView.GONE);
 
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        requestQueue = Volley.newRequestQueue(getContext());
         String url = Cons.BASE_URL + "dashboard.php?action=1";
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
-                new Response.Listener<JSONObject>() {
+        jsObjRequest = new JsonObjectRequest(
+            Request.Method.GET,
+            url,
+            null,
+            new Response.Listener<JSONObject>() {
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        //Log.d("Events: ", response.toString());
-                        String jumlah;
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("result");
+                @Override
+                public void onResponse(JSONObject response) {
+                    //Log.d("Events: ", response.toString());
+                    String jumlah;
+                    try {
+                        JSONArray jsonArray = response.getJSONArray("result");
 
-                            if (jsonArray.length() != 0) {
-                                JSONObject data = jsonArray.getJSONObject(0);
-                                jumlah = data.getString("jumlah").toString().trim();
-                                tvJEvent.setText(jumlah);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } finally {
-                            pbJEvent.setVisibility(ProgressBar.GONE);
-                            tvJEvent.setVisibility(TextView.VISIBLE);
+                        if (jsonArray.length() != 0) {
+                            JSONObject data = jsonArray.getJSONObject(0);
+                            jumlah = data.getString("jumlah").toString().trim();
+                            tvJEvent.setText(jumlah);
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } finally {
+                        pbJEvent.setVisibility(ProgressBar.GONE);
+                        tvJEvent.setVisibility(TextView.VISIBLE);
                     }
-                }, new Response.ErrorListener() {
+                }
+            }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -640,6 +647,22 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        queue.add(jsObjRequest);
+        jsObjRequest.setTag("tJEvent");
+        requestQueue.add(jsObjRequest);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        if (requestQueue != null) {
+            requestQueue.cancelAll("tTahun");
+            requestQueue.cancelAll("tGrafik");
+            requestQueue.cancelAll("tEvent");
+            requestQueue.cancelAll("tActive");
+            requestQueue.cancelAll("tLatest");
+            requestQueue.cancelAll("tJEvent");
+            requestQueue.cancelAll("tJMember");
+        }
     }
 }

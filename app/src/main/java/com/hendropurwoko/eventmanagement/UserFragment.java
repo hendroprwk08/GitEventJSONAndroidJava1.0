@@ -51,6 +51,9 @@ public class UserFragment extends Fragment {
     View fragment_view;
     public List<User> users;
 
+    RequestQueue requestQueue;
+    JsonObjectRequest jsObjRequest;
+
     private Unbinder unbinder;
 
     @Override public void onDestroyView() {
@@ -100,50 +103,50 @@ public class UserFragment extends Fragment {
     void load() {
         pb.setVisibility(ProgressBar.VISIBLE);
 
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        requestQueue = Volley.newRequestQueue(getContext());
         String url = Cons.BASE_URL +"pengguna.php?action=4";
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
-                new Response.Listener<JSONObject>() {
+        jsObjRequest = new JsonObjectRequest(
+            Request.Method.GET,
+            url,
+            null,
+            new Response.Listener<JSONObject>() {
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        //Log.d("Users ", response.toString());
+                @Override
+                public void onResponse(JSONObject response) {
+                    //Log.d("Users ", response.toString());
 
-                        users = new ArrayList<>();
+                    users = new ArrayList<>();
 
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("result");
-                            users.clear();
-                            if (jsonArray.length() != 0) {
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject data = jsonArray.getJSONObject(i);
+                    try {
+                        JSONArray jsonArray = response.getJSONArray("result");
+                        users.clear();
+                        if (jsonArray.length() != 0) {
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject data = jsonArray.getJSONObject(i);
 
-                                    users.add(new User(
-                                            data.getString("USERNAME").toString().trim(),
-                                            data.getString("EMAIL").toString().trim(),
-                                            data.getString("PHONE").toString().trim(),
-                                            data.getString("ACTIVE").toString().trim(),
-                                            data.getString("TYPE").toString().trim()));
-                                }
-
-                                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-                                UserAdapter mAdapter = new UserAdapter(getContext(), users);
-                                recyclerView.setAdapter(mAdapter);
-                                recyclerView.setItemAnimator(new DefaultItemAnimator());
-
+                                users.add(new User(
+                                        data.getString("USERNAME").toString().trim(),
+                                        data.getString("EMAIL").toString().trim(),
+                                        data.getString("PHONE").toString().trim(),
+                                        data.getString("ACTIVE").toString().trim(),
+                                        data.getString("TYPE").toString().trim()));
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }finally {
-                            pb.setVisibility(ProgressBar.GONE);
+
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+                            UserAdapter mAdapter = new UserAdapter(getContext(), users);
+                            recyclerView.setAdapter(mAdapter);
+                            recyclerView.setItemAnimator(new DefaultItemAnimator());
+
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }finally {
+                        pb.setVisibility(ProgressBar.GONE);
                     }
-                }, new Response.ErrorListener() {
+                }
+            }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -165,6 +168,15 @@ public class UserFragment extends Fragment {
             }
         });
 
-        queue.add(jsObjRequest);
+        jsObjRequest.setTag("tUser");
+        requestQueue.add(jsObjRequest);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (requestQueue != null) {
+            requestQueue.cancelAll("tUser");
+        }
     }
 }

@@ -57,6 +57,9 @@ public class UserFormFragment extends Fragment {
     String ACTION;
     SharedPref sp;
 
+    RequestQueue requestQueue;
+    JsonObjectRequest jsObjRequest;
+
     private Unbinder unbinder;
 
     public UserFormFragment(String action) {
@@ -156,24 +159,24 @@ public class UserFormFragment extends Fragment {
                     "&active=" + URLEncoder.encode(ac, "utf-8") +
                     "&type=" + URLEncoder.encode(ty, "utf-8");
 
-            RequestQueue queue = Volley.newRequestQueue(getContext());
-            JsonObjectRequest jsObjRequest = new JsonObjectRequest(
-                    Request.Method.GET,
-                    url,
-                    null,
-                    new Response.Listener<JSONObject>() {
+            requestQueue = Volley.newRequestQueue(getContext());
+            jsObjRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
 
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.d("Save: ", response.toString());
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Save: ", response.toString());
 
-                            Toast.makeText(getContext(),
-                                    us + " saved",
-                                    Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),
+                                us + " saved",
+                                Toast.LENGTH_SHORT).show();
 
-                            pb.setVisibility(ProgressBar.GONE);
-                        }
-                    }, new Response.ErrorListener() {
+                        pb.setVisibility(ProgressBar.GONE);
+                    }
+                }, new Response.ErrorListener() {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
@@ -196,7 +199,8 @@ public class UserFormFragment extends Fragment {
                 }
             });
 
-            queue.add(jsObjRequest);
+            jsObjRequest.setTag("tSimpan");
+            requestQueue.add(jsObjRequest);
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -227,25 +231,25 @@ public class UserFormFragment extends Fragment {
 
             pb.setVisibility(ProgressBar.VISIBLE);
 
-            RequestQueue queue = Volley.newRequestQueue(getContext());
-            JsonObjectRequest jsObjRequest = new JsonObjectRequest(
-                    Request.Method.GET,
-                    url,
-                    null,
-                    new Response.Listener<JSONObject>() {
+            requestQueue = Volley.newRequestQueue(getContext());
+            jsObjRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
 
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.d("Save: ", response.toString());
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Save: ", response.toString());
 
-                            Toast.makeText(getContext(),
-                                    us + " updated",
-                                    Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),
+                                us + " updated",
+                                Toast.LENGTH_SHORT).show();
 
-                            pb.setVisibility(ProgressBar.GONE);
+                        pb.setVisibility(ProgressBar.GONE);
 
-                        }
-                    }, new Response.ErrorListener() {
+                    }
+                }, new Response.ErrorListener() {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
@@ -260,7 +264,9 @@ public class UserFormFragment extends Fragment {
                 }
             });
 
-            queue.add(jsObjRequest);
+            jsObjRequest.setTag("tUpdate");
+            requestQueue.add(jsObjRequest);
+
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
 
@@ -352,5 +358,15 @@ public class UserFormFragment extends Fragment {
                 }
             })
             .show();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        if (requestQueue != null) {
+            requestQueue.cancelAll("tSimpan");
+            requestQueue.cancelAll("tUpdate");
+        }
     }
 }

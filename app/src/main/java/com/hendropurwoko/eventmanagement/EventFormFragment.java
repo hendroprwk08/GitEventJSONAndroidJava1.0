@@ -69,6 +69,9 @@ public class EventFormFragment extends Fragment {
     Bundle bundle;
     final Calendar myCalendar = Calendar.getInstance();
 
+    RequestQueue requestQueue;
+    JsonObjectRequest jsObjRequest;
+
     private Unbinder unbinder;
 
     public EventFormFragment(String action){
@@ -225,24 +228,24 @@ public class EventFormFragment extends Fragment {
                     "&active=" + URLEncoder.encode(vs, "utf-8");
 
 
-            RequestQueue queue = Volley.newRequestQueue(getContext());
-            JsonObjectRequest jsObjRequest = new JsonObjectRequest(
-                    Request.Method.GET,
-                    url,
-                    null,
-                    new Response.Listener<JSONObject>() {
+            requestQueue = Volley.newRequestQueue(getContext());
+            jsObjRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
 
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.d("Save: ", response.toString());
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Save: ", response.toString());
 
-                            Toast.makeText(getContext(),
-                                    nm + " saved",
-                                    Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),
+                                nm + " saved",
+                                Toast.LENGTH_SHORT).show();
 
-                            pb.setVisibility(ProgressBar.GONE);
-                        }
-                    }, new Response.ErrorListener() {
+                        pb.setVisibility(ProgressBar.GONE);
+                    }
+                }, new Response.ErrorListener() {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
@@ -265,7 +268,9 @@ public class EventFormFragment extends Fragment {
                 }
             });
 
-            queue.add(jsObjRequest);
+            jsObjRequest.setTag("tSimpan");
+            requestQueue.add(jsObjRequest);
+
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
 
@@ -290,8 +295,8 @@ public class EventFormFragment extends Fragment {
 
             Log.d("Update: ", url);
 
-            RequestQueue queue = Volley.newRequestQueue(getContext());
-            JsonObjectRequest jsObjRequest = new JsonObjectRequest(
+            requestQueue = Volley.newRequestQueue(getContext());
+            jsObjRequest = new JsonObjectRequest(
                     Request.Method.GET,
                     url,
                     null,
@@ -318,7 +323,8 @@ public class EventFormFragment extends Fragment {
                 }
             });
 
-            queue.add(jsObjRequest);
+            jsObjRequest.setTag("tUpdate");
+            requestQueue.add(jsObjRequest);
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -388,5 +394,15 @@ public class EventFormFragment extends Fragment {
                     }
                 })
                 .show();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        if (requestQueue != null) {
+            requestQueue.cancelAll("tSimpan");
+            requestQueue.cancelAll("tUpdate");
+        }
     }
 }

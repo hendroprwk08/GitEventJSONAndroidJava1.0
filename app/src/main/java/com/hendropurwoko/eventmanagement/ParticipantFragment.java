@@ -54,6 +54,11 @@ public class ParticipantFragment extends Fragment {
     View fragment_view;
     public List<Participant> participants;
 
+    RequestQueue requestQueue;
+    JsonObjectRequest jsObjRequest;
+
+    public static final String fTAG = ParticipantFragment.class.getSimpleName();
+
     ArrayList<String> arr;
     HashMap<String, String> mapData;
     int EVENT_ID;
@@ -133,12 +138,11 @@ public class ParticipantFragment extends Fragment {
     }
 
     void load(int id) {
-        RequestQueue queue = Volley.newRequestQueue(getContext());
         String url = Cons.BASE_URL +"peserta.php?action=41&id="+ id;
 
         //Log.d(Cons.TAG, "load: " + url );
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(
+        jsObjRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
                 null,
@@ -209,14 +213,15 @@ public class ParticipantFragment extends Fragment {
             }
         });
 
-        queue.add(jsObjRequest);
+        jsObjRequest.setTag("tParticipant");
+        requestQueue.add(jsObjRequest);
     }
 
     void loadEvent() {
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        requestQueue = Volley.newRequestQueue(getContext());
         String url = Cons.BASE_URL +"load_event.php";
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(
+        jsObjRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
                 null,
@@ -298,6 +303,16 @@ public class ParticipantFragment extends Fragment {
             }
         });
 
-        queue.add(jsObjRequest);
+        jsObjRequest.setTag("tEvent");
+        requestQueue.add(jsObjRequest);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (requestQueue != null) {
+            requestQueue.cancelAll("tEvent");
+            requestQueue.cancelAll("tParticipant");
+        }
     }
 }

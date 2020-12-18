@@ -67,6 +67,9 @@ public class MemberFragment extends Fragment {
     boolean show;
     String cari = null;
 
+    RequestQueue requestQueue;
+    JsonObjectRequest jsObjRequest;
+
     private Unbinder unbinder;
 
     @Override public void onDestroyView() {
@@ -166,7 +169,7 @@ public class MemberFragment extends Fragment {
     void load(String find) {
         pb.setVisibility(ProgressBar.VISIBLE);
 
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        requestQueue = Volley.newRequestQueue(getContext());
         String url;
 
         if (find == null) {
@@ -175,55 +178,55 @@ public class MemberFragment extends Fragment {
             url =  Cons.BASE_URL + "peserta.php?action=9&find="+ find;
         }
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
-                new Response.Listener<JSONObject>() {
+        jsObjRequest = new JsonObjectRequest(
+            Request.Method.GET,
+            url,
+            null,
+            new Response.Listener<JSONObject>() {
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        //Log.d("Events: ", response.toString());
+                @Override
+                public void onResponse(JSONObject response) {
+                    //Log.d("Events: ", response.toString());
 
-                        String id, name, institution, whatsapp, phone, email, active, jumlah;
-                        members = new ArrayList<>();
+                    String id, name, institution, whatsapp, phone, email, active, jumlah;
+                    members = new ArrayList<>();
 
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("result");
-                            members.clear();
+                    try {
+                        JSONArray jsonArray = response.getJSONArray("result");
+                        members.clear();
 
-                            if (jsonArray.length() != 0) {
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject data = jsonArray.getJSONObject(i);
+                        if (jsonArray.length() != 0) {
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject data = jsonArray.getJSONObject(i);
 
-                                    id = data.getString("id").toString().trim();
-                                    name = data.getString("name").toString().trim();
-                                    institution = data.getString("institution").toString().trim();
-                                    whatsapp = data.getString("whatsapp").toString().trim();
-                                    phone = data.getString("phone").toString().trim();
-                                    email = data.getString("email").toString().trim();
-                                    active = data.getString("active").toString().trim();
-                                    jumlah = data.getString("jumlah").toString().trim();
+                                id = data.getString("id").toString().trim();
+                                name = data.getString("name").toString().trim();
+                                institution = data.getString("institution").toString().trim();
+                                whatsapp = data.getString("whatsapp").toString().trim();
+                                phone = data.getString("phone").toString().trim();
+                                email = data.getString("email").toString().trim();
+                                active = data.getString("active").toString().trim();
+                                jumlah = data.getString("jumlah").toString().trim();
 
-                                    members.add(new Member(id, name, institution, whatsapp, phone, email, active, jumlah));
-                                }
-
-                                RecyclerView recyclerView = (RecyclerView) fragment_view.findViewById(R.id.rv_members);
-                                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-                                MemberAdapter mAdapter = new MemberAdapter(getContext(), members);
-                                recyclerView.setAdapter(mAdapter);
-                                //recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-                                pb.setVisibility(ProgressBar.GONE);
+                                members.add(new Member(id, name, institution, whatsapp, phone, email, active, jumlah));
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }finally {
+
+                            RecyclerView recyclerView = (RecyclerView) fragment_view.findViewById(R.id.rv_members);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+                            MemberAdapter mAdapter = new MemberAdapter(getContext(), members);
+                            recyclerView.setAdapter(mAdapter);
+                            //recyclerView.setItemAnimator(new DefaultItemAnimator());
+
                             pb.setVisibility(ProgressBar.GONE);
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }finally {
+                        pb.setVisibility(ProgressBar.GONE);
                     }
-                }, new Response.ErrorListener() {
+                }
+            }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -245,6 +248,15 @@ public class MemberFragment extends Fragment {
             }
         });
 
-        queue.add(jsObjRequest);
+        jsObjRequest.setTag("tMember");
+        requestQueue.add(jsObjRequest);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (requestQueue != null) {
+            requestQueue.cancelAll("tMember");
+        }
     }
 }

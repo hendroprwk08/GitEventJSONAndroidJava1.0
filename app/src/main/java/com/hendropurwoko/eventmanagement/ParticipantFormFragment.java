@@ -68,6 +68,9 @@ public class ParticipantFormFragment extends Fragment {
 
     String ACTION, ID;
 
+    RequestQueue requestQueue;
+    JsonObjectRequest jsObjRequest;
+
     private Unbinder unbinder;
 
     public ParticipantFormFragment(String action) {
@@ -243,24 +246,24 @@ public class ParticipantFormFragment extends Fragment {
 
             Log.d(Cons.TAG, "save: " + url);
 
-            RequestQueue queue = Volley.newRequestQueue(getContext());
-            JsonObjectRequest jsObjRequest = new JsonObjectRequest(
-                    Request.Method.GET,
-                    url,
-                    null,
-                    new Response.Listener<JSONObject>() {
+            requestQueue = Volley.newRequestQueue(getContext());
+            jsObjRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
 
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.d("Save: ", response.toString());
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Save: ", response.toString());
 
-                            Toast.makeText(getContext(),
-                                    nm + " saved",
-                                    Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),
+                                nm + " saved",
+                                Toast.LENGTH_SHORT).show();
 
-                            pb.setVisibility(ProgressBar.GONE);
-                        }
-                    }, new Response.ErrorListener() {
+                        pb.setVisibility(ProgressBar.GONE);
+                    }
+                }, new Response.ErrorListener() {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
@@ -280,7 +283,10 @@ public class ParticipantFormFragment extends Fragment {
                     }
                 }
             });
-            queue.add(jsObjRequest);
+
+            jsObjRequest.setTag("tSimpan");
+            requestQueue.add(jsObjRequest);
+
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
 
@@ -307,24 +313,24 @@ public class ParticipantFormFragment extends Fragment {
 
             pb.setVisibility(ProgressBar.VISIBLE);
 
-            RequestQueue queue = Volley.newRequestQueue(getContext());
-            JsonObjectRequest jsObjRequest = new JsonObjectRequest(
-                    Request.Method.GET,
-                    url,
-                    null,
-                    new Response.Listener<JSONObject>() {
+            requestQueue = Volley.newRequestQueue(getContext());
+            jsObjRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
 
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.d("Save: ", response.toString());
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Save: ", response.toString());
 
-                            Toast.makeText(getContext(),
-                                    nm + " updated",
-                                    Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),
+                                nm + " updated",
+                                Toast.LENGTH_SHORT).show();
 
-                            pb.setVisibility(ProgressBar.GONE);
-                        }
-                    }, new Response.ErrorListener() {
+                        pb.setVisibility(ProgressBar.GONE);
+                    }
+                }, new Response.ErrorListener() {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
@@ -339,7 +345,9 @@ public class ParticipantFormFragment extends Fragment {
                 }
             });
 
-            queue.add(jsObjRequest);
+            jsObjRequest.setTag("tUpdate");
+            requestQueue.add(jsObjRequest);
+
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
 
@@ -427,4 +435,13 @@ public class ParticipantFormFragment extends Fragment {
             .show();
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        if (requestQueue != null) {
+            requestQueue.cancelAll("tSimpan");
+            requestQueue.cancelAll("tUpdate");
+        }
+    }
 }
