@@ -54,7 +54,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-
 public class HomeFragment extends Fragment {
     @BindView(R.id.pb_j_event) ProgressBar pbJEvent;
     @BindView(R.id.pb_j_member) ProgressBar pbJMember;
