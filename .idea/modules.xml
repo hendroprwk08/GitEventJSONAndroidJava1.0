@@ -4,6 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/EventManagement.iml" filepath="$PROJECT_DIR$/EventManagement.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/EventManagement.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/EventManagement.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/EventManagement.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/EventManagement.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/EventManagement.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/EventManagement.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/EventManagement.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/EventManagement.app.unitTest.iml" />
     </modules>
   </component>
 </project>
